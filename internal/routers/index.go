@@ -8,4 +8,5 @@ import (
 
 func WebRouter(group *ghttp.RouterGroup) {
 	group.GET("/", ctls.Ctl.IndexTpl)
+	group.GET("/s/:keyword/:start", ctls.Ctl.SearchResult)
 }
