@@ -2,29 +2,31 @@ package cmd
 
 import (
 	"context"
+	"os"
 
-	"guoshao-fm-web/internal/controller"
+	"guoshao-fm-web/internal/routers"
 
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
+	"github.com/gogf/gf/v2/os/genv"
 )
 
 var (
 	Main = gcmd.Command{
-		Name:  "main",
+		Name:  "Guoshao FM Web",
 		Usage: "main",
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
-			s.Group("/", func(group *ghttp.RouterGroup) {
-				group.Middleware(ghttp.MiddlewareHandlerResponse)
-				group.Bind(
-					controller.IndexTpl,
-				)
-			})
+			s.Group("/", routers.WebRouter)
 			s.Run()
 			return
 		},
 	}
 )
+
+func initConfig() {
+	if os.Getenv("env") == "dev" {
+		genv.Set("GF_GCFG_FILE", "config.dev.yaml")
+	}
+}
