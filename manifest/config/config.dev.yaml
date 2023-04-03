@@ -5,7 +5,7 @@ logger:
   path: "./logs/"
   file: "{Y-m-d}.log"
   stdout: true
-  level: "info"
+  level: "all"
   rotateSize: "100M"
   rotateBackupLimit: 10
   rotateBackupExpire: "10d"
@@ -14,11 +14,11 @@ logger:
 
 database:
   default:
-    host: "rm-uf6zz7tf01t4n01ilio.rwlb.rds.aliyuncs.com"
+    host: "127.0.0.1"
     port: "3306"
     user: "guoshaofm"
     name: "guoshaofmdb"
-    pass: "1qaz!QAZ"
+    pass: "qazxsw"
     type: "mysql"
     weight: "100"
     createdAt: "true"
@@ -30,7 +30,7 @@ database:
 
 redis:
   default:
-    address: 47.242.232.137:6379
+    address: 127.0.0.1:6379
     db: 1
     pass: 123456
 
