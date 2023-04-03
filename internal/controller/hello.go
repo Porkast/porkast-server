@@ -8,12 +8,12 @@ import (
 )
 
 var (
-	Hello = cHello{}
+	IndexTpl = cIndex{}
 )
 
-type cHello struct{}
+type cIndex struct{}
 
-func (h *cHello) Hello(ctx context.Context, req *apiv1.HelloReq) (res *apiv1.HelloRes, err error) {
+func (h *cIndex) IndexTpl(ctx context.Context, req *apiv1.IndexReq) (res *apiv1.IndexRes, err error) {
 	g.RequestFromCtx(ctx).Response.Writeln("Hello World!")
 	return
 }

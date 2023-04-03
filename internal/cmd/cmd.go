@@ -20,11 +20,11 @@ var (
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Bind(
-					controller.Hello,
+					controller.IndexTpl,
 				)
 			})
 			s.Run()
-			return nil
+			return
 		},
 	}
 )
