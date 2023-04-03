@@ -5,6 +5,9 @@
 package dao
 
 import (
+	"context"
+	"errors"
+	"guoshao-fm-web/internal/model/entity"
 	"guoshao-fm-web/internal/service/internal/dao/internal"
 )
 
@@ -22,3 +25,26 @@ var (
 )
 
 // Fill with you ideas below.
+func GetFeedItemsByChannelId(ctx context.Context, channelId string) (itemList []entity.FeedItem, err error) {
+
+	err = FeedItem.Ctx(ctx).Where("channel_id=?", channelId).Scan(&itemList)
+	if err != nil {
+		return
+	}
+
+	if len(itemList) == 0 {
+		return itemList, errors.New("The feed item is exist.")
+	}
+
+	return
+}
+
+func GetFeedItemById(ctx context.Context, id string) (item entity.FeedItem, err error) {
+
+	err = FeedItem.Ctx(ctx).Where("id=?", id).Scan(&item)
+	if err != nil {
+		return
+	}
+
+	return
+}

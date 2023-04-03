@@ -5,6 +5,8 @@
 package dao
 
 import (
+	"context"
+	"guoshao-fm-web/internal/model/entity"
 	"guoshao-fm-web/internal/service/internal/dao/internal"
 )
 
@@ -22,3 +24,10 @@ var (
 )
 
 // Fill with you ideas below.
+
+func GetFeedChannelInfoByChannelId(ctx context.Context, channelId string) (feedInfo entity.FeedChannel, err error) {
+
+    err = FeedChannel.Ctx(ctx).Where("id=?", channelId).Scan(&feedInfo)
+
+	return
+}
