@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="halloween">
 
 <head>
     <title>RSS Go</title>
@@ -7,10 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="/resource/image/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css" rel="stylesheet" type="text/css" />
-    <link href="/resource/css/feed_item.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="/resource/js/nav.js"></script>
     <style>
         .collapse {
             visibility: visible !important;
@@ -23,18 +21,18 @@
     <div class="navbar bg-base-100">
         <div class="navbar-start">
             <div class="flex-1 ml-6">
-                <a class="avatar" href="/">
-                    <div class="w-8 rounded-full">
-                        <img src="/resource/image/logo192.png" />
-                    </div>
-                </a>
+                <!-- <a class="avatar" href="/"> -->
+                <!--     <div class="w-8 rounded-full"> -->
+                <!--         <img src="/resource/image/logo192.png" /> -->
+                <!--     </div> -->
+                <!-- </a> -->
             </div>
         </div>
         <div class="navbar-center">
             <div class="w-70 sm:w-96 md:w-96 lg:w-96 xl:w-96 flex justify-center">
-                <div class="form-control w-full max-w-2xl">
-                    <input id="searchInput" type="text" placeholder="搜索更多Feed" class="input input-bordered" />
-                </div>
+                <!-- <div class="form-control w-full max-w-2xl"> -->
+                <!--     <input id="searchInput" type="text" placeholder="搜索更多Feed" class="input input-bordered" /> -->
+                <!-- </div> -->
             </div>
         </div>
         <div class="navbar-end">
@@ -44,8 +42,40 @@
     <!-- content -->
     <div class="flex justify-center">
         <div class="w-full ml-6 mr-6">
-            <!-- feed item list -->
-            {{include "module/list_item.html" .}}
+            <div class="flex justify-center text-3xl">
+                锅烧 FM
+            </div>
+            <div class="flex justify-center text-base text-gray-500 mt-5">
+                锅烧播客搜索引擎
+            </div>
+            <div class="flex justify-center mt-20">
+                <div class="form-control w-full max-w-2xl">
+                    <input id="searchInput" type="text" placeholder="输入关键词" class="input input-bordered" />
+                </div>
+                <button id="homeSearchBtn" class="btn btn-primary">搜索</button>
+            </div>
         </div>
     </div>
 </body>
+
+<script>
+    $(function () {
+        let searchBtn = $("#homeSearchBtn");
+        let searchClearBtn = $("#searchClearBtn");
+        let searchInput = $("#searchInput");
+        searchInput.keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                let keyword = $(this).val()
+                window.location.href = "/s/" + keyword + "/1";
+            }
+            event.stopPropagation();
+        });
+        searchBtn.click(function () {
+            let keyword = searchInput.val()
+            alert("Handler for search button .click() called. The search keyword is " + keyword);
+        });
+    });
+</script>
+
+</html>
