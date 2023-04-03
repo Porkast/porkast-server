@@ -8,7 +8,7 @@ import (
 
 func (ctl *controller) IndexTpl(req *ghttp.Request) {
 	req.Response.WriteTpl("index.html", g.Map{
-		"name": "RSS Go",
+		"name": "锅烧FM",
 	})
 	return
 }
