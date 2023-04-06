@@ -1,5 +1,5 @@
 server:
-  address:     ":8000"
+  address: ":8000"
   serverRoot: "resource/public"
 
 logger:
@@ -35,3 +35,8 @@ redis:
     db: 1
     pass: 123456
 
+elastic:
+  host: "http://127.0.0.1"
+  port: "9200"
+  username: "elastic"
+  password: "qazxsw"
