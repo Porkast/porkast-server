@@ -45,3 +45,7 @@ func InitES(ctx context.Context) {
 	}
 	g.Log().Line().Infof(ctx, "Elasticsearch version %s", esVersion)
 }
+
+func GetClient() *elastic.Client {
+	return esClient
+}
