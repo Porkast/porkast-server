@@ -9,12 +9,12 @@ import (
 	"github.com/olivere/elastic/v7"
 )
 
-func (client *ESClient) QueryFeedItemFull(ctx context.Context, keyword string) (esFeedItemList []entity.FeedItemESData) {
+func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string) (esFeedItemList []entity.FeedItemESData) {
 	multMatch := elastic.NewMultiMatchQuery(keyword, "title", "author", "description")
 	multMatch.FieldWithBoost("title", 3)
 	multMatch.FieldWithBoost("author", 2)
 	multMatch.FieldWithBoost("description", 1)
-	searchResult, err := client.Client.Search().
+	searchResult, err := c.Client.Search().
 		Index("feed_item").
 		Query(multMatch).
 		From(0).Size(10).

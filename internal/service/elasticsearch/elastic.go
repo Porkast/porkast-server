@@ -8,11 +8,11 @@ import (
 	"github.com/olivere/elastic/v7"
 )
 
-type ESClient struct {
+type GSElastic struct {
 	Client *elastic.Client
 }
 
-var esClient *ESClient
+var esClient *GSElastic
 
 func InitES(ctx context.Context) {
 	var (
@@ -28,7 +28,7 @@ func InitES(ctx context.Context) {
 	password, _ = g.Cfg().Get(ctx, "elastic.password")
 	url = host.String() + ":" + port.String()
 	var err error
-	esClient = &ESClient{}
+	esClient = &GSElastic{}
 	esClient.Client, err = elastic.NewClient(elastic.SetURL(url), elastic.SetSniff(false), elastic.SetHealthcheck(false), elastic.SetBasicAuth(username.String(), password.String()))
 	if err != nil {
 		panic(err)
@@ -51,6 +51,6 @@ func InitES(ctx context.Context) {
 	g.Log().Line().Infof(ctx, "Elasticsearch version %s", esVersion)
 }
 
-func GetClient() *ESClient {
+func GetClient() *GSElastic {
 	return esClient
 }

@@ -11,13 +11,13 @@ import (
 func TestESClient_QueryFeedItemFull(t *testing.T) {
 	var (
 		ctx        = gctx.New()
-		esClient   *ESClient
+		gsElastic   *GSElastic
 		resultList []entity.FeedItemESData
 	)
 	genv.Set("GF_GCFG_FILE", "config.dev.yaml")
 	InitES(ctx)
-	esClient = GetClient()
-	resultList = esClient.QueryFeedItemFull(ctx, "推荐")
+	gsElastic = GetClient()
+	resultList = gsElastic.QueryFeedItemFull(ctx, "推荐")
 	if len(resultList) == 0 {
 		t.Fatal("Elasticsearch query feed item is empty")
 	}
