@@ -22,6 +22,7 @@ type FeedItem struct {
 	Description     string
 	ChannelImageUrl string
 	ChannelTitle    string
+	SourceLink      string
 	Count           int
 	HasThumbnail    bool
 }
