@@ -18,19 +18,24 @@ func (ctl *controller) IndexTpl(req *ghttp.Request) {
 
 func (ctl *controller) SearchResult(req *ghttp.Request) {
 	var (
+		err           error
 		searchKeyword string
-		start         int
+		offset         int
 		totalPage     int
-		feedItemList  []string
+		items         []dto.FeedItem
 	)
 
-	searchKeyword = req.Get("keyword").String()
-	start = req.Get("start").Int()
+	searchKeyword = req.GetQuery("q").String()
+	offset = req.GetQuery("offset").Int()
+	items, err = feedService.SearchFeedItemsByKeyword(req.Context(), searchKeyword, offset, 10)
+	if err != nil {
+		//TODO Add error page
+	}
 	req.Response.WriteTpl("search.html", g.Map{
 		"searchKeyword":   searchKeyword,
-		"currentPage":     start,
+		"currentPage":     offset,
 		"totalPage":       totalPage,
-		consts.FEED_ITEMS: feedItemList,
+		consts.FEED_ITEMS: items,
 	})
 }
 

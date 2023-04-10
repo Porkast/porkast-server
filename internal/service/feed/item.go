@@ -21,12 +21,18 @@ func GetFeedItemByItemId(ctx context.Context, itemId string) (feedItemInfoDto dt
 	return
 }
 
-func SearchFeedItemsByKeyword(ctx context.Context, keyword string, start, size int) (items []dto.FeedItem, err error) {
+func SearchFeedItemsByKeyword(ctx context.Context, keyword string, offseet, size int) (items []dto.FeedItem, err error) {
 	var (
 		feedItemESDatalList []entity.FeedItemESData
 	)
 
-	feedItemESDatalList, err = elasticsearch.GetClient().QueryFeedItemFull(ctx, keyword, start, size)
+	if size == 0 {
+		size = 10
+	}
+
+	offseet = offseet * size
+
+	feedItemESDatalList, err = elasticsearch.GetClient().QueryFeedItemFull(ctx, keyword, offseet, size)
 	if err != nil {
 		return
 	}
