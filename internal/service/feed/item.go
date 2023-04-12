@@ -47,7 +47,7 @@ func SearchFeedItemsByKeyword(ctx context.Context, keyword string, page, size in
 		itemDto.ChannelImageUrl = feedItemES.ChannelImageUrl
 		itemDto.ChannelTitle = feedItemES.ChannelTitle
 		itemDto.SourceLink = feedItemES.SourceLink
-		if itemDto.ImageUrl != "" {
+		if itemDto.ChannelImageUrl != "" {
 			itemDto.HasThumbnail = true
 		} else {
 			itemDto.HasThumbnail = false
