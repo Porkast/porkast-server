@@ -1,0 +1,35 @@
+<div class="w-full flex justify-center">
+    <div class="md:w-full lg:w-3/5 xl:w-3/5 max-w-xl">
+        {{range $index, $item := .feedItems}}
+        <div class="card max-w-xl bg-base-100 shadow-xl mt-6">
+            <div class="card-body">
+                <a href="/feed/item/{{$item.Id}}">
+                    <h2 class="card-title gap-0">{{$item.Title}}</h2>
+                </a>
+                <div class="flex mt-3">
+                    <a href="/feed/channel/{{$item.ChannelId}}">
+                        <div class="avatar">
+                            <div class="w-16 rounded">
+                                <img src="{{$item.ChannelImageUrl}}" />
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <a href="/feed/channel/{{$item.ChannelId}}">
+                                <div class="text-lg font-medium">{{$item.ChannelTitle}}</div>
+                            </a>
+                            <div class="text-base font-medium text-gray-500">{{$item.Author}}</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="truncate max-h-24 flex">
+                    <p>{{$item.Description}}</p>
+                </div>
+                <div class="text-gray-500">{{$item.PubDate}}</div>
+                <div class="card-actions justify-end">
+                    <button class="btn btn-primary">Buy Now</button>
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </div>
+</div>
