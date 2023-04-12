@@ -18,5 +18,4 @@ cbuild
 main
 output/
 manifest/output/
-logs/2023-04-11.log
-logs/2023-04-12.log
+logs/
