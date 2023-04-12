@@ -20,20 +20,25 @@ func (ctl *controller) SearchResult(req *ghttp.Request) {
 	var (
 		err           error
 		searchKeyword string
-		offset         int
+		page          int
 		totalPage     int
+		count         int
 		items         []dto.FeedItem
 	)
 
 	searchKeyword = req.GetQuery("q").String()
-	offset = req.GetQuery("offset").Int()
-	items, err = feedService.SearchFeedItemsByKeyword(req.Context(), searchKeyword, offset, 10)
+	page = req.GetQuery("page").Int()
+	items, err = feedService.SearchFeedItemsByKeyword(req.Context(), searchKeyword, page, 10)
 	if err != nil {
 		//TODO Add error page
 	}
+	if len(items) > 0 {
+		count = items[0].Count
+		totalPage = count / 10
+	}
 	req.Response.WriteTpl("search.html", g.Map{
 		"searchKeyword":   searchKeyword,
-		"currentPage":     offset,
+		"currentPage":     page,
 		"totalPage":       totalPage,
 		consts.FEED_ITEMS: items,
 	})
