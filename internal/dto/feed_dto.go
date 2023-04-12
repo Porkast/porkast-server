@@ -7,7 +7,7 @@ type FeedItem struct {
 	ChannelId       string
 	Title           string
 	Link            string
-	PubDate         *gtime.Time
+	PubDate         string
 	Author          string
 	InputDate       *gtime.Time
 	ImageUrl        string
