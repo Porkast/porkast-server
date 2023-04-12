@@ -3,8 +3,8 @@ package elasticsearch
 import (
 	"context"
 	"guoshao-fm-web/internal/model/entity"
-	"reflect"
 
+	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/olivere/elastic/v7"
 )
@@ -14,9 +14,13 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, from,
 	multMatch.FieldWithBoost("title", 3)
 	multMatch.FieldWithBoost("author", 2)
 	multMatch.FieldWithBoost("description", 1)
+	highlight := elastic.NewHighlight()
+	highlight = highlight.PreTags("<span style='color: red;'>").PostTags("</span>")
+	highlight = highlight.Fields(elastic.NewHighlighterField("title"), elastic.NewHighlighterField("description"), elastic.NewHighlighterField("author"))
 	searchResult, err := c.Client.Search().
 		Index("feed_item").
 		Query(multMatch).
+		Highlight(highlight).
 		From(from).Size(size).
 		Pretty(true).
 		Do(ctx)
@@ -25,14 +29,23 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, from,
 		return
 	}
 
-	var itemType entity.FeedItemESData
 	var totalCount int
 	totalCount = int(searchResult.TotalHits())
-	for _, item := range searchResult.Each(reflect.TypeOf(itemType)) {
-		if t, ok := item.(entity.FeedItemESData); ok {
-			t.Count = totalCount
-			esFeedItemList = append(esFeedItemList, t)
+	for _, hit := range searchResult.Hits.Hits {
+		var esFeedItem entity.FeedItemESData
+		gjson.Unmarshal(hit.Source, &esFeedItem)
+		
+		esFeedItem.Count = totalCount
+		if len(hit.Highlight["title"]) != 0 {
+			esFeedItem.Title = hit.Highlight["title"][0]
 		}
+		if len(hit.Highlight["description"]) != 0 {
+			esFeedItem.Description = hit.Highlight["description"][0]
+		}
+		if len(hit.Highlight["author"]) != 0 {
+			esFeedItem.Author = hit.Highlight["author"][0]
+		}
+		esFeedItemList = append(esFeedItemList, esFeedItem)
 	}
 
 	return
