@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="halloween">
+<html lang="en" data-theme="lofi">
 
 <head>
     <title>锅烧FM</title>
@@ -13,6 +13,40 @@
 
 <body style="margin: 0; display:inherit;">
 
+    <div class="flex justify-center">
+        <div class="w-full ml-6 mr-6">
+            <!-- feed channel item list -->
+            {{include "module/list_item.html" .}}
+            <div class="flex justify-center mt-6">
+                <div class="btn-group">
+                    <button class="btn" id="prePageBtn">«</button>
+                    <button class="btn">第{{.currentPage}}页</button>
+                    <button class="btn" id="nextPageBtn">»</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+    $(function () {
+        let currentPage = parseInt('{{.currentPage}}')
+        let totalPage = parseInt('{{.totalPage}}')
+        let nextPage = currentPage + 1
+        let prePage = currentPage - 1
+        let keyword = '{{.searchKeyword}}'
+        $('#nextPageBtn').click(function (event) {
+            if (currentPage >= totalPage) {
+                return
+            }
+            window.location.href = "/search?q=" + keyword + "&page=" + nextPage;
+        });
+        $('#prePageBtn').click(function (event) {
+            if (currentPage == 1) {
+                return
+            }
+            window.location.href = "/search?q=" + keyword + "&page=" + prePage;
+        });
+    });
+</script>
 
 </html>
