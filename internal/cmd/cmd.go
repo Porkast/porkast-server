@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"guoshao-fm-web/internal/routers"
+	"guoshao-fm-web/internal/service/elasticsearch"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcmd"
@@ -20,6 +21,7 @@ var (
 			s := g.Server()
 			s.Group("/", routers.WebRouter)
 			initConfig()
+			initComponent(ctx)
 			s.Run()
 			return
 		},
@@ -30,4 +32,8 @@ func initConfig() {
 	if os.Getenv("env") == "dev" {
 		genv.Set("GF_GCFG_FILE", "config.dev.yaml")
 	}
+}
+
+func initComponent(ctx context.Context) {
+	elasticsearch.InitES(ctx)
 }
