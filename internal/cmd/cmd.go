@@ -18,9 +18,9 @@ var (
 		Usage: "main",
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
+			initConfig()
 			s := g.Server()
 			s.Group("/", routers.WebRouter)
-			initConfig()
 			initComponent(ctx)
 			s.Run()
 			return
@@ -31,6 +31,8 @@ var (
 func initConfig() {
 	if os.Getenv("env") == "dev" {
 		genv.Set("GF_GCFG_FILE", "config.dev.yaml")
+	} else {
+		genv.Set("GF_GCFG_FILE", "config.yaml")
 	}
 }
 
