@@ -2,12 +2,14 @@ package feed
 
 import (
 	"context"
+	"fmt"
 	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/model/entity"
 	"guoshao-fm-web/internal/service/elasticsearch"
 	"guoshao-fm-web/internal/service/internal/dao"
 
 	"github.com/gogf/gf/v2/os/gtime"
+	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -53,6 +55,26 @@ func SearchFeedItemsByKeyword(ctx context.Context, keyword string, page, size in
 			itemDto.HasThumbnail = false
 		}
 		itemDto.PubDate = gtime.New(itemDto.PubDate).Format("Y-m-d")
+		if !gstr.Contains(itemDto.Duration, ":") {
+			var (
+				totalSecs = gconv.Int(itemDto.Duration)
+				hours     int
+				minutes   int
+				seconds   int
+			)
+			hours = totalSecs / 3600
+			minutes = (totalSecs % 3600) / 60
+			seconds = totalSecs % 60
+			itemDto.Duration = fmt.Sprintf("%02d:%02d:%02d", hours, minutes, seconds);
+		} else {
+			var (
+				splits []string
+			)
+			splits = gstr.Split(itemDto.Duration, ":")
+			if len(splits) < 3 {
+				itemDto.Duration = "00:" + itemDto.Duration
+			}
+		}
 		items = append(items, itemDto)
 	}
 
