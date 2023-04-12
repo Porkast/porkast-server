@@ -2,7 +2,7 @@
 <html lang="en" data-theme="lofi">
 
 <head>
-    <title>锅烧FM</title>
+    <title>{{.searchKeyword}} - 锅烧FM</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="/resource/image/favicon.ico">
@@ -15,6 +15,12 @@
 
     <div class="flex justify-center">
         <div class="w-full ml-6 mr-6">
+            <div class="flex justify-center mb-10 mt-6">
+                <div class="form-control w-full max-w-2xl">
+                    <input id="searchInput" type="text" placeholder="{{.searchKeyword}}" class="input input-bordered" />
+                </div>
+                <button id="homeSearchBtn" class="btn btn-primary">搜索</button>
+            </div>
             <!-- feed channel item list -->
             {{include "module/list_item.html" .}}
             <div class="flex justify-center mt-6">
@@ -45,6 +51,25 @@
                 return
             }
             window.location.href = "/search?q=" + keyword + "&page=" + prePage;
+        });
+
+        let searchBtn = $("#homeSearchBtn");
+        let searchClearBtn = $("#searchClearBtn");
+        let searchInput = $("#searchInput");
+        searchInput.keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                let keyword = $(this).val()
+                window.location.href = "/search?q=" + keyword + "&page=1";
+            }
+            event.stopPropagation();
+        });
+        searchBtn.click(function () {
+            let keyword = searchInput.val()
+            if (keyword === "") {
+                return
+            }
+            window.location.href = "/search?q=" + keyword + "&page=1";
         });
     });
 </script>
