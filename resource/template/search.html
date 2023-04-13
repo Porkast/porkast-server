@@ -12,9 +12,8 @@
 </head>
 
 <body style="margin: 0; display:inherit;">
-
     <div class="flex justify-center">
-        <div class="w-full ml-6 mr-6">
+        <div class="w-full pl-6 pr-6 max-w-2xl">
             <div class="flex justify-center mb-10 mt-6">
                 <div class="form-control w-full max-w-2xl">
                     <input id="searchInput" type="text" placeholder="{{.searchKeyword}}" class="input input-bordered" />
@@ -22,7 +21,9 @@
                 <button id="homeSearchBtn" class="btn btn-primary">搜索</button>
             </div>
             <!-- feed channel item list -->
-            {{include "module/list_item.html" .}}
+            <div class="w-full mt-3 flex justify-center">
+                {{include "module/list_item.html" .}}
+            </div>
             <div class="flex justify-center mt-6">
                 <div class="btn-group">
                     <button class="btn" id="prePageBtn">«</button>

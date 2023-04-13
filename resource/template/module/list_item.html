@@ -1,7 +1,7 @@
 <div class="w-full flex justify-center">
-    <div class="md:w-full lg:w-3/5 xl:w-3/5 max-w-xl">
+    <div class="w-full">
         {{range $index, $item := .feedItems}}
-        <div class="card max-w-xl bg-base-100 shadow-xl mt-6">
+        <div class="card w-full max-w-2xl bg-base-100 shadow-xl mt-6">
             <div class="card-body">
                 <a href="/feed/item/{{$item.Id}}">
                     <h2 class="card-title gap-0">{{$item.Title}}</h2>
@@ -24,7 +24,7 @@
                             <div class="text-sm font-medium text-gray-500 mt-2">{{$item.Author}}</div>
                             <div class="flex items-center mt-2">
                                 <div class="tooltip" data-tip="RSS Feed">
-                                    <a href="{{$item.FeedLink}}" target="_blank">
+                                    <a href="{{$item.FeedLink}}" target="">
                                         <svg t="1681315996544" class="w-4 h-4" viewBox="0 0 1024 1024" version="1.1"
                                             xmlns="http://www.w3.org/2000/svg" p-id="11685" width="48" height="48">
                                             <path

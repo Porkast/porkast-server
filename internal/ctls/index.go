@@ -56,7 +56,7 @@ func (ctl *controller) FeedChannelDetail(req *ghttp.Request) {
 	if err != nil {
 		// TODO redirect to error page
 	}
-	req.Response.WriteTpl("channel.html", g.Map{
+	req.Response.WriteTpl("feed_channel.html", g.Map{
 		"channelInfo":     channelInfo,
 		consts.FEED_ITEMS: channelInfo.Items,
 	})
