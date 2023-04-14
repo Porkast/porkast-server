@@ -33,6 +33,8 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string) (feedInfo 
 		gconv.Struct(item, &feedItemDto)
 		feedItemDto.ChannelImageUrl = feedInfo.ImageUrl
 		feedItemDto.ChannelTitle = feedInfo.Title
+		feedItemDto.Duration = formatDuration(feedItemDto.Duration)
+		feedItemDto.PubDate = formatPubDate(feedItemDto.PubDate)
 		if feedItemDto.ChannelImageUrl != "" {
 			feedItemDto.HasThumbnail = true
 		}

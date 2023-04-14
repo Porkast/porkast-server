@@ -27,7 +27,7 @@ var (
 // Fill with you ideas below.
 func GetFeedItemsByChannelId(ctx context.Context, channelId string) (itemList []entity.FeedItem, err error) {
 
-	err = FeedItem.Ctx(ctx).Where("channel_id=?", channelId).Scan(&itemList)
+	err = FeedItem.Ctx(ctx).Where("channel_id=?", channelId).OrderDesc("pub_date").Scan(&itemList)
 	if err != nil {
 		return
 	}
