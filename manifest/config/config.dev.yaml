@@ -21,6 +21,7 @@ database:
     name: "guoshaofmdb"
     pass: "qazxsw"
     type: "mysql"
+    debug: "true"
     weight: "100"
     createdAt: "true"
     updatedAt: "true"
