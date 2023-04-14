@@ -20,6 +20,7 @@ type FeedItem struct {
 	Season          string
 	EpisodeType     string
 	Description     string
+	TextDescription string
 	ChannelImageUrl string
 	ChannelTitle    string
 	FeedLink        string
@@ -28,18 +29,19 @@ type FeedItem struct {
 }
 
 type FeedChannel struct {
-	Id          string
-	Title       string
-	ChannelDesc string
-	ImageUrl    string
-	Link        string
-	FeedLink    string
-	Launguage   string
-	FeedType    string
-	Categories  string
-	Author      string
-	OwnerName   string
-	OwnerEmail  string
-	Items       []FeedItem
-	Count       int
+	Id              string
+	Title           string
+	ChannelDesc     string
+	TextChannelDesc string
+	ImageUrl        string
+	Link            string
+	FeedLink        string
+	Launguage       string
+	FeedType        string
+	Categories      string
+	Author          string
+	OwnerName       string
+	OwnerEmail      string
+	Items           []FeedItem
+	Count           int
 }
