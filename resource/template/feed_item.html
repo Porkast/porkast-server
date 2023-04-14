@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lofi">
+
+<head>
+    <title>{{.itemInfo.Title}} - 锅烧FM</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/resource/image/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body style="margin: 0; display:inherit;">
+    <div class="flex justify-center">
+        <div class="w-full pl-6 pr-6 max-w-2xl">
+            <div class="w-full mb-10 mt-6">
+                <div class="text-xl font-bold">{{.itemInfo.Title}}</div>
+                <div class="flex mt-3">
+                    <div class="avatar">
+                        <div class="w-24 rounded">
+                            {{if .itemInfo.HasThumbnail}}
+                            <img src="{{.itemInfo.ChannelImageUrl}}" />
+                            {{else}}
+                            <img src="/resource/image/logo192.png" />
+                            {{end}}
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="text-sm font-lg ml-3">频道: {{.itemInfo.ChannelTitle}}</div>
+                        <div class="text-sm font-medium text-gray-500 ml-3">主播: {{.itemInfo.Author}}</div>
+                        <div class="flex justify-start ml-3 mt-3">
+                            <a href="{{.itemInfo.FeedLink}}" target="_blank">
+                                <button class="w-24 h-8 flex items-center bg-gray-200 hover:bg-gray-100 rounded-lg">
+                                    <img class="w-3 h-3 ml-3 mr-3" src="/resource/image/rss.png" alt="">
+                                    <span class="text-sm">RSS</span>
+                                </button>
+                            </a>
+                            <a href="{{.itemInfo.Link}}" target="_blank">
+                                <button
+                                    class="w-24 h-8 ml-3 flex items-center bg-gray-200 hover:bg-gray-100 rounded-lg">
+                                    <img class="w-3 h-3 ml-3 mr-3" src="/resource/image/link.png" alt="">
+                                    <span class="text-sm">源网页</span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 text-gray-500">{{.itemInfo.PubDate}}</div>
+                <div class="mt-3 flex items-center">
+                    <button class="btn btn-circle btn-sm border-none bg-orange-500">
+                        <svg t="1681315725035" class="w-4 h-4" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="9542" width="32" height="32">
+                            <path
+                                d="M130.844444 69.859556v884.963555a56.888889 56.888889 0 0 0 87.608889 47.957333l690.915556-442.538666a56.888889 56.888889 0 0 0 0-95.800889L218.396444 21.959111A56.888889 56.888889 0 0 0 130.844444 69.859556z"
+                                fill="#FFFFFF" p-id="9543"></path>
+                        </svg>
+                        <!-- <svg t="1681315796396" class="w-6 h-6" viewBox="0 0 1024 1024" version="1.1"
+                                                                xmlns="http://www.w3.org/2000/svg" p-id="10573" width="48" height="48">
+                                                                <path
+                                                                    d="M352 768c-17.664 0-32-14.304-32-32L320 288c0-17.664 14.336-32 32-32s32 14.336 32 32l0 448C384 753.696 369.664 768 352 768z"
+                                                                    fill="#ffffff" p-id="10574"></path>
+                                                                <path
+                                                                    d="M672 768c-17.696 0-32-14.304-32-32L640 288c0-17.664 14.304-32 32-32s32 14.336 32 32l0 448C704 753.696 689.696 768 672 768z"
+                                                                    fill="#ffffff" p-id="10575"></path>
+                                                            </svg> -->
+                    </button>
+                    <div class="text-base text-gray-500 ml-3">{{.itemInfo.Duration}}</div>
+                </div>
+            </div>
+            <div class="card w-full max-w-2xl bg-base-100 shadow-xl mt-6">
+                <div class="card-body">
+                    <p>{{.itemInfo.Description}}</p>
+                </div>
+            </div>
+            <div class="card w-full max-w-2xl bg-base-100 shadow-xl mt-6">
+                <div class="card-body">
+                    <h2 class="card-title">节目详情</h2>
+                    <p class="mt-3">{{.channelInfo.ChannelDesc}}</p>
+                    <p class="mt-3 text-xs">{{.channelInfo.Copyright}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -13,13 +13,27 @@ import (
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
-func GetFeedItemByItemId(ctx context.Context, itemId string) (feedItemInfoDto dto.FeedItem, err error) {
+func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedChannelDto dto.FeedChannel, feedItemInfoDto dto.FeedItem, err error) {
 	var (
-		feedItemModel entity.FeedItem
+		feedItemModel    entity.FeedItem
+		feedChannelModel entity.FeedChannel
 	)
 
-	feedItemModel, err = dao.GetFeedItemById(ctx, itemId)
-	gconv.Struct(feedItemModel, &feedItemModel)
+	feedChannelModel, err = dao.GetFeedChannelInfoByChannelId(ctx, channelId)
+	if err != nil {
+		return
+	}
+	gconv.Struct(feedChannelModel, &feedChannelDto)
+	feedItemModel, err = dao.GetFeedItemById(ctx, channelId, itemId)
+	gconv.Struct(feedItemModel, &feedItemInfoDto)
+	feedItemInfoDto.Duration = formatDuration(feedItemInfoDto.Duration)
+	feedItemInfoDto.PubDate = formatPubDate(feedItemInfoDto.PubDate)
+	feedItemInfoDto.ChannelImageUrl = feedChannelModel.ImageUrl
+	feedItemInfoDto.ChannelTitle = feedChannelModel.Title
+	feedItemInfoDto.FeedLink = feedChannelModel.FeedLink
+	if feedItemInfoDto.ChannelImageUrl != "" {
+		feedItemInfoDto.HasThumbnail = true
+	}
 
 	return
 }
@@ -54,29 +68,39 @@ func SearchFeedItemsByKeyword(ctx context.Context, keyword string, page, size in
 		} else {
 			itemDto.HasThumbnail = false
 		}
-		itemDto.PubDate = gtime.New(itemDto.PubDate).Format("Y-m-d")
-		if !gstr.Contains(itemDto.Duration, ":") {
-			var (
-				totalSecs = gconv.Int(itemDto.Duration)
-				hours     int
-				minutes   int
-				seconds   int
-			)
-			hours = totalSecs / 3600
-			minutes = (totalSecs % 3600) / 60
-			seconds = totalSecs % 60
-			itemDto.Duration = fmt.Sprintf("%02d:%02d:%02d", hours, minutes, seconds)
-		} else {
-			var (
-				splits []string
-			)
-			splits = gstr.Split(itemDto.Duration, ":")
-			if len(splits) < 3 {
-				itemDto.Duration = "00:" + itemDto.Duration
-			}
-		}
+		itemDto.PubDate = formatPubDate(itemDto.PubDate)
+		itemDto.Duration = formatDuration(itemDto.Duration)
 		items = append(items, itemDto)
 	}
 
+	return
+}
+
+func formatPubDate(pubDate string) (formatPubDate string) {
+	formatPubDate = gtime.New(pubDate).Format("Y-m-d")
+	return
+}
+
+func formatDuration(duration string) (formatDuration string) {
+	if !gstr.Contains(duration, ":") {
+		var (
+			totalSecs = gconv.Int(duration)
+			hours     int
+			minutes   int
+			seconds   int
+		)
+		hours = totalSecs / 3600
+		minutes = (totalSecs % 3600) / 60
+		seconds = totalSecs % 60
+		formatDuration = fmt.Sprintf("%02d:%02d:%02d", hours, minutes, seconds)
+	} else {
+		var (
+			splits []string
+		)
+		splits = gstr.Split(duration, ":")
+		if len(splits) < 3 {
+			formatDuration = "00:" + duration
+		}
+	}
 	return
 }

@@ -39,9 +39,9 @@ func GetFeedItemsByChannelId(ctx context.Context, channelId string) (itemList []
 	return
 }
 
-func GetFeedItemById(ctx context.Context, id string) (item entity.FeedItem, err error) {
+func GetFeedItemById(ctx context.Context, channelId, itemId string) (item entity.FeedItem, err error) {
 
-	err = FeedItem.Ctx(ctx).Where("id=?", id).Scan(&item)
+	err = FeedItem.Ctx(ctx).Where("id=?", itemId).Where("channel_id=?", channelId).Scan(&item)
 	if err != nil {
 		return
 	}

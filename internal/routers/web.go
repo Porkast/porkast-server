@@ -10,5 +10,5 @@ func WebRouter(group *ghttp.RouterGroup) {
 	group.GET("/", ctls.Ctl.IndexTpl)
 	group.GET("/search", ctls.Ctl.SearchResult)
 	group.GET("/feed/channel/:id", ctls.Ctl.FeedChannelDetail)
-	group.GET("/feed/item/:id", ctls.Ctl.FeedItemDetail)
+	group.GET("/feed/:channelId/item/:itemId", ctls.Ctl.FeedItemDetail)
 }

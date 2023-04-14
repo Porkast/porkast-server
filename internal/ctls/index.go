@@ -64,17 +64,21 @@ func (ctl *controller) FeedChannelDetail(req *ghttp.Request) {
 
 func (ctl *controller) FeedItemDetail(req *ghttp.Request) {
 	var (
-		err      error
-		itemInfo dto.FeedItem
-		itemId   string
+		err         error
+		itemInfo    dto.FeedItem
+		channelInfo dto.FeedChannel
+		itemId      string
+		channelId   string
 	)
 
-	itemId = req.Get("id").String()
-	itemInfo, err = feedService.GetFeedItemByItemId(req.Context(), itemId)
+	itemId = req.Get("itemId").String()
+	channelId = req.Get("channelId").String()
+	channelInfo, itemInfo, err = feedService.GetFeedItemByItemId(req.Context(), channelId, itemId)
 	if err != nil {
 		// TODO redirect to error page
 	}
-	req.Response.WriteTpl("item.html", g.Map{
-		"itemInfo": itemInfo,
+	req.Response.WriteTpl("feed_item.html", g.Map{
+		"itemInfo":    itemInfo,
+		"channelInfo": channelInfo,
 	})
 }

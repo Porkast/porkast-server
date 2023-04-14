@@ -44,4 +44,6 @@ type FeedChannel struct {
 	OwnerEmail      string
 	Items           []FeedItem
 	Count           int
+	Copyright       string
+	Language        string
 }

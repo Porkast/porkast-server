@@ -3,7 +3,7 @@
         {{range $index, $item := .feedItems}}
         <div class="card w-full max-w-2xl bg-base-100 shadow-xl mt-6">
             <div class="card-body">
-                <a href="/feed/item/{{$item.Id}}">
+                <a href="/feed/{{$item.ChannelId}}/item/{{$item.Id}}">
                     <h2 class="card-title gap-0">{{$item.Title}}</h2>
                 </a>
                 <div class="flex mt-3">
