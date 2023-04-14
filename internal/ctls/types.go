@@ -1,9 +1,8 @@
 package ctls
 
 var (
-    Ctl  = controller{}
+	Ctl = controller{}
 )
 
-type controller struct{
-
+type controller struct {
 }

@@ -31,12 +31,12 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string) (feedInfo 
 			feedItemDto dto.FeedItem
 		)
 		gconv.Struct(item, &feedItemDto)
-        feedItemDto.ChannelImageUrl = feedInfo.ImageUrl
-        feedItemDto.ChannelTitle = feedInfo.Title
+		feedItemDto.ChannelImageUrl = feedInfo.ImageUrl
+		feedItemDto.ChannelTitle = feedInfo.Title
 		if feedItemDto.ChannelImageUrl != "" {
 			feedItemDto.HasThumbnail = true
 		}
-        feedInfo.Items = append(feedInfo.Items, feedItemDto)
+		feedInfo.Items = append(feedInfo.Items, feedItemDto)
 	}
 
 	return

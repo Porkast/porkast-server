@@ -34,7 +34,7 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, from,
 	for _, hit := range searchResult.Hits.Hits {
 		var esFeedItem entity.FeedItemESData
 		gjson.Unmarshal(hit.Source, &esFeedItem)
-		
+
 		esFeedItem.Count = totalCount
 		if len(hit.Highlight["title"]) != 0 {
 			esFeedItem.Title = hit.Highlight["title"][0]

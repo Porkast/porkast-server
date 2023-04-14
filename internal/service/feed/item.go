@@ -65,7 +65,7 @@ func SearchFeedItemsByKeyword(ctx context.Context, keyword string, page, size in
 			hours = totalSecs / 3600
 			minutes = (totalSecs % 3600) / 60
 			seconds = totalSecs % 60
-			itemDto.Duration = fmt.Sprintf("%02d:%02d:%02d", hours, minutes, seconds);
+			itemDto.Duration = fmt.Sprintf("%02d:%02d:%02d", hours, minutes, seconds)
 		} else {
 			var (
 				splits []string

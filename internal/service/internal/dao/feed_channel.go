@@ -27,7 +27,7 @@ var (
 
 func GetFeedChannelInfoByChannelId(ctx context.Context, channelId string) (feedInfo entity.FeedChannel, err error) {
 
-    err = FeedChannel.Ctx(ctx).Where("id=?", channelId).Scan(&feedInfo)
+	err = FeedChannel.Ctx(ctx).Where("id=?", channelId).Scan(&feedInfo)
 
 	return
 }
