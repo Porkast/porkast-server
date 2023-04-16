@@ -52,22 +52,27 @@
                 </div>
                 <div class="text-gray-500">{{$item.PubDate}}</div>
                 <div class="card-actions flex items-center">
-                    <button class="btn btn-circle btn-sm border-none bg-orange-500">
-                        <svg t="1681315725035" class="w-4 h-4" viewBox="0 0 1024 1024" version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" p-id="9542" width="32" height="32">
-                            <path
-                                d="M130.844444 69.859556v884.963555a56.888889 56.888889 0 0 0 87.608889 47.957333l690.915556-442.538666a56.888889 56.888889 0 0 0 0-95.800889L218.396444 21.959111A56.888889 56.888889 0 0 0 130.844444 69.859556z"
-                                fill="#FFFFFF" p-id="9543"></path>
-                        </svg>
-                        <!-- <svg t="1681315796396" class="w-6 h-6" viewBox="0 0 1024 1024" version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" p-id="10573" width="48" height="48">
-                            <path
-                                d="M352 768c-17.664 0-32-14.304-32-32L320 288c0-17.664 14.336-32 32-32s32 14.336 32 32l0 448C384 753.696 369.664 768 352 768z"
-                                fill="#ffffff" p-id="10574"></path>
-                            <path
-                                d="M672 768c-17.696 0-32-14.304-32-32L640 288c0-17.664 14.304-32 32-32s32 14.336 32 32l0 448C704 753.696 689.696 768 672 768z"
-                                fill="#ffffff" p-id="10575"></path>
-                        </svg> -->
+                    <button id="list-item-btn-{{$item.Id}}" class="btn btn-circle btn-sm border-none bg-orange-500"
+                        onclick="FeedListItemPlayBtnOnClick(event,'{{$item.Id}}')">
+                        <span id="list-item-play-svg-{{$item.Id}}">
+                            <svg t="1681315725035" class="w-4 h-4" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="9542" width="32" height="32">
+                                <path
+                                    d="M130.844444 69.859556v884.963555a56.888889 56.888889 0 0 0 87.608889 47.957333l690.915556-442.538666a56.888889 56.888889 0 0 0 0-95.800889L218.396444 21.959111A56.888889 56.888889 0 0 0 130.844444 69.859556z"
+                                    fill="#FFFFFF" p-id="9543"></path>
+                            </svg>
+                        </span>
+                        <span id="list-item-pause-svg-{{$item.Id}}" class="hidden">
+                            <svg t="1681315796396" class="w-6 h-6" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="10573" width="48" height="48">
+                                <path
+                                    d="M352 768c-17.664 0-32-14.304-32-32L320 288c0-17.664 14.336-32 32-32s32 14.336 32 32l0 448C384 753.696 369.664 768 352 768z"
+                                    fill="#ffffff" p-id="10574"></path>
+                                <path
+                                    d="M672 768c-17.696 0-32-14.304-32-32L640 288c0-17.664 14.304-32 32-32s32 14.336 32 32l0 448C704 753.696 689.696 768 672 768z"
+                                    fill="#ffffff" p-id="10575"></path>
+                            </svg>
+                        </span>
                     </button>
                     <div class="text-base text-gray-500">{{$item.Duration}}</div>
                 </div>
