@@ -1,4 +1,4 @@
-function FeedListItemPlayBtnOnClick(event, feedItemId, audioSource, audioType) {
+function playOrPause(event, feedItemId, audioSource, audioType) {
     let playSvgElement = $("#list-item-play-svg-" + feedItemId)
     let pauseSvgElement = $("#list-item-pause-svg-" + feedItemId)
     let isPlay = playSvgElement.hasClass('hidden')
