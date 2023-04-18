@@ -36,3 +36,19 @@ function playAudio(isPlay, source, type) {
         playerElement[0].play()
     }
 }
+
+function hideBottomAudio() {
+    let bottomAudioPlayerElem = $('#bottom-audio-player-layout')
+    let bottomAudioSmallPlayerElem = $('#bottom-audio-player-layout-small')
+    bottomAudioPlayerElem.addClass("hidden")
+    bottomAudioPlayerElem.addClass("md:hidden")
+    bottomAudioSmallPlayerElem.removeClass("hidden")
+}
+
+function showBottomAudio() {
+    let bottomAudioPlayerElem = $('#bottom-audio-player-layout')
+    let bottomAudioSmallPlayerElem = $('#bottom-audio-player-layout-small')
+    bottomAudioPlayerElem.removeClass("hidden")
+    bottomAudioPlayerElem.removeClass("md:hidden")
+    bottomAudioSmallPlayerElem.addClass("hidden")
+}
