@@ -16,13 +16,17 @@
                 </div>
                 <div class="md:hidden w-full flex justify-center items-center mt-3 pr-24">
                     <button class="btn btn-circle btn-sm border-none bg-orange-500">
-                        <img src="/resource/image/previous.png" class="w-6 h-6" alt="">
+                        <img src="/resource/image/outline-backward-15-seconds.png" class="w-6 h-6" alt="">
                     </button>
-                    <button class="btn btn-circle btn-sm border-none bg-orange-500 mr-6 ml-6">
-                        <img src="/resource/image/play.png" class="w-6 h-6" alt="">
+                    <button id="small-bottom-audio-player-play-btn"
+                        class="btn btn-circle btn-sm border-none bg-orange-500 mr-6 ml-6" onclick="bottomPlayOrPause()">
+                        <img id="small-bottom-audio-player-play-btn-img" src="/resource/image/play.png" class="w-6 h-6"
+                            alt="">
+                        <img id="small-bottom-audio-player-pause-btn-img" src="/resource/image/pause.png"
+                            class="w-6 h-6 hidden" alt="">
                     </button>
                     <button class="btn btn-circle btn-sm border-none bg-orange-500">
-                        <img src="/resource/image/next.png" class="w-6 h-6" alt="">
+                        <img src="/resource/image/outline-forward-15-seconds.png" class="w-6 h-6" alt="">
                     </button>
                 </div>
             </div>
@@ -36,28 +40,32 @@
             <div class="text-gray-400">
                 00:00
             </div>
-            <progress class="progress w-3/5 lg:w-8/12 ml-2 mr-2" value="40" max="100"></progress>
+            <input type="range w-3/5 lg:w-8/12 ml-2 mr-2" min="0" max="100" value="40" class="range range-primary" />
             <div class="text-gray-400">
                 00:12:00
             </div>
         </div>
         <div class="lg:w-3/5 w-full hidden md:block h-24">
             <div class="flex justify-center items-center mt-3">
-                <button class="btn btn-circle btn-sm border-none bg-orange-500">
-                    <img src="/resource/image/previous.png" class="w-6 h-6" alt="">
+                <button id="bottom-audio-player-backward-btn" class="btn btn-circle btn-sm border-none bg-orange-500">
+                    <img src="/resource/image/outline-backward-15-seconds.png" class="w-6 h-6" alt="">
                 </button>
-                <button class="btn btn-circle btn-sm border-none bg-orange-500 mr-6 ml-6">
-                    <img src="/resource/image/play.png" class="w-6 h-6" alt="">
+                <button id="bottom-audio-player-play-btn"
+                    class="btn btn-circle btn-sm border-none bg-orange-500 mr-6 ml-6" onclick="bottomPlayOrPause()">
+                    <img id="bottom-audio-player-play-btn-img" src="/resource/image/play.png" class="w-6 h-6" alt="">
+                    <img id="bottom-audio-player-pause-btn-img" src="/resource/image/pause.png" class="w-6 h-6 hidden"
+                        alt="">
                 </button>
-                <button class="btn btn-circle btn-sm border-none bg-orange-500">
-                    <img src="/resource/image/next.png" class="w-6 h-6" alt="">
+                <button id="bottom-audio-player-forward-btn" class="btn btn-circle btn-sm border-none bg-orange-500">
+                    <img src="/resource/image/outline-forward-15-seconds.png" class="w-6 h-6" alt="">
                 </button>
             </div>
             <div class="flex justify-center items-center mt-3">
                 <div class="text-gray-400">
                     00:00
                 </div>
-                <progress class="progress w-3/5 lg:w-8/12 ml-2 mr-2" value="40" max="100"></progress>
+                <input type="range w-3/5 lg:w-8/12 ml-2 mr-2" min="0" max="100" value="40"
+                    class="range range-primary" />
                 <div class="text-gray-400">
                     00:12:00
                 </div>
@@ -68,9 +76,6 @@
                 <img src="/resource/image/down.png" alt="">
             </div>
         </div>
-        <audio id="bottom-audio-player">
-            <source id="bottom-audio-player-source" src="" type="">
-        </audio>
     </div>
 </div>
 <div id="bottom-audio-player-layout-small"
@@ -89,3 +94,6 @@
         </div>
     </div>
 </div>
+<audio id="bottom-audio-player" current-item-id="" current-source="">
+    <source id="bottom-audio-player-source" src="" type="">
+</audio>

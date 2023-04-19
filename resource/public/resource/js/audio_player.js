@@ -1,16 +1,34 @@
 function playOrPause(event, feedItemId, audioSource, audioType) {
-    let playSvgElement = $("#list-item-play-svg-" + feedItemId)
-    let pauseSvgElement = $("#list-item-pause-svg-" + feedItemId)
-    let isPlay = playSvgElement.hasClass('hidden')
-    playAudio(isPlay, audioSource, audioType)
-    if (isPlay) {
-        playSvgElement.removeClass("hidden")
-        pauseSvgElement.addClass("hidden")
-    } else {
-        pauseSvgElement.removeClass("hidden")
-        playSvgElement.addClass("hidden")
-    }
+    let isPlay = isSourceAudioAlreadyPlay(audioSource)
+    let bottomAudioTag = $("#bottom-audio-player")
+    bottomAudioTag.attr("current-item-id", feedItemId)
+    bottomAudioTag.attr("current-source", audioSource)
+    bottomAudioTag.attr("current-type", audioType)
+    doPlayOrPauseAudio(isPlay, feedItemId, audioSource, audioType)
     event.stopPropagation();
+}
+
+function bottomPlayOrPause() {
+    let bottomAudioTag = $("#bottom-audio-player")
+    let currentAudioSource = bottomAudioTag.attr("current-source")
+    let currentAudioType = bottomAudioTag.attr("current-type")
+    let currentFeedItemId = bottomAudioTag.attr("current-item-id")
+    let btnPlayBottomPlayImg = $("#bottom-audio-player-play-btn-img")
+    let isPlay = false
+    if (btnPlayBottomPlayImg.hasClass("hidden")) {
+        isPlay = true
+    }
+    doPlayOrPauseAudio(isPlay, currentFeedItemId, currentAudioSource, currentAudioType)
+}
+
+function isSourceAudioAlreadyPlay(audioSource) {
+    let bottomAudioTag = $("#bottom-audio-player")
+    let currentAudioSource = bottomAudioTag.attr("current-source")
+    if (currentAudioSource === audioSource) {
+        return true
+    } else {
+        return false
+    }
 }
 
 function resetAllPlayButton() {
@@ -20,9 +38,10 @@ function resetAllPlayButton() {
     allPauseBtnElements.addClass("hidden")
 }
 
-function playAudio(isPlay, source, type) {
+function doPlayOrPauseAudio(isPlay, feedItemId, source, type) {
     let playerWrapperElement = $("#bottom-audio-player-layout")
     playerWrapperElement.removeClass("hidden")
+
     let playerSourceElement = $("#bottom-audio-player-source")
     let playerElement = $("#bottom-audio-player")
     let currentSource = playerSourceElement.attr("src")
@@ -32,9 +51,33 @@ function playAudio(isPlay, source, type) {
         playerSourceElement.attr("type", type)
         playerElement[0].load()
     }
+
+    let playSvgElement = $("#list-item-play-svg-" + feedItemId)
+    let pauseSvgElement = $("#list-item-pause-svg-" + feedItemId)
+    let btnPlayBottomPlayImg = $("#bottom-audio-player-play-btn-img")
+    let btnPlayBottomPauseImg = $("#bottom-audio-player-pause-btn-img")
+    let btnSmallPlayBottomPlayImg = $("#small-bottom-audio-player-play-btn-img")
+    let btnSmallPlayBottomPauseImg = $("#small-bottom-audio-player-pause-btn-img")
+    console.log("isPlay ? ", isPlay)
     if (isPlay) {
+        btnPlayBottomPlayImg.removeClass("hidden")
+        btnPlayBottomPauseImg.addClass("hidden")
+        btnSmallPlayBottomPlayImg.removeClass("hidden")
+        btnSmallPlayBottomPauseImg.addClass("hidden")
+
+        playSvgElement.removeClass("hidden")
+        pauseSvgElement.addClass("hidden")
+        console.log("do audio pause")
         playerElement[0].pause()
     } else {
+        btnPlayBottomPlayImg.addClass("hidden")
+        btnPlayBottomPauseImg.removeClass("hidden")
+        btnSmallPlayBottomPlayImg.addClass("hidden")
+        btnSmallPlayBottomPauseImg.removeClass("hidden")
+
+        pauseSvgElement.removeClass("hidden")
+        playSvgElement.addClass("hidden")
+        console.log("do audio play")
         playerElement[0].play()
     }
 }
