@@ -1,5 +1,9 @@
 function playOrPause(event, feedItemId, audioSource, audioType) {
-    let isPlay = isSourceAudioAlreadyPlay(audioSource)
+    let isPlay = false
+    let playSvgElement = $("#list-item-play-svg-" + feedItemId)
+    if (playSvgElement.hasClass("hidden")) {
+        isPlay = true
+    }
     let bottomAudioTag = $("#bottom-audio-player")
     bottomAudioTag.attr("current-item-id", feedItemId)
     bottomAudioTag.attr("current-source", audioSource)
@@ -19,16 +23,6 @@ function bottomPlayOrPause() {
         isPlay = true
     }
     doPlayOrPauseAudio(isPlay, currentFeedItemId, currentAudioSource, currentAudioType)
-}
-
-function isSourceAudioAlreadyPlay(audioSource) {
-    let bottomAudioTag = $("#bottom-audio-player")
-    let currentAudioSource = bottomAudioTag.attr("current-source")
-    if (currentAudioSource === audioSource) {
-        return true
-    } else {
-        return false
-    }
 }
 
 function resetAllPlayButton() {
@@ -58,7 +52,6 @@ function doPlayOrPauseAudio(isPlay, feedItemId, source, type) {
     let btnPlayBottomPauseImg = $("#bottom-audio-player-pause-btn-img")
     let btnSmallPlayBottomPlayImg = $("#small-bottom-audio-player-play-btn-img")
     let btnSmallPlayBottomPauseImg = $("#small-bottom-audio-player-pause-btn-img")
-    console.log("isPlay ? ", isPlay)
     if (isPlay) {
         btnPlayBottomPlayImg.removeClass("hidden")
         btnPlayBottomPauseImg.addClass("hidden")
@@ -67,7 +60,6 @@ function doPlayOrPauseAudio(isPlay, feedItemId, source, type) {
 
         playSvgElement.removeClass("hidden")
         pauseSvgElement.addClass("hidden")
-        console.log("do audio pause")
         playerElement[0].pause()
     } else {
         btnPlayBottomPlayImg.addClass("hidden")
@@ -77,7 +69,6 @@ function doPlayOrPauseAudio(isPlay, feedItemId, source, type) {
 
         pauseSvgElement.removeClass("hidden")
         playSvgElement.addClass("hidden")
-        console.log("do audio play")
         playerElement[0].play()
     }
 }
