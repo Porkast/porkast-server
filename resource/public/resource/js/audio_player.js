@@ -21,6 +21,8 @@ function resetAllPlayButton() {
 }
 
 function playAudio(isPlay, source, type) {
+    let playerWrapperElement = $("#bottom-audio-player-layout")
+    playerWrapperElement.removeClass("hidden")
     let playerSourceElement = $("#bottom-audio-player-source")
     let playerElement = $("#bottom-audio-player")
     let currentSource = playerSourceElement.attr("src")
