@@ -12,6 +12,7 @@ $(function() {
         let formatTime = secondsToHourMunitesSeconds(Math.floor(currentTime))
         $("#small-bottom-audio-range-time").text(formatTime)
         $("#bottom-audio-range-time").text(formatTime)
+        $("#bottom-audio-player-layout-small-time").text(formatTime)
 
         let rangeInput = $("#bottom-audio-range-input")
         let smallRangeInput = $("#small-bottom-audio-range-input")
@@ -109,8 +110,10 @@ function setBottomAudioAudioInfo(itemTitle, channelTitle, channelImageUrl) {
     let channelTitleElem = $("#bottom-audio-channel-title")
     let itemTitleElem = $("#bottom-audio-item-title")
     let itemImgElem = $("#bottom-audio-channel-img")
+    let bottomSmallLayoutItemTitleElem = $("#bottom-audio-player-layout-small-item-title")
     channelTitleElem.text(channelTitle)
     itemTitleElem.text(itemTitle)
+    bottomSmallLayoutItemTitleElem.text(itemTitle)
     itemImgElem.attr("src", channelImageUrl)
 }
 

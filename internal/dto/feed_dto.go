@@ -6,6 +6,7 @@ type FeedItem struct {
 	Id              string
 	ChannelId       string
 	Title           string
+	HighlightTitle  string
 	Link            string
 	PubDate         string
 	Author          string

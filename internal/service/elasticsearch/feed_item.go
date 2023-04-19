@@ -37,7 +37,7 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, from,
 
 		esFeedItem.Count = totalCount
 		if len(hit.Highlight["title"]) != 0 {
-			esFeedItem.Title = hit.Highlight["title"][0]
+			esFeedItem.HighlightTitle = hit.Highlight["title"][0]
 		}
 		if len(hit.Highlight["textDescription"]) != 0 {
 			esFeedItem.TextDescription = hit.Highlight["textDescription"][0]

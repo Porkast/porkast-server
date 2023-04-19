@@ -4,7 +4,7 @@
         <div class="card w-full max-w-2xl bg-base-100 shadow-xl mt-6">
             <div class="card-body">
                 <a href="/feed/{{$item.ChannelId}}/item/{{$item.Id}}">
-                    <h2 class="card-title gap-0 overflow-x-scroll inline">{{$item.Title}}</h2>
+                    <h2 class="card-title gap-0 overflow-x-scroll inline">{{$item.HighlightTitle}}</h2>
                 </a>
                 <div class="flex mt-3">
                     <a href="/feed/channel/{{$item.ChannelId}}">
@@ -53,7 +53,7 @@
                 <div class="text-gray-500">{{$item.PubDate}}</div>
                 <div class="card-actions flex items-center">
                     <button id="list-item-btn-{{$item.Id}}" class="btn btn-circle btn-sm border-none"
-                        onclick="playOrPause(event,'{{$item.Id}}', '{{$item.EnclosureUrl}}', '{{$item.EnclosureType}}', 'item title', 'channel title','{{$item.ChannelImageUrl}}')">
+                        onclick="playOrPause(event,'{{$item.Id}}', '{{$item.EnclosureUrl}}', '{{$item.EnclosureType}}', '{{$item.Title}}', '{{$item.ChannelTitle}}','{{$item.ChannelImageUrl}}')">
                         <span id="list-item-play-svg-{{$item.Id}}">
                             <svg t="1681315725035" class="w-4 h-4" viewBox="0 0 1024 1024" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" p-id="9542" width="32" height="32">
