@@ -1,4 +1,35 @@
-function playOrPause(event, feedItemId, audioSource, audioType) {
+$(function() {
+    $("#bottom-audio-player").on("canplay", function() {
+        let duration = $(this)[0].duration
+        let totalTime = secondsToHourMunitesSeconds(Math.floor(duration))
+        $("#small-bottom-audio-range-duration").text(totalTime)
+        $("#bottom-audio-range-duration").text(totalTime)
+    })
+
+    $("#bottom-audio-player").on("timeupdate", function() {
+        let currentTime = $(this)[0].currentTime
+        let duration = $(this)[0].duration
+        let formatTime = secondsToHourMunitesSeconds(Math.floor(currentTime))
+        $("#small-bottom-audio-range-time").text(formatTime)
+        $("#bottom-audio-range-time").text(formatTime)
+
+        let rangeInput = $("#bottom-audio-range-input")
+        let smallRangeInput = $("#small-bottom-audio-range-input")
+        let currentRangeVal = caculateRangeInputVal(Math.floor(currentTime), Math.floor(duration))
+        rangeInput.val(currentRangeVal)
+        smallRangeInput.val(currentRangeVal)
+    })
+
+    $("#botton-audio-range-input").change(function() {
+        console.log("audio-range-input is changed, the value is ", $(this).val())
+    })
+
+    $("#small-botton-audio-range-input").change(function() {
+        console.log("audio-range-input is changed, the value is ", $(this).val())
+    })
+})
+
+function playOrPause(event, feedItemId, audioSource, audioType, itemTitle, channelTitle, channelImageUrl) {
     let isPlay = false
     let playSvgElement = $("#list-item-play-svg-" + feedItemId)
     if (playSvgElement.hasClass("hidden")) {
@@ -9,6 +40,7 @@ function playOrPause(event, feedItemId, audioSource, audioType) {
     bottomAudioTag.attr("current-source", audioSource)
     bottomAudioTag.attr("current-type", audioType)
     doPlayOrPauseAudio(isPlay, feedItemId, audioSource, audioType)
+    setBottomAudioAudioInfo(itemTitle, channelTitle, channelImageUrl)
     event.stopPropagation();
 }
 
@@ -73,6 +105,15 @@ function doPlayOrPauseAudio(isPlay, feedItemId, source, type) {
     }
 }
 
+function setBottomAudioAudioInfo(itemTitle, channelTitle, channelImageUrl) {
+    let channelTitleElem = $("#bottom-audio-channel-title")
+    let itemTitleElem = $("#bottom-audio-item-title")
+    let itemImgElem = $("#bottom-audio-channel-img")
+    channelTitleElem.text(channelTitle)
+    itemTitleElem.text(itemTitle)
+    itemImgElem.attr("src", channelImageUrl)
+}
+
 function hideBottomAudio() {
     let bottomAudioPlayerElem = $('#bottom-audio-player-layout')
     let bottomAudioSmallPlayerElem = $('#bottom-audio-player-layout-small')
@@ -87,4 +128,22 @@ function showBottomAudio() {
     bottomAudioPlayerElem.removeClass("hidden")
     bottomAudioPlayerElem.removeClass("md:hidden")
     bottomAudioSmallPlayerElem.addClass("hidden")
+}
+
+function secondsToHourMunitesSeconds(totalSeconds) {
+    let hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds % 60;
+
+    // If you want strings with leading zeroes:
+    minutes = String(minutes).padStart(2, "0");
+    hours = String(hours).padStart(2, "0");
+    seconds = String(seconds).padStart(2, "0");
+    let formatTime = hours + ":" + minutes + ":" + seconds
+    return formatTime
+}
+
+function caculateRangeInputVal(currentTime, totalTime) {
+    return Math.round((currentTime / totalTime) * 10000)
 }

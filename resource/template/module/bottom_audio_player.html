@@ -3,15 +3,15 @@
         <div class="lg:w-2/5 w-full md:h-24 mt-2 md:pt-0 flex md:justify-start border-r">
             <div class="avatar ml-6">
                 <div class="w-16 h-16 md:w-24 md:h-24 rounded">
-                    <img
+                    <img id="bottom-audio-channel-img"
                         src="https://d3wo5wojvuv7l.cloudfront.net/t_rss_itunes_square_1400/images.spreaker.com/original/2db350c312df2e55b204878e234bb5f2.jpg" />
                 </div>
             </div>
             <div class="ml-6 w-full">
-                <div class="text-sm text-gray-400 hidden md:block">
+                <div id="bottom-audio-channel-title" class="text-sm text-gray-400 hidden md:block">
                     This is Channel Title
                 </div>
-                <div class="text-base">
+                <div id="bottom-audio-item-title" class="text-base">
                     This is Channel Item Title
                 </div>
                 <div class="md:hidden w-full flex justify-center items-center mt-3 pr-24">
@@ -37,12 +37,13 @@
             </div>
         </div>
         <div class="md:hidden flex justify-center items-center mt-3">
-            <div class="text-gray-400">
-                00:00
+            <div id="small-bottom-audio-range-time" class="text-gray-400 ml-2">
+                00:00:00
             </div>
-            <input type="range w-3/5 lg:w-8/12 ml-2 mr-2" min="0" max="100" value="40" class="range range-primary" />
-            <div class="text-gray-400">
-                00:12:00
+            <input id="small-bottom-audio-range-input" type="range" min="0" max="10000" value="0"
+                class="range range-warning ml-2 mr-2" />
+            <div id="small-bottom-audio-range-duration" class="text-gray-400 mr-2">
+                00:00:00
             </div>
         </div>
         <div class="lg:w-3/5 w-full hidden md:block h-24">
@@ -61,14 +62,13 @@
                 </button>
             </div>
             <div class="flex justify-center items-center mt-3">
-                <div class="text-gray-400 ml-2">
-                    00:00
+                <div id="bottom-audio-range-time" class="text-gray-400 ml-2">
+                    00:00:00
                 </div>
-                <!-- <input type="range w-3/5 lg:w-8/12 ml-2 mr-2" min="0" max="100" value="40" -->
-                <!--     class="range range-primary" /> -->
-                <input type="range" min="0" max="100" value="40" class="range range-warning ml-2 mr-2" />
-                <div class="text-gray-400 mr-2">
-                    00:12:00
+                <input id="bottom-audio-range-input" type="range" min="0" max="10000" value="0"
+                    class="range range-warning ml-2 mr-2" />
+                <div id="bottom-audio-range-duration" class="text-gray-400 mr-2">
+                    00:00:00
                 </div>
             </div>
         </div>
