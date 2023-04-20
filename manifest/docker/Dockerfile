@@ -8,7 +8,7 @@ ENV WORKDIR  /app
 
 ADD resource $WORKDIR/
 
-ADD ./bin/linux_amd64/guoshao-fm-web $WORKDIR/main
+ADD ./bin/linux_amd64/guoshao-fm-web $WORKDIR/guoshao-fm-web
 
 RUN chmod +x $WORKDIR/guoshao-fm-web
 
