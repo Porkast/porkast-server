@@ -53,6 +53,21 @@ function playOrPause(event, feedItemId, audioSource, audioType, itemTitle, chann
     event.stopPropagation();
 }
 
+
+function forwardAudioCurrentTime(forwardTime) {
+    let bottomAudioPlayer = $("#bottom-audio-player")
+    let currentTime = bottomAudioPlayer[0].currentTime
+    let targetTime = currentTime + forwardTime
+    setAudioCurrentTime(targetTime)
+}
+
+function backwardAudioCurrentTime(backwardTime) {
+    let bottomAudioPlayer = $("#bottom-audio-player")
+    let currentTime = bottomAudioPlayer[0].currentTime
+    let targetTime = currentTime - backwardTime
+    setAudioCurrentTime(targetTime)
+}
+
 function bottomPlayOrPause() {
     let bottomAudioTag = $("#bottom-audio-player")
     let currentAudioSource = bottomAudioTag.attr("current-source")
