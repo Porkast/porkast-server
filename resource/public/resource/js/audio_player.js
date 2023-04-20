@@ -38,7 +38,7 @@ $(function() {
     })
 })
 
-function playOrPause(event, feedItemId, audioSource, audioType, itemTitle, channelTitle, channelImageUrl) {
+function playOrPause(event, feedItemId, audioSource, audioType, itemTitle, channelTitle, channelId, channelImageUrl) {
     let isPlay = false
     let playSvgElement = $("#list-item-play-svg-" + feedItemId)
     if (playSvgElement.hasClass("hidden")) {
@@ -49,7 +49,7 @@ function playOrPause(event, feedItemId, audioSource, audioType, itemTitle, chann
     bottomAudioTag.attr("current-source", audioSource)
     bottomAudioTag.attr("current-type", audioType)
     doPlayOrPauseAudio(isPlay, feedItemId, audioSource, audioType)
-    setBottomAudioAudioInfo(itemTitle, channelTitle, channelImageUrl)
+    setBottomAudioAudioInfo(itemTitle, feedItemId, channelId, channelTitle, channelImageUrl)
     event.stopPropagation();
 }
 
@@ -134,15 +134,20 @@ function setAudioCurrentTime(currentTime) {
     playerElement[0].currentTime = currentTime
 }
 
-function setBottomAudioAudioInfo(itemTitle, channelTitle, channelImageUrl) {
+function setBottomAudioAudioInfo(itemTitle, itemId, channelId, channelTitle, channelImageUrl) {
     let channelTitleElem = $("#bottom-audio-channel-title")
     let itemTitleElem = $("#bottom-audio-item-title")
     let itemImgElem = $("#bottom-audio-channel-img")
     let bottomSmallLayoutItemTitleElem = $("#bottom-audio-player-layout-small-item-title")
+    let bottomInfoAvatarTag = $("#bottom-audio-player-avatar-img")
+    let bottomInfoItemTitleTag = $("#bottom-audio-player-item-title-tag")
+    let itemUrl = "/feed/" + channelId + "/item/" + itemId
     channelTitleElem.text(channelTitle)
     itemTitleElem.text(itemTitle)
     bottomSmallLayoutItemTitleElem.text(itemTitle)
     itemImgElem.attr("src", channelImageUrl)
+    bottomInfoAvatarTag.attr("href", itemUrl)
+    bottomInfoItemTitleTag.attr("href", itemUrl)
 }
 
 function hideBottomAudio() {
