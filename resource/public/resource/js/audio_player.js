@@ -21,12 +21,20 @@ $(function() {
         smallRangeInput.val(currentRangeVal)
     })
 
-    $("#botton-audio-range-input").change(function() {
-        console.log("audio-range-input is changed, the value is ", $(this).val())
+    $("#bottom-audio-range-input").change(function() {
+        let onChangedValue = $(this).val()
+        let bottomAudioPlayer = $("#bottom-audio-player")
+        let duration = bottomAudioPlayer[0].duration
+        let targetTime = Math.round((onChangedValue / 10000) * duration)
+        setAudioCurrentTime(targetTime)
     })
 
-    $("#small-botton-audio-range-input").change(function() {
-        console.log("audio-range-input is changed, the value is ", $(this).val())
+    $("#small-bottom-audio-range-input").change(function() {
+        let onChangedValue = $(this).val()
+        let bottomAudioPlayer = $("#bottom-audio-player")
+        let duration = bottomAudioPlayer[0].duration
+        let targetTime = Math.round((onChangedValue / 10000) * duration)
+        setAudioCurrentTime(targetTime)
     })
 })
 
@@ -104,6 +112,11 @@ function doPlayOrPauseAudio(isPlay, feedItemId, source, type) {
         playSvgElement.addClass("hidden")
         playerElement[0].play()
     }
+}
+
+function setAudioCurrentTime(currentTime) {
+    let playerElement = $("#bottom-audio-player")
+    playerElement[0].currentTime = currentTime
 }
 
 function setBottomAudioAudioInfo(itemTitle, channelTitle, channelImageUrl) {
