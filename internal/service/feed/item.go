@@ -28,7 +28,7 @@ func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedCha
 	feedItemInfoDto.ChannelImageUrl = feedChannelModel.ImageUrl
 	feedItemInfoDto.ChannelTitle = feedChannelModel.Title
 	feedItemInfoDto.FeedLink = feedChannelModel.FeedLink
-    feedItemInfoDto.Link = formatSourceLink(feedItemInfoDto.Link)
+	feedItemInfoDto.Link = formatSourceLink(feedItemInfoDto.Link)
 	if feedItemInfoDto.ChannelImageUrl != "" {
 		feedItemInfoDto.HasThumbnail = true
 	}
