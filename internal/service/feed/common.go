@@ -36,3 +36,13 @@ func formatDuration(duration string) (formatDuration string) {
 	}
 	return
 }
+
+func formatSourceLink(link string) (formatLink string) {
+	if gstr.Contains(link, "ximalaya.com//") {
+		formatLink = gstr.Replace(link, "ximalaya.com//", "ximalaya.com/")
+	} else {
+		formatLink = link
+	}
+
+	return
+}
