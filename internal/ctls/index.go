@@ -30,7 +30,7 @@ func (ctl *controller) SearchResult(req *ghttp.Request) {
 	page = req.GetQuery("page").Int()
 	items, err = feedService.SearchFeedItemsByKeyword(req.Context(), searchKeyword, page, 10)
 	if err != nil {
-		//TODO Add error page
+        //TODO: Add error page
 	}
 	if len(items) > 0 {
 		count = items[0].Count
@@ -54,7 +54,7 @@ func (ctl *controller) FeedChannelDetail(req *ghttp.Request) {
 	channelId = req.Get("id").String()
 	channelInfo, err = feedService.GetChannelInfoByChannelId(req.Context(), channelId)
 	if err != nil {
-		// TODO redirect to error page
+        // TODO: redirect to error page
 	}
 	req.Response.WriteTpl("feed_channel.html", g.Map{
 		"channelInfo":     channelInfo,
@@ -75,7 +75,7 @@ func (ctl *controller) FeedItemDetail(req *ghttp.Request) {
 	channelId = req.Get("channelId").String()
 	channelInfo, itemInfo, err = feedService.GetFeedItemByItemId(req.Context(), channelId, itemId)
 	if err != nil {
-		// TODO redirect to error page
+        // TODO: redirect to error page
 	}
 	req.Response.WriteTpl("feed_item.html", g.Map{
 		"itemInfo":    itemInfo,
