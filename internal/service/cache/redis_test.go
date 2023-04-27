@@ -17,9 +17,9 @@ func Test_initRedisClient(t *testing.T) {
 		if redisClient == nil {
 			t.Fatal("init redis client failed")
 		}
-		_, err = redisClient.Do(ctx, "SET", "Test")
+		_, err = redisClient.Do(ctx, "SET", "Test", "test_value")
 		if err != nil {
-			t.Log("init redis client failed")
+            t.Fatal("init redis client failed : \n", err)
 		}
 	})
 }
