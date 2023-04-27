@@ -47,9 +47,11 @@
                         </div>
                     </a>
                 </div>
-                <div class="max-h-24 flex overflow-clip">
-                    <p>{{$item.TextDescription}}</p>
-                </div>
+                <a href="/feed/{{$item.ChannelId}}/item/{{$item.Id}}">
+                    <div class="max-h-24 flex overflow-clip">
+                        <p>{{$item.TextDescription}}</p>
+                    </div>
+                </a>
                 <div class="text-gray-500">{{$item.PubDate}}</div>
                 <div class="card-actions flex items-center">
                     <button id="list-item-btn-{{$item.Id}}" class="btn btn-circle btn-sm border-none"
