@@ -67,6 +67,9 @@ func SearchFeedItemsByKeyword(ctx context.Context, keyword string, page, size in
 		} else {
 			itemDto.HasThumbnail = false
 		}
+		if itemDto.HighlightTitle == "" {
+			itemDto.HighlightTitle = itemDto.Title
+		}
 		itemDto.PubDate = formatPubDate(itemDto.PubDate)
 		itemDto.Duration = formatDuration(itemDto.Duration)
 		items = append(items, itemDto)
