@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/resource/js/search.js"></script>
 </head>
 
 <body style="margin: 0; display:inherit;">
@@ -55,21 +56,6 @@
 
 <script>
     $(function () {
-        let searchBtn = $("#homeSearchBtn");
-        let searchClearBtn = $("#searchClearBtn");
-        let searchInput = $("#searchInput");
-        searchInput.keypress(function (event) {
-            var keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode == '13') {
-                let keyword = $(this).val()
-                window.location.href = "/search?q=" + keyword + "&page=1";
-            }
-            event.stopPropagation();
-        });
-        searchBtn.click(function () {
-            let keyword = searchInput.val()
-            window.location.href = "/search?q=" + keyword + "&page=1";
-        });
     });
 </script>
 
