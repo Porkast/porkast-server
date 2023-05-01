@@ -21,6 +21,7 @@ var (
 			initConfig()
 			s := g.Server()
 			s.Group("/", routers.WebRouter)
+			s.Group("/api", routers.ApiRouter)
 			initComponent(ctx)
 			s.Run()
 			return
@@ -31,6 +32,8 @@ var (
 func initConfig() {
 	if os.Getenv("env") == "dev" {
 		genv.Set("GF_GCFG_FILE", "config.dev.yaml")
+    } else if os.Getenv("env") == "prod" {
+		genv.Set("GF_GCFG_FILE", "config.prod.yaml")
 	} else {
 		genv.Set("GF_GCFG_FILE", "config.yaml")
 	}
