@@ -13,10 +13,10 @@
     <script src="/resource/js/search.js"></script>
 </head>
 
-<body style="margin: 0; display:inherit;">
+<body style="margin: 0; display:inherit;" class="bg-gray-100">
     <!-- nav header -->
     {{include "module/header.html" .}}
-    <div class="flex justify-center">
+    <div class="flex justify-center min-h-screen">
         <div class="w-full pl-6 pr-6 max-w-2xl">
             <!-- feed channel item list -->
             <div class="w-full mt-3 flex justify-center">
@@ -34,6 +34,14 @@
     <div class="mb-32">
         {{include "module/bottom_audio_player.html" .}}
     </div>
+
+    <footer class="footer items-center p-4 bg-neutral text-neutral-content">
+        <div class="items-center grid-flow-col">
+            <p>Copyright © 2023 - All right reserved</p>
+        </div>
+        <div class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+        </div>
+    </footer>
 </body>
 <script>
     $(function () {
