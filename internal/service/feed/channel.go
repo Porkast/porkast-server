@@ -38,6 +38,9 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string) (feedInfo 
 		if feedItemDto.ChannelImageUrl != "" {
 			feedItemDto.HasThumbnail = true
 		}
+        if feedItemDto.HighlightTitle == "" {
+            feedItemDto.HighlightTitle = feedItemDto.Title
+        }
 		feedInfo.Items = append(feedInfo.Items, feedItemDto)
 	}
 
