@@ -41,6 +41,9 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string) (feedInfo 
         if feedItemDto.HighlightTitle == "" {
             feedItemDto.HighlightTitle = feedItemDto.Title
         }
+        if feedItemDto.TextDescription == "" {
+            feedItemDto.TextDescription = feedItemDto.Description
+        }
 		feedInfo.Items = append(feedInfo.Items, feedItemDto)
 	}
 
