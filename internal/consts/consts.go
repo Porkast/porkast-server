@@ -1,8 +1,8 @@
 package consts
 
 // template consts
-const APP_NAME = "name"
-const APP_NAME_KEY = "锅烧FM"
+const APP_NAME_KEY = "appname"
+const APP_NAME = "锅烧FM"
 
 const TOTAL_PAGE = "totalPage"
 const FEED_ITEMS = "feedItems"
