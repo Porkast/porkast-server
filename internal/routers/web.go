@@ -20,6 +20,7 @@ func WebRouter(group *ghttp.RouterGroup) {
 func ApiRouter(group *ghttp.RouterGroup)  {
     unAuthGroup := group.Group("/")
     unAuthGroup.POST("/login", ctls.Ctl.DoLogin)
+    unAuthGroup.POST("/register", ctls.Ctl.DoRegister)
 
     authGroup := group.Group("/")
     authGroup.Middleware(middleware.AuthToken)
