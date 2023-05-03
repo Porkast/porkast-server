@@ -9,9 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/resource/js/login.js"></script>
 </head>
 
-<body style="margin: 0; display:inherit;" class="bg-gray-300">
+<body style="margin: 0; display:inherit;" class="bg-gray-100">
     <!-- nav header -->
     <div class="w-full h-16 flex justify-center items-center shadow-lg drop-shadow-lg bg-white">
         <div class="w-1/6 flex justify-start">
@@ -27,6 +28,34 @@
 
         </div>
     </div>
+    <div class="flex justify-center mt-4 min-h-screen">
+        <div class="w-full pl-6 pr-6 max-w-2xl bg-white min-h-screen">
+            <div class="mt-4">
+                <div class="flex justify-center">
+                    <div class="form-control w-full max-w-xs">
+                        <label class="label">
+                            <span class="label-text">{{.login_email_input_hint}}</span>
+                        </label>
+                        <input id="email_phone_input" type="text" placeholder="{{.login_email_input_placeholder_hint}}"
+                            class="input input-bordered w-full max-w-xs" />
+                    </div>
+                </div>
+                <div class="flex justify-center mt-4">
+                    <div class="form-control w-full max-w-xs">
+                        <label class="label">
+                            <span class="label-text">{{.login_email_password_hint}}</span>
+                        </label>
+                        <input id="password_input" type="text" placeholder="{{.login_email_password_placeholder_hint}}"
+                            class="input input-bordered w-full max-w-xs" />
+                    </div>
+                </div>
+                <div class="flex justify-center mt-6">
+                    <button id="login_btn" class="btn btn-wide w-full max-w-xs">{{.login_btn_text}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{include "module/footer.html" .}}
 </body>
 
 </html>
