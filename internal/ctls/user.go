@@ -53,11 +53,10 @@ func (ctl *controller) DoRegister(req *ghttp.Request) {
 	userInfoDto = dto.UserInfo{
 		Nickname: reqData.Nickname,
 		Password: reqData.Password,
-		Email: reqData.Email,
-		Phone: reqData.Phone,
+		Email:    reqData.Email,
+		Phone:    reqData.Phone,
 	}
 
 	userInfoDto, err = userService.Register(req.GetCtx(), userInfoDto)
-
 	middleware.JsonExit(req, 0, "register success", userInfoDto)
 }
