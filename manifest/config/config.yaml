@@ -1,6 +1,8 @@
 server:
   address: ":8000"
   serverRoot: "resource/public"
+  accessLogEnabled: true
+  errorLogEnabled:  true
 
 logger:
   path: "./logs/"
