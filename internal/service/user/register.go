@@ -35,6 +35,7 @@ func Register(ctx context.Context, userInfo dto.UserInfo) (userInfoResp dto.User
 		return dto.UserInfo{}, err
 	}
 	userInfoResp = userInfo
+    userInfoResp.Password = ""
 	tokenModel = middleware.TokenModel{
 		UserId:         userInfoResp.Id,
 		NickName:       userInfoResp.Nickname,

@@ -21,6 +21,7 @@ func Login(ctx context.Context, email, phone, password string) (userInfoDto dto.
 	}
 
 	gconv.Struct(userInfoEntity, userInfoDto)
+    userInfoDto.Password = ""
 
 	return
 }
