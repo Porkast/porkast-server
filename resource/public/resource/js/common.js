@@ -1,6 +1,6 @@
 
 function setUserInfo(userInfo) {
-    userInfo['auth'] = userInfo['token'] + "@@" + userInfo['uid']
+    userInfo['auth'] = userInfo['token'] + "@@" + userInfo['id']
     localStorage.setItem("userInfo", JSON.stringify(userInfo))
 }
 
@@ -9,7 +9,7 @@ function getUserInfo() {
     if (userInfo === undefined || userInfo === null) {
         return null
     }
-    let uid = userInfo['uid']
+    let uid = userInfo['id']
     if (uid !== null && uid !== undefined && uid !== '') {
         return userInfo
     }
