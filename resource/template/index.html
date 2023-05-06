@@ -10,34 +10,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="/resource/js/search.js"></script>
+    <script src="/resource/js/common.js"></script>
 </head>
 
 <body style="margin: 0; display:inherit;">
     <!-- nav header -->
-    <div class="navbar bg-base-100">
-        <div class="navbar-start">
-            <div class="flex-1 ml-6">
-                <!-- <a class="avatar" href="/"> -->
-                <!--     <div class="w-8 rounded-full"> -->
-                <!--         <img src="/resource/image/logo192.png" /> -->
-                <!--     </div> -->
-                <!-- </a> -->
-            </div>
+    <div class="w-full h-16 flex justify-center items-center">
+        <div class="w-1/6 flex justify-start">
+            <!-- <a class="normal-case font-bold md:text-2xl sm:text-base ml-4" href="/"> -->
+            <!--     锅烧FM -->
+            <!-- </a> -->
         </div>
-        <div class="navbar-center">
-            <div class="w-70 sm:w-96 md:w-96 lg:w-96 xl:w-96 flex justify-center">
-                <!-- <div class="form-control w-full max-w-2xl"> -->
-                <!--     <input id="searchInput" type="text" placeholder="搜索更多Feed" class="input input-bordered" /> -->
-                <!-- </div> -->
-            </div>
+
+        <div class="w-4/6 flex justify-center ">
         </div>
-        <div class="navbar-end">
+
+        <div class="w-1/6 flex justify-end">
+            <div id="header-avatar" class="avatar mr-4">
+                <div class="w-6 rounded-full">
+                    <img src="/resource/image/rss.png" />
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- content -->
     <div class="flex justify-center min-h-screen">
-        <div class="w-full ml-6 mr-6">
+        <div class="w-full ml-6 mr-6 mt-6">
             <div class="flex justify-center text-3xl">
                 锅烧 FM
             </div>
@@ -58,7 +57,12 @@
 
 <script>
     $(function () {
-    });
+        let userInfo = getUserInfo()
+        if (userInfo === undefined || userInfo === null) {
+            let headerAvatar = $("#header-avatar")
+            headerAvatar.hide()
+        }
+    })
 </script>
 
 </html>
