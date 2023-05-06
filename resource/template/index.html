@@ -26,13 +26,17 @@
         </div>
 
         <div class="w-1/6 flex justify-end">
-            <a href="">
-                <div id="header-avatar" class="avatar md:mr-8 mr-4">
-                    <div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="avatar md:mr-8 mr-4 hover:cursor-pointer">
+                    <div id="header-avatar" class="w-6 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                         <img src="/resource/image/user-fill.png" />
                     </div>
-                </div>
-            </a>
+                </label>
+                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a>Item 1</a></li>
+                    <li><a>Item 2</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 
