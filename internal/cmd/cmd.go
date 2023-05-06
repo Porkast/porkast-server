@@ -21,7 +21,7 @@ var (
 			initConfig()
 			s := g.Server()
 			s.Group("/", routers.WebRouter)
-			s.Group("/api", routers.ApiRouter)
+			s.Group("/v1/api", routers.V1ApiRouter)
 			initComponent(ctx)
 			s.Run()
 			return
