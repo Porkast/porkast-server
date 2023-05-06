@@ -26,11 +26,13 @@
         </div>
 
         <div class="w-1/6 flex justify-end">
-            <div id="header-avatar" class="avatar mr-4">
-                <div class="w-6 rounded-full">
-                    <img src="/resource/image/rss.png" />
+            <a href="">
+                <div id="header-avatar" class="avatar mr-4">
+                    <div class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <img src="/resource/image/user-fill.png" />
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -60,7 +62,7 @@
         let userInfo = getUserInfo()
         if (userInfo === undefined || userInfo === null) {
             let headerAvatar = $("#header-avatar")
-            headerAvatar.hide()
+            // headerAvatar.hide()
         }
     })
 </script>
