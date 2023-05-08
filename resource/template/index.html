@@ -89,11 +89,15 @@
 <script>
     $(function () {
         let userInfo = getUserInfo()
+        let loginDiv = $("#login")
+        let loginedDiv = $("#logined")
+        console.log(userInfo)
         if (userInfo === undefined || userInfo === null) {
-            let loginDiv = $("#login")
-            let loginedDiv = $("#logined")
             loginDiv.show()
             loginedDiv.hide()
+        } else {
+            loginDiv.hide()
+            loginedDiv.show()
         }
     })
 

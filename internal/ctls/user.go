@@ -8,6 +8,7 @@ import (
 	userService "guoshao-fm-web/internal/service/user"
 
 	"github.com/gogf/gf/v2/crypto/gmd5"
+	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 )
@@ -40,8 +41,10 @@ func (ctl *controller) DoLogin(req *ghttp.Request) {
 	reqData.Password = cryptoPwd
 	respUserInfo, err = userService.Login(req.GetCtx(), reqData.Email, reqData.Phone, reqData.Password)
 	if err != nil {
+		g.Log().Line().Error(req.GetCtx(), "do login failed :\n", err)
 		middleware.JsonExit(req, 1, err.Error(), respUserInfo)
 	}
+	g.Log().Line().Debug(req.GetCtx(), "do login success :\n", gjson.MustEncodeString(respUserInfo))
 	middleware.JsonExit(req, 0, "register success", respUserInfo)
 }
 

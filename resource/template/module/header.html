@@ -19,15 +19,39 @@
 
         <div class="md:w-1/6 w-1/2 flex justify-end">
             <div class="dropdown dropdown-end">
-                <label tabindex="0" class="avatar md:mr-8 mr-4 hover:cursor-pointer">
+                <label tabindex="0" class="avatar md:pr-8 pr-6 hover:cursor-pointer">
                     <div id="header-avatar"
-                        class="w-6 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        class="md:w-6 w-4 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                         <img src="/resource/image/user-fill.png" />
                     </div>
                 </label>
-                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><a>Item 1</a></li>
-                    <li><a>Item 2</a></li>
+                <ul id="login" tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <li class="" onclick="logout()">
+                        <a class="w-full flex justify-start" href="/login">
+                            <img class="w-6" src="/resource/image/login.png" alt="">登录
+                        </a>
+                    </li>
+                </ul>
+                <ul id="logined" tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <div class="w-full p-3">
+                        <div>陈大力</div>
+                        <div class="mt-4 text-gray-500">@18801731480</div>
+                    </div>
+                    <li class="h-12 border-t border-gray-200">
+                        <a class="w-full flex justify-start">
+                            <img class="w-6" src="/resource/image/account.png" alt="">我的
+                        </a>
+                    </li>
+                    <!-- <li class="border-t border-gray-200"> -->
+                    <!--     <a class="w-full flex justify-start"> -->
+                    <!--         <img class="w-6" src="/resource/image/setting.png" alt="">设置 -->
+                    <!--     </a> -->
+                    <!-- </li> -->
+                    <li class="border-t border-gray-200" onclick="logout()">
+                        <a class="w-full flex justify-start">
+                            <img class="w-6" src="/resource/image/log-out.png" alt="">登出
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

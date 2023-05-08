@@ -1,7 +1,17 @@
 $(function() {
     let userInfo = getUserInfo()
+    let loginDiv = $("#login")
+    let loginedDiv = $("#logined")
     if (userInfo === undefined || userInfo === null) {
-        let headerAvatar = $("#header-avatar")
-        headerAvatar.hide()
+        loginDiv.show()
+        loginedDiv.hide()
+    } else {
+        loginDiv.hide()
+        loginedDiv.show()
     }
 })
+
+function logout() {
+    cleanUserInfo()
+    window.location.href = '/'
+}

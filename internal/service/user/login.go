@@ -6,6 +6,8 @@ import (
 	"guoshao-fm-web/internal/model/entity"
 	"guoshao-fm-web/internal/service/internal/dao"
 
+	"github.com/gogf/gf/v2/encoding/gjson"
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -20,7 +22,8 @@ func Login(ctx context.Context, email, phone, password string) (userInfoDto dto.
 		userInfoEntity, err = dao.GetUserInfoByEmailAndPassword(ctx, email, password)
 	}
 
-	gconv.Struct(userInfoEntity, userInfoDto)
+    g.Log().Line().Debug(ctx, "query user info : \n", gjson.MustEncodeString(userInfoEntity))
+	gconv.Struct(userInfoEntity, &userInfoDto)
     userInfoDto.Password = ""
 
 	return
