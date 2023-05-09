@@ -7,6 +7,9 @@ import (
 	"guoshao-fm-web/internal/service/elasticsearch"
 	"guoshao-fm-web/internal/service/internal/dao"
 
+	"github.com/anaskhan96/soup"
+	"github.com/gogf/gf/v2/encoding/gjson"
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -67,10 +70,17 @@ func SearchFeedItemsByKeyword(ctx context.Context, keyword string, page, size in
 		if itemDto.HighlightTitle == "" {
 			itemDto.HighlightTitle = itemDto.Title
 		}
+		if itemDto.TextDescription == "" && itemDto.Description != "" {
+			rootDocs := soup.HTMLParse(itemDto.Description)
+			itemDto.TextDescription = rootDocs.FullText()
+
+		}
 		itemDto.PubDate = formatPubDate(itemDto.PubDate)
 		itemDto.Duration = formatDuration(itemDto.Duration)
 		items = append(items, itemDto)
 	}
+
+	g.Log().Line().Debug(ctx, "search result :\n", gjson.MustEncodeString(feedItemESDatalList))
 
 	return
 }

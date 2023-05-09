@@ -6,6 +6,7 @@ import (
 	"guoshao-fm-web/internal/model/entity"
 	"guoshao-fm-web/internal/service/internal/dao"
 
+	"github.com/anaskhan96/soup"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -41,8 +42,9 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string) (feedInfo 
         if feedItemDto.HighlightTitle == "" {
             feedItemDto.HighlightTitle = feedItemDto.Title
         }
-        if feedItemDto.TextDescription == "" {
-            feedItemDto.TextDescription = feedItemDto.Description
+        if feedItemDto.TextDescription == "" && feedItemDto.Description != "" {
+			rootDocs := soup.HTMLParse(feedItemDto.Description)
+			feedItemDto.TextDescription = rootDocs.FullText()
         }
 		feedInfo.Items = append(feedInfo.Items, feedItemDto)
 	}
