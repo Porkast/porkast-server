@@ -2,7 +2,7 @@
 <html lang="en" data-theme="lofi">
 
 <head>
-    <title>{{.searchKeyword}} - 锅烧FM</title>
+    <title>{{.searchKeyword}} - {{.appname}}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="/resource/image/favicon.ico">
@@ -20,6 +20,11 @@
     {{include "module/header.html" .}}
     <div class="flex justify-center min-h-screen">
         <div class="w-full pl-6 pr-6 max-w-2xl">
+            <div class="flex justify-start mt-6">
+                <div class="text-gray-500 text-sm">{{.searchResultCountText}}</div>
+                <span>&nbsp;</span>
+                <div class="text-gray-500 text-sm">{{.searchTookTime}}</div>
+            </div>
             <!-- feed channel item list -->
             <div class="w-full mt-3 flex justify-center">
                 {{include "module/list_item.html" .}}
