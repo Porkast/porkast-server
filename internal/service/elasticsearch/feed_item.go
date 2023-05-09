@@ -11,12 +11,13 @@ import (
 
 func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, from, size int) (esFeedItemList []entity.FeedItemESData, err error) {
 	multMatch := elastic.NewMultiMatchQuery(keyword, "title", "author", "textDescription")
-	multMatch.FieldWithBoost("title", 3)
+	multMatch.FieldWithBoost("title", 4)
+	multMatch.FieldWithBoost("textDescription", 3)
 	multMatch.FieldWithBoost("author", 2)
-	multMatch.FieldWithBoost("textDescription", 1)
+	multMatch.FieldWithBoost("channelTitle", 2)
 	highlight := elastic.NewHighlight()
 	highlight = highlight.PreTags("<span style='color: red;'>").PostTags("</span>")
-	highlight = highlight.Fields(elastic.NewHighlighterField("title"), elastic.NewHighlighterField("textDescription"), elastic.NewHighlighterField("author"))
+	highlight = highlight.Fields(elastic.NewHighlighterField("title"), elastic.NewHighlighterField("channelTitle"), elastic.NewHighlighterField("textDescription"), elastic.NewHighlighterField("author"))
 	searchResult, err := c.Client.Search().
 		Index("feed_item").
 		Query(multMatch).
@@ -38,6 +39,9 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, from,
 		esFeedItem.Count = totalCount
 		if len(hit.Highlight["title"]) != 0 {
 			esFeedItem.HighlightTitle = hit.Highlight["title"][0]
+		}
+		if len(hit.Highlight["channelTitle"]) != 0 {
+			esFeedItem.ChannelTitle = hit.Highlight["channelTitle"][0]
 		}
 		if len(hit.Highlight["textDescription"]) != 0 {
 			esFeedItem.TextDescription = hit.Highlight["textDescription"][0]

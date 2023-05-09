@@ -58,9 +58,6 @@ func SearchFeedItemsByKeyword(ctx context.Context, keyword string, page, size in
 	for _, feedItemES := range feedItemESDatalList {
 		var itemDto dto.FeedItem
 		gconv.Struct(feedItemES, &itemDto)
-		itemDto.ChannelImageUrl = feedItemES.ChannelImageUrl
-		itemDto.ChannelTitle = feedItemES.ChannelTitle
-		itemDto.FeedLink = feedItemES.FeedLink
 		itemDto.Link = formatSourceLink(itemDto.Link)
 		if itemDto.ChannelImageUrl != "" {
 			itemDto.HasThumbnail = true
