@@ -26,4 +26,5 @@ type FeedItemESData struct {
 	ChannelTitle    string      `json:"channelTitle"    `          //
 	FeedLink        string      `json:"feedLink"        `          //
 	Count           int         `json:"count"           `          //
+	TookTime        float64     `json:"tookTime"           `       //
 }

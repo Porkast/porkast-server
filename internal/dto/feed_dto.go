@@ -26,6 +26,7 @@ type FeedItem struct {
 	ChannelTitle    string
 	FeedLink        string
 	Count           int
+	TookTime        float64
 	HasThumbnail    bool
 }
 
