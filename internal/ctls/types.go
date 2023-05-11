@@ -20,3 +20,9 @@ type RegisterReqData struct {
 	Email          string `json:"email" v:"required-without:Phone"`
 	Phone          string `json:"phone" v:"required-without:Email"`
 }
+
+type AddListenLaterReqData struct {
+	UserId    string `json:"userId" v:"required"`
+	ChannelId string `json:"channelId" v:"required"`
+	ItemId    string `json:"itemId" v:"required"`
+}
