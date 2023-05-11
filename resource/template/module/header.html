@@ -11,10 +11,10 @@
                 {{if eq "" .searchKeyword}}
                 <input id="searchInput" type="text" placeholder="输入关键词搜索" class="input input-bordered" />
                 {{else}}
-                <input id="searchInput" type="text" placeholder="{{.searchKeyword}}" class="input input-bordered" />
+                <input id="searchInput" type="text" placeholder="{{.searchKeyword}}" value="{{.searchKeyword}}" class="input input-bordered" />
                 {{end}}
             </div>
-            <button id="homeSearchBtn" class="btn btn-primary">搜索</button>
+            <button id="homeSearchBtn" class="btn btn-primary ml">搜索</button>
         </div>
 
         <div class="md:w-1/6 w-1/2 flex justify-end">
@@ -61,10 +61,9 @@
             {{if eq "" .searchKeyword}}
             <input id="searchInputBottom" type="text" placeholder="输入关键词搜索" class="input input-sm input-bordered" />
             {{else}}
-            <input id="searchInputBottom" type="text" placeholder="{{.searchKeyword}}"
-                class="input input-sm input-bordered" />
+            <input id="searchInputBottom" type="text" value="{{.searchKeyword}}" class="input input-sm input-bordered" />
             {{end}}
         </div>
-        <button id="homeSearchBtnBottom" class="btn btn-primary btn-sm">搜索</button>
+        <button id="homeSearchBtnBottom" class="btn btn-primary btn-sm ml">搜索</button>
     </div>
 </div>
