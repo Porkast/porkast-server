@@ -1,6 +1,7 @@
 package ctls
 
 import (
+	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/service/middleware"
 
 	feedService "guoshao-fm-web/internal/service/feed"
@@ -25,5 +26,26 @@ func (ctl *controller) AddListenLater(req *ghttp.Request) {
 		middleware.JsonExit(req, 1, err.Error(), nil)
 	}
 	middleware.JsonExit(req, 0, "add listen later success", nil)
+
+}
+
+func (ctl *controller) GetListenLaterList(req *ghttp.Request) {
+
+	var (
+		err        error
+		reqData    *GetListenLaterListReqData
+		resultList []dto.UserListenLater
+	)
+
+	if err = req.Parse(&reqData); err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	}
+
+	resultList, err = feedService.GetListenLaterListByUserId(req.GetCtx(), reqData.UserId)
+	if err != nil {
+		g.Log().Line().Error(req.GetCtx(), "get listen later failed :\n", err)
+		middleware.JsonExit(req, 1, err.Error(), nil)
+	}
+	middleware.JsonExit(req, 0, "get listen later success", resultList)
 
 }

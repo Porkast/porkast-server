@@ -7,7 +7,7 @@ import (
 
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	"github.com/gogf/gf/v2/frame/g"
-
+	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/guid"
 )
@@ -125,6 +125,44 @@ func TestCreateListenLaterByUserIdAndFeedId(t *testing.T) {
 			if err := CreateListenLaterByUserIdAndFeedId(tt.args.ctx, tt.args.newEntity); (err != nil) != tt.wantErr {
 				t.Errorf("CreateListenLaterByUserIdAndFeedId() error = %v, wantErr %v", err, tt.wantErr)
 			}
+		})
+	}
+}
+
+func TestGetListenLaterListByUserId(t *testing.T) {
+	type args struct {
+		ctx    context.Context
+		userId string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "get listen later list",
+			args: args{
+				ctx:    gctx.New(),
+				userId: "1t5z27w7h00csfdx7cluc20100do2yyq",
+			},
+			wantErr: false,
+		},
+		{
+			name: "get listen later list without user id",
+			args: args{
+				ctx:    gctx.New(),
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := GetListenLaterListByUserId(tt.args.ctx, tt.args.userId)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetListenLaterListByUserId() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+
 		})
 	}
 }

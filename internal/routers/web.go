@@ -18,12 +18,13 @@ func WebRouter(group *ghttp.RouterGroup) {
 
 }
 
-func V1ApiRouter(group *ghttp.RouterGroup)  {
-    unAuthGroup := group.Group("/")
-    unAuthGroup.POST("/user/login", ctls.Ctl.DoLogin)
-    unAuthGroup.POST("/user/register", ctls.Ctl.DoRegister)
+func V1ApiRouter(group *ghttp.RouterGroup) {
+	unAuthGroup := group.Group("/")
+	unAuthGroup.POST("/user/login", ctls.Ctl.DoLogin)
+	unAuthGroup.POST("/user/register", ctls.Ctl.DoRegister)
 
-    authGroup := group.Group("/")
-    authGroup.Middleware(middleware.AuthToken)
-    authGroup.POST("/listenlater/item", ctls.Ctl.AddListenLater)
+	authGroup := group.Group("/")
+	authGroup.Middleware(middleware.AuthToken)
+	authGroup.POST("/listenlater/item", ctls.Ctl.AddListenLater)
+	authGroup.GET("/listenlater/list", ctls.Ctl.GetListenLaterList)
 }

@@ -59,3 +59,14 @@ func GetListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, ite
 
 	return
 }
+
+func GetListenLaterListByUserId(ctx context.Context, userId string) (entityList []entity.UserListenLater, err error) {
+
+	if userId == "" {
+		err = gerror.New(gcode.CodeMissingParameter.Message())
+		return
+	}
+	err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Scan(&entityList)
+
+	return
+}

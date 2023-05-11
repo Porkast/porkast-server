@@ -26,3 +26,7 @@ type AddListenLaterReqData struct {
 	ChannelId string `json:"channelId" v:"required"`
 	ItemId    string `json:"itemId" v:"required"`
 }
+
+type GetListenLaterListReqData struct {
+	UserId    string `json:"userId" v:"required"`
+}
