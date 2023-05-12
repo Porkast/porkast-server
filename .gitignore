@@ -19,3 +19,4 @@ main
 output/
 manifest/output/
 logs/
+__debug_bin
