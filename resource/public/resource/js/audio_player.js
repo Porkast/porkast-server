@@ -1,12 +1,22 @@
-$(function() {
-    $("#bottom-audio-player").on("canplay", function() {
+$(function () {
+    $("#bottom-audio-player").on("canplay", function () {
         let duration = $(this)[0].duration
         let totalTime = secondsToHourMunitesSeconds(Math.floor(duration))
         $("#small-bottom-audio-range-duration").text(totalTime)
         $("#bottom-audio-range-duration").text(totalTime)
     })
 
-    $("#bottom-audio-player").on("timeupdate", function() {
+    $("#bottom-audio-player").on("pause", function () {
+        let feedItemId = $("#bottom-audio-player").attr("current-item-id")
+        SetButtonWhenPause(feedItemId)
+    })
+
+    $("#bottom-audio-player").on("play", function () {
+        let feedItemId = $("#bottom-audio-player").attr("current-item-id")
+        SetButtonWhenPlay(feedItemId)
+    })
+
+    $("#bottom-audio-player").on("timeupdate", function () {
         let currentTime = $(this)[0].currentTime
         let duration = $(this)[0].duration
         let formatTime = secondsToHourMunitesSeconds(Math.floor(currentTime))
@@ -21,7 +31,7 @@ $(function() {
         smallRangeInput.val(currentRangeVal)
     })
 
-    $("#bottom-audio-range-input").change(function() {
+    $("#bottom-audio-range-input").change(function () {
         let onChangedValue = $(this).val()
         let bottomAudioPlayer = $("#bottom-audio-player")
         let duration = bottomAudioPlayer[0].duration
@@ -29,7 +39,7 @@ $(function() {
         setAudioCurrentTime(targetTime)
     })
 
-    $("#small-bottom-audio-range-input").change(function() {
+    $("#small-bottom-audio-range-input").change(function () {
         let onChangedValue = $(this).val()
         let bottomAudioPlayer = $("#bottom-audio-player")
         let duration = bottomAudioPlayer[0].duration
@@ -38,6 +48,7 @@ $(function() {
     })
 })
 
+// for list item play buttom
 function playOrPause(event, feedItemId, audioSource, audioType, itemTitle, channelTitle, channelId, channelImageUrl) {
     let isPlay = false
     let playSvgElement = $("#list-item-play-svg-" + feedItemId)
@@ -102,31 +113,47 @@ function doPlayOrPauseAudio(isPlay, feedItemId, source, type) {
         playerElement[0].load()
     }
 
+    if (isPlay) {
+        SetButtonWhenPause(feedItemId)
+    } else {
+        SetButtonWhenPlay(feedItemId)
+    }
+}
+
+function SetButtonWhenPlay(feedItemId) {
+    let playerElement = $("#bottom-audio-player")
     let playSvgElement = $("#list-item-play-svg-" + feedItemId)
     let pauseSvgElement = $("#list-item-pause-svg-" + feedItemId)
     let btnPlayBottomPlayImg = $("#bottom-audio-player-play-btn-img")
     let btnPlayBottomPauseImg = $("#bottom-audio-player-pause-btn-img")
     let btnSmallPlayBottomPlayImg = $("#small-bottom-audio-player-play-btn-img")
     let btnSmallPlayBottomPauseImg = $("#small-bottom-audio-player-pause-btn-img")
-    if (isPlay) {
-        btnPlayBottomPlayImg.removeClass("hidden")
-        btnPlayBottomPauseImg.addClass("hidden")
-        btnSmallPlayBottomPlayImg.removeClass("hidden")
-        btnSmallPlayBottomPauseImg.addClass("hidden")
+    btnPlayBottomPlayImg.addClass("hidden")
+    btnPlayBottomPauseImg.removeClass("hidden")
+    btnSmallPlayBottomPlayImg.addClass("hidden")
+    btnSmallPlayBottomPauseImg.removeClass("hidden")
 
-        playSvgElement.removeClass("hidden")
-        pauseSvgElement.addClass("hidden")
-        playerElement[0].pause()
-    } else {
-        btnPlayBottomPlayImg.addClass("hidden")
-        btnPlayBottomPauseImg.removeClass("hidden")
-        btnSmallPlayBottomPlayImg.addClass("hidden")
-        btnSmallPlayBottomPauseImg.removeClass("hidden")
+    pauseSvgElement.removeClass("hidden")
+    playSvgElement.addClass("hidden")
+    playerElement[0].play()
+}
 
-        pauseSvgElement.removeClass("hidden")
-        playSvgElement.addClass("hidden")
-        playerElement[0].play()
-    }
+function SetButtonWhenPause(feedItemId) {
+    let playerElement = $("#bottom-audio-player")
+    let playSvgElement = $("#list-item-play-svg-" + feedItemId)
+    let pauseSvgElement = $("#list-item-pause-svg-" + feedItemId)
+    let btnPlayBottomPlayImg = $("#bottom-audio-player-play-btn-img")
+    let btnPlayBottomPauseImg = $("#bottom-audio-player-pause-btn-img")
+    let btnSmallPlayBottomPlayImg = $("#small-bottom-audio-player-play-btn-img")
+    let btnSmallPlayBottomPauseImg = $("#small-bottom-audio-player-pause-btn-img")
+    btnPlayBottomPlayImg.removeClass("hidden")
+    btnPlayBottomPauseImg.addClass("hidden")
+    btnSmallPlayBottomPlayImg.removeClass("hidden")
+    btnSmallPlayBottomPauseImg.addClass("hidden")
+
+    playSvgElement.removeClass("hidden")
+    pauseSvgElement.addClass("hidden")
+    playerElement[0].pause()
 }
 
 function setAudioCurrentTime(currentTime) {
