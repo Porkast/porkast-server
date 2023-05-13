@@ -11,7 +11,6 @@ $(function() {
         doLogin(emailPhoneInputText, passwordInputText)
     });
     registerBtn.click(function() {
-        console.log("the register btn is clicked")
         let nicknameInputText = nicknameInput.val()
         let emailPhoneInputText = emailPhoneInput.val()
         let passwordInputText = passwordInput.val()
