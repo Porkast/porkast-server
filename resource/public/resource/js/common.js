@@ -20,7 +20,7 @@ function getAuthToken() {
     let userInfo = getUserInfo()
     let auth = ""
     if (userInfo !== null) {
-        userId = userInfo.uid
+        userId = userInfo.id
         token = userInfo.token
     }
     auth = token + "@@" + userId

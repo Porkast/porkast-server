@@ -5,6 +5,7 @@ import (
 	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/model/entity"
 	"guoshao-fm-web/internal/service/internal/dao"
+	"guoshao-fm-web/internal/service/middleware"
 
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
@@ -14,6 +15,8 @@ import (
 func Login(ctx context.Context, email, phone, password string) (userInfoDto dto.UserInfo, err error) {
 	var (
 		userInfoEntity entity.UserInfo
+		tokenModel     middleware.TokenModel
+		token          string
 	)
 
 	if email == "" {
@@ -22,9 +25,19 @@ func Login(ctx context.Context, email, phone, password string) (userInfoDto dto.
 		userInfoEntity, err = dao.GetUserInfoByEmailAndPassword(ctx, email, password)
 	}
 
-    g.Log().Line().Debug(ctx, "query user info : \n", gjson.MustEncodeString(userInfoEntity))
+	g.Log().Line().Debug(ctx, "query user info : \n", gjson.MustEncodeString(userInfoEntity))
 	gconv.Struct(userInfoEntity, &userInfoDto)
-    userInfoDto.Password = ""
+	tokenModel = middleware.TokenModel{
+		UserId:         userInfoDto.Id,
+		NickName:       userInfoDto.Nickname,
+		Email:          userInfoDto.Email,
+		Mobile:         userInfoDto.Phone,
+		CreateDate:     userInfoDto.RegDate.String(),
+		UpdateDateTime: userInfoDto.UpdateDate.String(),
+	}
+	token, err = middleware.CreateToken(ctx, tokenModel)
+	userInfoDto.Password = ""
+	userInfoDto.Token = token
 
 	return
 }

@@ -88,4 +88,5 @@ func AuthToken(req *ghttp.Request) {
 		g.Log().Line().Info(req.Request.Context(), "token invalid tokenModel : ", tokenModel, " ,uid : ", uid)
 		JsonExit(req, 1, "AuthToken Invalid")
 	}
+	req.Middleware.Next()
 }

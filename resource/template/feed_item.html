@@ -13,6 +13,7 @@
     <script src="/resource/js/search.js"></script>
     <script src="/resource/js/common.js"></script>
     <script src="/resource/js/header.js"></script>
+    <script src="/resource/js/listen_later.js"></script>
 </head>
 
 <body style="margin: 0; display:inherit;" class="bg-gray-100">
@@ -61,7 +62,10 @@
                         <img src="/resource/image/pause.png" id="list-item-pause-svg-{{.itemInfo.Id}}"
                             class="w-6 h-6 hidden" alt="">
                     </button>
-                    <div class="text-base text-gray-500 ml-3">{{.itemInfo.Duration}}</div>
+                    <div class="text-base text-gray-500 ml-3 w-20">{{.itemInfo.Duration}}</div>
+                    <button class="bg-gray-200 w-24 h-8 ml-4 flex items-center rounded-lg"
+                        onclick="AddToListenLater('{{.itemInfo.ChannelId}}', '{{.itemInfo.Id}}')"><img class="w-4 ml-2 mr-2"
+                            src="/resource/image/save.png" alt=""><span class="font-bold text-sm">稍后听</span></button>
                 </div>
             </div>
             <div class="card w-full max-w-2xl bg-base-100 shadow-xl mt-6">
