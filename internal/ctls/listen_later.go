@@ -29,6 +29,26 @@ func (ctl *controller) AddListenLater(req *ghttp.Request) {
 
 }
 
+func (ctl *controller) GetListenLater(req *ghttp.Request) {
+	var (
+		err                error
+		reqData            *GetListenLaterReqData
+		userListenLaterDto dto.UserListenLater
+	)
+
+	if err = req.Parse(&reqData); err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	}
+
+	userListenLaterDto, err = feedService.GetListenLaterByUserIdAndFeedId(req.GetCtx(), reqData.UserId, reqData.ChannelId, reqData.ItemId)
+	if err != nil {
+		g.Log().Line().Error(req.GetCtx(), "get listen later failed :\n", err)
+		middleware.JsonExit(req, 1, err.Error(), nil)
+	}
+	middleware.JsonExit(req, 0, "get listen later success", userListenLaterDto)
+
+}
+
 func (ctl *controller) GetListenLaterList(req *ghttp.Request) {
 
 	var (

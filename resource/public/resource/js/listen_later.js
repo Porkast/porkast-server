@@ -23,10 +23,9 @@ function AddToListenLater(channelId, itemId) {
         success: function (data) {
             let jsonData = data
             if (jsonData.code !== 0) {
-                console.log("add listen later failed")
-                console.log(data)
+                if (jsonData.message === "DB_DATA_ALREADY_EXIST") {
+                }
             } else {
-
             }
         },
         error: function (data) {

@@ -26,5 +26,6 @@ func V1ApiRouter(group *ghttp.RouterGroup) {
 	authGroup := group.Group("/")
 	authGroup.Middleware(middleware.AuthToken)
 	authGroup.POST("/listenlater/item", ctls.Ctl.AddListenLater)
+	authGroup.GET("/listenlater/item", ctls.Ctl.GetListenLater)
 	authGroup.GET("/listenlater/list", ctls.Ctl.GetListenLaterList)
 }
