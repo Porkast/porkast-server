@@ -72,7 +72,6 @@ func (ctl *controller) FeedChannelDetail(req *ghttp.Request) {
 	var tplMap = consts.GetCommonTplMap()
 	tplMap[consts.CHANNEL_INFO] = channelInfo
 	tplMap[consts.FEED_ITEMS] = channelInfo.Items
-	tplMap[consts.LISTEN_LATER_HEADER_TAG] = consts.LISTEN_LATER_HEADER_TAG_TEXT
 	req.Response.WriteTpl("feed_channel.html", tplMap)
 }
 

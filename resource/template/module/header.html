@@ -29,14 +29,14 @@
                 <ul id="login" tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                     <li class="" onclick="logout()">
                         <a class="w-full flex justify-start" href="/login">
-                            <img class="w-6" src="/resource/image/login.png" alt="">登录
+                            <img class="w-6" src="/resource/image/login.png" alt="">{{.login_tag}}
                         </a>
                     </li>
                 </ul>
                 <ul id="logined" tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                     <div class="w-full p-3">
-                        <div>陈大力</div>
-                        <div class="mt-4 text-gray-500">@18801731480</div>
+                        <div id="header_nickname_text">__</div>
+                        <div id="header_account_text" class="mt-4 text-gray-500">__</div>
                     </div>
                     <li class="h-12 border-t border-gray-200">
                         <a class="w-full flex justify-start">
@@ -45,7 +45,7 @@
                     </li>
                     <li class="h-12 border-t border-gray-200">
                         <a class="w-full flex justify-start">
-                            <img class="w-6" src="/resource/image/account.png" alt="">{{.listen_later_header_tag}}
+                            <img class="w-6" src="/resource/image/list.png" alt="">{{.listen_later_header_tag}}
                         </a>
                     </li>
                     <!-- <li class="border-t border-gray-200"> -->
@@ -55,7 +55,7 @@
                     <!-- </li> -->
                     <li class="border-t border-gray-200" onclick="logout()">
                         <a class="w-full flex justify-start">
-                            <img class="w-6" src="/resource/image/log-out.png" alt="">登出
+                            <img class="w-6" src="/resource/image/log-out.png" alt="">{{.logout_tag}}
                         </a>
                     </li>
                 </ul>

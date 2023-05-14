@@ -22,6 +22,10 @@ const LISTEN_LATER_HEADER_TAG_TEXT = "稍后听"
 const LISTEN_LATER_HEADER_TAG = "listen_later_header_tag"
 const MY_ACCOUNT_TAG = "my_account_tag"
 const MY_ACCOUNT_TAG_VALUE = "我的账号"
+const LOGIN_TAG = "login_tag"
+const LOGIN_TAG_VALUE = "登录"
+const LOGOUT_TAG = "logout_tag"
+const LOGOUT_TAG_VALUE = "登出"
 
 func GetCommonTplMap() (tplMap g.Map) {
 
@@ -29,6 +33,8 @@ func GetCommonTplMap() (tplMap g.Map) {
 		APP_NAME_KEY:            APP_NAME,
 		LISTEN_LATER_HEADER_TAG: LISTEN_LATER_HEADER_TAG_TEXT,
 		MY_ACCOUNT_TAG:          MY_ACCOUNT_TAG_VALUE,
+		LOGOUT_TAG:              LOGOUT_TAG_VALUE,
+		LOGIN_TAG:               LOGIN_TAG_VALUE,
 	}
 
 	return
