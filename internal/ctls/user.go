@@ -15,15 +15,14 @@ import (
 
 func (ctl *controller) LoginTpl(req *ghttp.Request) {
 
-	req.Response.WriteTpl("user/login.html", g.Map{
-		consts.APP_NAME_KEY:                       consts.APP_NAME,
-		consts.LOGIN_EMAIL_INPUT_HINT:             consts.LOGIN_EMAIL_INPUT_HINT_VALUE,
-		consts.LOGIN_EMAIL_INPUT_PLACEHOLDER_HINT: consts.LOGIN_EMAIL_INPUT_HINT_PLACEHOLDER_VALUE,
-		consts.LOGIN_PASSWORD_PLACEHOLDER_HINT:    consts.LOGIN_PASSWORD_HINT_PLACEHOLDER_VALUE,
-		consts.LOGIN_PASSWORD_HINT:                consts.LOGIN_PASSWORD_HINT_VALUE,
-		consts.LOGIN_BTN_TEXT:                     consts.LOGIN_BTN_TEXT_VALUE,
-		consts.TO_REGISTER_TEXT:                   consts.TO_REGISTER_TEXT_VALUE,
-	})
+	var tplMap = consts.GetCommonTplMap()
+	tplMap[consts.LOGIN_EMAIL_INPUT_HINT] = consts.LOGIN_EMAIL_INPUT_HINT_VALUE
+	tplMap[consts.LOGIN_EMAIL_INPUT_PLACEHOLDER_HINT] = consts.LOGIN_EMAIL_INPUT_HINT_PLACEHOLDER_VALUE
+	tplMap[consts.LOGIN_PASSWORD_PLACEHOLDER_HINT] = consts.LOGIN_PASSWORD_HINT_PLACEHOLDER_VALUE
+	tplMap[consts.LOGIN_PASSWORD_HINT] = consts.LOGIN_PASSWORD_HINT_VALUE
+	tplMap[consts.LOGIN_BTN_TEXT] = consts.LOGIN_BTN_TEXT_VALUE
+	tplMap[consts.TO_REGISTER_TEXT] = consts.TO_REGISTER_TEXT_VALUE
+	req.Response.WriteTpl("user/login.html", tplMap)
 }
 
 func (ctl *controller) DoLogin(req *ghttp.Request) {
@@ -50,17 +49,16 @@ func (ctl *controller) DoLogin(req *ghttp.Request) {
 
 func (ctl *controller) RegisterTpl(req *ghttp.Request) {
 
-	req.Response.WriteTpl("user/register.html", g.Map{
-		consts.APP_NAME_KEY:                             consts.APP_NAME,
-		consts.REGISTER_EMAIL_INPUT_HINT:                consts.REGISTER_EMAIL_INPUT_HINT_VALUE,
-		consts.REGISTER_EMAIL_INPUT_PLACEHOLDER_HINT:    consts.REGISTER_EMAIL_INPUT_HINT_PLACEHOLDER_VALUE,
-		consts.REGISTER_PASSWORD_PLACEHOLDER_HINT:       consts.REGISTER_PASSWORD_HINT_PLACEHOLDER_VALUE,
-		consts.REGISTER_PASSWORD_HINT:                   consts.REGISTER_PASSWORD_HINT_VALUE,
-		consts.REGISTER_PASSWORD_CONFIRM_HINT:           consts.REGISTER_PASSWORD_CONFIRM_VALUE,
-		consts.REGISTER_NICKNAME_INPUT_HINT:             consts.REGISTER_NICKNAME_INPUT_HINT_VALUE,
-		consts.REGISTER_NICKNAME_INPUT_PLACEHOLDER_HINT: consts.REGISTER_NICKNAME_INPUT_PLACEHOLDER_HINT_VALUE,
-		consts.REGISTER_BTN_TEXT:                        consts.REGISTER_BTN_TEXT_VALUE,
-	})
+	var tplMap = consts.GetCommonTplMap()
+	tplMap[consts.REGISTER_EMAIL_INPUT_HINT] = consts.REGISTER_EMAIL_INPUT_HINT_VALUE
+	tplMap[consts.REGISTER_EMAIL_INPUT_PLACEHOLDER_HINT] = consts.REGISTER_EMAIL_INPUT_HINT_PLACEHOLDER_VALUE
+	tplMap[consts.REGISTER_PASSWORD_PLACEHOLDER_HINT] = consts.REGISTER_PASSWORD_HINT_PLACEHOLDER_VALUE
+	tplMap[consts.REGISTER_PASSWORD_HINT] = consts.REGISTER_PASSWORD_HINT_VALUE
+	tplMap[consts.REGISTER_PASSWORD_CONFIRM_HINT] = consts.REGISTER_PASSWORD_CONFIRM_VALUE
+	tplMap[consts.REGISTER_NICKNAME_INPUT_HINT] = consts.REGISTER_NICKNAME_INPUT_HINT_VALUE
+	tplMap[consts.REGISTER_NICKNAME_INPUT_PLACEHOLDER_HINT] = consts.REGISTER_NICKNAME_INPUT_PLACEHOLDER_HINT_VALUE
+	tplMap[consts.REGISTER_BTN_TEXT] = consts.REGISTER_BTN_TEXT_VALUE
+	req.Response.WriteTpl("user/register.html", tplMap)
 }
 
 func (ctl *controller) DoRegister(req *ghttp.Request) {

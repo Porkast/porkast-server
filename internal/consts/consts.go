@@ -1,5 +1,7 @@
 package consts
 
+import "github.com/gogf/gf/v2/frame/g"
+
 // template consts
 const APP_NAME_KEY = "appname"
 const APP_NAME = "锅烧FM"
@@ -15,3 +17,19 @@ const ITEM_INFO = "itemInfo"
 
 const SEARCH_KEY_WORD = "searchKeyword"
 const CURRENT_PAGE = "currentPage"
+
+const LISTEN_LATER_HEADER_TAG_TEXT = "稍后听"
+const LISTEN_LATER_HEADER_TAG = "listen_later_header_tag"
+const MY_ACCOUNT_TAG = "my_account_tag"
+const MY_ACCOUNT_TAG_VALUE = "我的账号"
+
+func GetCommonTplMap() (tplMap g.Map) {
+
+	tplMap = g.Map{
+		APP_NAME_KEY:            APP_NAME,
+		LISTEN_LATER_HEADER_TAG: LISTEN_LATER_HEADER_TAG_TEXT,
+		MY_ACCOUNT_TAG:          MY_ACCOUNT_TAG_VALUE,
+	}
+
+	return
+}

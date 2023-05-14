@@ -12,9 +12,7 @@ import (
 )
 
 func (ctl *controller) IndexTpl(req *ghttp.Request) {
-	req.Response.WriteTpl("index.html", g.Map{
-		consts.APP_NAME_KEY: consts.APP_NAME,
-	})
+	req.Response.WriteTpl("index.html", consts.GetCommonTplMap())
 	return
 }
 
@@ -46,15 +44,17 @@ func (ctl *controller) SearchResult(req *ghttp.Request) {
 	}
 	totalCountText = fmt.Sprintf(consts.SEARCH_RESULT_COUNT_TEXT_VALUE, totalCount)
 	tookTimeText = fmt.Sprintf(consts.SEARCH_TOOK_TIME_TEXT_VALUE, tookTimeStr)
-	req.Response.WriteTpl("search.html", g.Map{
-		consts.APP_NAME_KEY:             consts.APP_NAME,
-		consts.SEARCH_KEY_WORD:          searchKeyword,
-		consts.CURRENT_PAGE:             page,
-		consts.TOTAL_PAGE:               totalPage,
-		consts.SEARCH_RESULT_COUNT_TEXT: totalCountText,
-		consts.SEARCH_TOOK_TIME_TEXT:    tookTimeText,
-		consts.FEED_ITEMS:               items,
-	})
+	var tplMap = consts.GetCommonTplMap()
+	tplMap[consts.SEARCH_KEY_WORD] = searchKeyword
+	tplMap[consts.CURRENT_PAGE] = page
+	tplMap[consts.SEARCH_KEY_WORD] = searchKeyword
+	tplMap[consts.SEARCH_KEY_WORD] = searchKeyword
+	tplMap[consts.SEARCH_KEY_WORD] = searchKeyword
+	tplMap[consts.TOTAL_PAGE] = totalPage
+	tplMap[consts.SEARCH_RESULT_COUNT_TEXT] = totalCountText
+	tplMap[consts.SEARCH_TOOK_TIME_TEXT] = tookTimeText
+	tplMap[consts.FEED_ITEMS] = items
+	req.Response.WriteTpl("search.html", tplMap)
 }
 
 func (ctl *controller) FeedChannelDetail(req *ghttp.Request) {
@@ -69,10 +69,11 @@ func (ctl *controller) FeedChannelDetail(req *ghttp.Request) {
 	if err != nil {
 		// TODO: redirect to error page
 	}
-	req.Response.WriteTpl("feed_channel.html", g.Map{
-		consts.CHANNEL_INFO: channelInfo,
-		consts.FEED_ITEMS:   channelInfo.Items,
-	})
+	var tplMap = consts.GetCommonTplMap()
+	tplMap[consts.CHANNEL_INFO] = channelInfo
+	tplMap[consts.FEED_ITEMS] = channelInfo.Items
+	tplMap[consts.LISTEN_LATER_HEADER_TAG] = consts.LISTEN_LATER_HEADER_TAG_TEXT
+	req.Response.WriteTpl("feed_channel.html", tplMap)
 }
 
 func (ctl *controller) FeedItemDetail(req *ghttp.Request) {
@@ -90,8 +91,8 @@ func (ctl *controller) FeedItemDetail(req *ghttp.Request) {
 	if err != nil {
 		// TODO: redirect to error page
 	}
-	req.Response.WriteTpl("feed_item.html", g.Map{
-		consts.ITEM_INFO:    itemInfo,
-		consts.CHANNEL_INFO: channelInfo,
-	})
+	var tplMap = consts.GetCommonTplMap()
+	tplMap[consts.ITEM_INFO] = itemInfo
+	tplMap[consts.CHANNEL_INFO] = channelInfo
+	req.Response.WriteTpl("feed_item.html", g.Map{})
 }
