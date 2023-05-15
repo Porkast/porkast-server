@@ -7,7 +7,6 @@ import (
 	feedService "guoshao-fm-web/internal/service/feed"
 	"strconv"
 
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 
@@ -93,5 +92,5 @@ func (ctl *controller) FeedItemDetail(req *ghttp.Request) {
 	var tplMap = consts.GetCommonTplMap()
 	tplMap[consts.ITEM_INFO] = itemInfo
 	tplMap[consts.CHANNEL_INFO] = channelInfo
-	req.Response.WriteTpl("feed_item.html", g.Map{})
+	req.Response.WriteTpl("feed_item.html", tplMap)
 }
