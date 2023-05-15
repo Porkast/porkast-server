@@ -133,6 +133,8 @@ func TestGetListenLaterListByUserId(t *testing.T) {
 	type args struct {
 		ctx    context.Context
 		userId string
+		offset int
+		limit  int
 	}
 	tests := []struct {
 		name    string
@@ -144,6 +146,8 @@ func TestGetListenLaterListByUserId(t *testing.T) {
 			args: args{
 				ctx:    gctx.New(),
 				userId: "1t5z27w7h00csfdx7cluc20100do2yyq",
+				offset: 0,
+				limit:  10,
 			},
 			wantErr: false,
 		},
@@ -151,16 +155,22 @@ func TestGetListenLaterListByUserId(t *testing.T) {
 			name: "get listen later list without user id",
 			args: args{
 				ctx:    gctx.New(),
+				offset: 0,
+				limit:  10,
 			},
 			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := GetListenLaterListByUserId(tt.args.ctx, tt.args.userId)
+			resultEntity, err := GetListenLaterListByUserId(tt.args.ctx, tt.args.userId, tt.args.offset, tt.args.limit)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetListenLaterListByUserId() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			} else if !tt.wantErr {
+				if len(resultEntity) == 0 {
+					t.Fatal("get listen later feed list is empty")
+				}
 			}
 
 		})

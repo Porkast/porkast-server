@@ -27,6 +27,9 @@ const LOGIN_TAG_VALUE = "登录"
 const LOGOUT_TAG = "logout_tag"
 const LOGOUT_TAG_VALUE = "登出"
 
+const ADD_ON = "add_on"
+const ADD_ON_TEXT = "添加于"
+
 func GetCommonTplMap() (tplMap g.Map) {
 
 	tplMap = g.Map{

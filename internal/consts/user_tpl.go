@@ -1,5 +1,6 @@
 package consts
 
+const USER_INFO = "user_info"
 const LOGIN_EMAIL_INPUT_HINT = "login_email_input_hint"
 const LOGIN_EMAIL_INPUT_HINT_VALUE = "邮箱/手机号"
 const LOGIN_EMAIL_INPUT_PLACEHOLDER_HINT = "login_email_input_placeholder_hint"

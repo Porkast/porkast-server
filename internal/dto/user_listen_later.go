@@ -1,12 +1,30 @@
 package dto
 
-import "github.com/gogf/gf/v2/os/gtime"
-
 type UserListenLater struct {
-	Id        string      `json:"id"        ` //
-	UserId    string      `json:"userId"    ` //
-	ItemId    string      `json:"itemId"    ` //
-	ChannelId string      `json:"channelId" ` //
-	RegDate   *gtime.Time `json:"regDate"   ` //
-	ItemInfo  FeedItem    `json:"itemInfo"  ` //
+	Id              string
+	UserId          string
+	ItemId          string
+	ChannelId       string
+	RegDate         string
+	Title           string
+	Link            string
+	PubDate         string
+	Author          string
+	InputDate       string
+	ImageUrl        string
+	EnclosureUrl    string
+	EnclosureType   string
+	EnclosureLength string
+	Duration        string
+	Episode         string
+	Explicit        string
+	Season          string
+	EpisodeType     string
+	Description     string
+	TextDescription string
+	ChannelImageUrl string
+	ChannelTitle    string
+	FeedLink        string
+	Count           int
+	HasThumbnail    bool
 }

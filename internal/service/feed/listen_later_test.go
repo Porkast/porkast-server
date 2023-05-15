@@ -41,7 +41,7 @@ func TestGetListenLaterByUserIdAndFeedId(t *testing.T) {
 			if userListenLaterDto, err = GetListenLaterByUserIdAndFeedId(tt.args.ctx, tt.args.userId, tt.args.channelId, tt.args.itemId); (err != nil) != tt.wantErr {
 				t.Fatalf("GetListenLaterByUserIdAndFeedId() error = %v, wantErr %v", err, tt.wantErr)
 			} else {
-				if userListenLaterDto.ItemInfo.Id == "" {
+				if userListenLaterDto.Id == "" {
 					t.Fatal("the item info is empty")
 				}
 			}

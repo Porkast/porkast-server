@@ -12,6 +12,7 @@ import (
 
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 // userListenLaterDao is the data access object for table user_listen_later.
@@ -60,13 +61,20 @@ func GetListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, ite
 	return
 }
 
-func GetListenLaterListByUserId(ctx context.Context, userId string) (entityList []entity.UserListenLater, err error) {
+func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limit int) (entityList []entity.UserListenLaterFeed, err error) {
 
 	if userId == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
 		return
 	}
-	err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Scan(&entityList)
+
+	g.Model("user_listen_later ull").
+		InnerJoin("feed_item fi", "ull.item_id = fi.id").
+		InnerJoin("feed_channel fc", "fi.channel_id = fc.id").
+		Fields("ull.*, fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title").
+		Offset(offset).
+		Limit(limit).
+		Scan(&entityList)
 
 	return
 }

@@ -34,5 +34,7 @@ type GetListenLaterReqData struct {
 }
 
 type GetListenLaterListReqData struct {
-	UserId    string `json:"userId" v:"required"`
+	UserId string `json:"userId" v:"required"`
+	Offset int    `json:"offset" v:"required"`
+	Limit  int    `json:"limit" v:"required"`
 }

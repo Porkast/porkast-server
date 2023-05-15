@@ -2,10 +2,12 @@ package feed
 
 import (
 	"context"
+	"guoshao-fm-web/internal/consts"
 	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/model/entity"
 	"guoshao-fm-web/internal/service/internal/dao"
 
+	"github.com/anaskhan96/soup"
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
@@ -58,22 +60,37 @@ func GetListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, ite
 		return
 	}
 	gconv.Struct(feedItemInfoEntity, &feedItemInfoDto)
-	userListenLaterDto.ItemInfo = feedItemInfoDto
 
 	return
 }
 
-func GetListenLaterListByUserId(ctx context.Context, userId string) (userListenLaterDtoList []dto.UserListenLater, err error) {
+func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limit int) (userListenLaterDtoList []dto.UserListenLater, err error) {
 	var (
-		userListenLaterEntityList []entity.UserListenLater
+		userListenLaterEntityList []entity.UserListenLaterFeed
 	)
 
-	userListenLaterEntityList, err = dao.GetListenLaterListByUserId(ctx, userId)
+	userListenLaterEntityList, err = dao.GetListenLaterListByUserId(ctx, userId, offset, limit)
 	if err != nil {
 		return
 	}
 
-	gconv.Structs(userListenLaterEntityList, &userListenLaterDtoList)
+	for _, entityItem := range userListenLaterEntityList {
+		var dtoItem dto.UserListenLater
+		gconv.Struct(entityItem, &dtoItem)
+		if entityItem.ChannelImageUrl != "" {
+			dtoItem.HasThumbnail = true
+		} else {
+			dtoItem.HasThumbnail = false
+		}
+		if dtoItem.TextDescription == "" && dtoItem.Description != "" {
+			rootDocs := soup.HTMLParse(dtoItem.Description)
+			dtoItem.TextDescription = rootDocs.FullText()
+		}
+		dtoItem.PubDate = formatPubDate(dtoItem.PubDate)
+		dtoItem.Duration = formatDuration(dtoItem.Duration)
+		dtoItem.RegDate = consts.ADD_ON_TEXT + formatPubDate(dtoItem.RegDate)
+		userListenLaterDtoList = append(userListenLaterDtoList, dtoItem)
+	}
 
 	return
 }
