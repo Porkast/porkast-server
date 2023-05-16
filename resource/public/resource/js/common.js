@@ -67,3 +67,22 @@ function copyToClickBoard(elemId) {
         })
 }
 
+function ShowSuccessAlert(alertMsg) {
+    let alertElem = $("#success-alert-elem")
+    let alertMsgElem = $("#success-alert-msg")
+    alertMsgElem.text(alertMsg)
+    alertElem.removeClass("hidden")
+    setTimeout(function () {
+        alertElem.addClass("hidden")
+    }, 5000);
+}
+
+function ShowErrorAlert(alertMsg) {
+    let alertElem = $("#error-alert-elem")
+    let alertMsgElem = $("#erro-alert-msg")
+    alertMsgElem.text(alertMsg)
+    alertElem.removeClass("hidden")
+    setTimeout(function () {
+        alertElem.addClass("hidden")
+    }, 5000);
+}

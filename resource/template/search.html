@@ -19,6 +19,7 @@
 <body style="margin: 0; display:inherit;" class="bg-gray-100">
     <!-- nav header -->
     {{include "module/header.html" .}}
+    {{include "module/alert.html" .}}
     <div class="flex justify-center min-h-screen">
         <div class="w-full pl-6 pr-6 max-w-2xl">
             <div class="flex justify-start mt-6">
@@ -42,7 +43,6 @@
     <div class="mb-32">
         {{include "module/bottom_audio_player.html" .}}
     </div>
-
     <footer class="footer items-center p-4 bg-neutral text-neutral-content">
         <div class="items-center grid-flow-col">
             <p>Copyright © 2023 - All right reserved</p>
