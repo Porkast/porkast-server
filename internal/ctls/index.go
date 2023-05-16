@@ -46,9 +46,6 @@ func (ctl *controller) SearchResult(req *ghttp.Request) {
 	var tplMap = consts.GetCommonTplMap()
 	tplMap[consts.SEARCH_KEY_WORD] = searchKeyword
 	tplMap[consts.CURRENT_PAGE] = page
-	tplMap[consts.SEARCH_KEY_WORD] = searchKeyword
-	tplMap[consts.SEARCH_KEY_WORD] = searchKeyword
-	tplMap[consts.SEARCH_KEY_WORD] = searchKeyword
 	tplMap[consts.TOTAL_PAGE] = totalPage
 	tplMap[consts.SEARCH_RESULT_COUNT_TEXT] = totalCountText
 	tplMap[consts.SEARCH_TOOK_TIME_TEXT] = tookTimeText
