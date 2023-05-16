@@ -8,6 +8,7 @@ import (
 )
 
 func WebRouter(group *ghttp.RouterGroup) {
+	group.Middleware(middleware.SetI18nLang)
 	group.GET("/", ctls.Ctl.IndexTpl)
 	group.GET("/search", ctls.Ctl.SearchResult)
 	group.GET("/feed/channel/:id", ctls.Ctl.FeedChannelDetail)

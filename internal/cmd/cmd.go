@@ -37,6 +37,7 @@ func initConfig() {
 	} else {
 		genv.Set("GF_GCFG_FILE", "config.yaml")
 	}
+	g.I18n().SetPath("./resource/i18n")
 }
 
 func initComponent(ctx context.Context) {
