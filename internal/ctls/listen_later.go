@@ -88,7 +88,7 @@ func (ctl *controller) GetListenLaterList(req *ghttp.Request) {
 		middleware.JsonExit(req, 1, err.Error())
 	}
 
-	resultList, err = feedService.GetListenLaterListByUserId(req.GetCtx(), reqData.UserId, reqData.Offset,reqData.Limit)
+	resultList, err = feedService.GetListenLaterListByUserId(req.GetCtx(), reqData.UserId, reqData.Offset, reqData.Limit)
 	if err != nil {
 		g.Log().Line().Error(req.GetCtx(), "get listen later failed :\n", err)
 		middleware.JsonExit(req, 1, err.Error(), nil)
