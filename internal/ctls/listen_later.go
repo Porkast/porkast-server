@@ -34,6 +34,7 @@ func (ctl *controller) ListenLaterTpl(req *ghttp.Request) {
 	}
 	tplMap[consts.LISTEN_LATER_ITEM_LIST] = userListenLaterItemDtoList
 	tplMap[consts.USER_INFO] = userInfo
+	tplMap[consts.LISTEN_LATER_PLAYLIST_NAME] = consts.LISTEN_LATER_PLAYLIST_NAME_TEXT
 	req.Response.WriteTpl("listen_later_playlist.html", tplMap)
 }
 
