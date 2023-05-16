@@ -3,7 +3,7 @@
         {{range $index, $item := .listen_later_item_list}}
         <div class="card w-full max-w-2xl bg-base-100 shadow-xl mt-6">
             <div class="card-body">
-                <a href="/feed/{{$item.ChannelId}}/item/{{$item.Id}}">
+                <a href="/feed/{{$item.ChannelId}}/item/{{$item.ItemId}}">
                     <h2 class="card-title gap-0 overflow-x-scroll inline">{{$item.Title}}</h2>
                 </a>
                 <div class="flex mt-3">
@@ -26,16 +26,16 @@
                         </div>
                     </a>
                 </div>
-                <a href="/feed/{{$item.ChannelId}}/item/{{$item.Id}}">
+                <a href="/feed/{{$item.ChannelId}}/item/{{$item.ItemId}}">
                     <div class="max-h-24 flex overflow-clip">
                         <p>{{$item.TextDescription}}</p>
                     </div>
                 </a>
                 <div class="text-gray-500">{{$item.PubDate}}</div>
                 <div class="card-actions flex items-center">
-                    <button id="list-item-btn-{{$item.Id}}" class="btn btn-circle btn-sm border-none"
-                        onclick="playOrPause(event,'{{$item.Id}}', '{{$item.EnclosureUrl}}', '{{$item.EnclosureType}}', '{{$item.Title}}', '{{$item.ChannelTitle}}', '{{$item.ChannelId}}', '{{$item.ChannelImageUrl}}')">
-                        <span id="list-item-play-svg-{{$item.Id}}">
+                    <button id="list-item-btn-{{$item.ItemId}}" class="btn btn-circle btn-sm border-none"
+                        onclick="playOrPause(event,'{{$item.ItemId}}', '{{$item.EnclosureUrl}}', '{{$item.EnclosureType}}', '{{$item.Title}}', '{{$item.ChannelTitle}}', '{{$item.ChannelId}}', '{{$item.ChannelImageUrl}}')">
+                        <span id="list-item-play-svg-{{$item.ItemId}}">
                             <svg t="1681315725035" class="w-4 h-4" viewBox="0 0 1024 1024" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" p-id="9542" width="32" height="32">
                                 <path
@@ -43,7 +43,7 @@
                                     fill="#FFFFFF" p-id="9543"></path>
                             </svg>
                         </span>
-                        <span id="list-item-pause-svg-{{$item.Id}}" class="hidden">
+                        <span id="list-item-pause-svg-{{$item.ItemId}}" class="hidden">
                             <svg t="1681315796396" class="w-6 h-6" viewBox="0 0 1024 1024" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" p-id="10573" width="48" height="48">
                                 <path
