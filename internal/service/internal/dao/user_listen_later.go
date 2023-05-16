@@ -74,6 +74,7 @@ func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limi
 		Fields("ull.*, fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title").
 		Offset(offset).
 		Limit(limit).
+		Order("ull.reg_date desc").
 		Scan(&entityList)
 
 	return
