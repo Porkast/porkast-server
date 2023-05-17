@@ -23,9 +23,7 @@ function AddToListenLater(channelId, itemId) {
         success: function (data) {
             let jsonData = data
             if (jsonData.code !== 0) {
-                if (jsonData.message === "DB_DATA_ALREADY_EXIST") {
-                    ShowSuccessAlert("DB_DATA_ALREADY_EXIST")
-                }
+                ShowSuccessAlert(jsonData.message)
             } else {
                 ShowSuccessAlert(jsonData.message)
             }

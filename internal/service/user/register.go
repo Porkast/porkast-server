@@ -8,6 +8,7 @@ import (
 	"guoshao-fm-web/internal/service/middleware"
 
 	"github.com/gogf/gf/v2/crypto/gmd5"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -17,6 +18,7 @@ import (
 func Register(ctx context.Context, userInfo dto.UserInfo) (userInfoResp dto.UserInfo, err error) {
 	var (
 		userInfoEntity entity.UserInfo
+		existEntity    entity.UserInfo
 		tokenModel     middleware.TokenModel
 		token          string
 		cryptoPwd      string
@@ -29,13 +31,18 @@ func Register(ctx context.Context, userInfo dto.UserInfo) (userInfoResp dto.User
 	gconv.Struct(userInfo, &userInfoEntity)
 	userInfoEntity.Password = cryptoPwd
 
+	existEntity, _ = dao.GetUserInfoByEmailOrPhone(ctx, userInfo.Email, userInfo.Phone)
+	if existEntity.Id != "" {
+		return userInfoResp, gerror.New(g.I18n().T(ctx,`{#user_already_exist}`))
+	}
+
 	err = dao.CreateUserInfo(ctx, userInfoEntity)
 	if err != nil {
 		g.Log().Line().Error(ctx, err)
 		return dto.UserInfo{}, err
 	}
 	userInfoResp = userInfo
-    userInfoResp.Password = ""
+	userInfoResp.Password = ""
 	tokenModel = middleware.TokenModel{
 		UserId:         userInfoResp.Id,
 		NickName:       userInfoResp.Nickname,

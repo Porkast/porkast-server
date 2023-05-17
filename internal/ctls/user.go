@@ -40,11 +40,11 @@ func (ctl *controller) DoLogin(req *ghttp.Request) {
 	reqData.Password = cryptoPwd
 	respUserInfo, err = userService.Login(req.GetCtx(), reqData.Email, reqData.Phone, reqData.Password)
 	if err != nil {
-		g.Log().Line().Error(req.GetCtx(), "do login failed :\n", err)
-		middleware.JsonExit(req, 1, err.Error(), respUserInfo)
+		g.Log().Line().Error(req.GetCtx(), err)
+		middleware.JsonExit(req, 1, g.I18n().T(req.GetCtx(), `{#username_or_password_not_right}`), nil)
 	}
 	g.Log().Line().Debug(req.GetCtx(), "do login success :\n", gjson.MustEncodeString(respUserInfo))
-	middleware.JsonExit(req, 0, "register success", respUserInfo)
+	middleware.JsonExit(req, 0, g.I18n().T(req.GetCtx(), `{#login_sucess}`), respUserInfo)
 }
 
 func (ctl *controller) RegisterTpl(req *ghttp.Request) {
@@ -80,5 +80,9 @@ func (ctl *controller) DoRegister(req *ghttp.Request) {
 	}
 
 	userInfoDto, err = userService.Register(req.GetCtx(), userInfoDto)
-	middleware.JsonExit(req, 0, "register success", userInfoDto)
+	if err != nil {
+		g.Log().Line().Error(req.GetCtx(), err)
+		middleware.JsonExit(req, 1, err.Error(), nil)
+	}
+	middleware.JsonExit(req, 0, g.I18n().T(req.GetCtx(), `{#register_sucess}`), userInfoDto)
 }

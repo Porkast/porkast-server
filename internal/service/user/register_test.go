@@ -16,8 +16,9 @@ func TestRegister(t *testing.T) {
 		userInfo dto.UserInfo
 	}
 	tests := []struct {
-		name string
-		args args
+		name    string
+		args    args
+		wantErr bool
 	}{
 		{
 			name: "create user info",
@@ -29,14 +30,28 @@ func TestRegister(t *testing.T) {
 					Password: "testpassword",
 				},
 			},
+			wantErr: false,
+		},
+		{
+			name: "create user info when user account exist",
+			args: args{
+				ctx: gctx.New(),
+				userInfo: dto.UserInfo{
+					Nickname: "test nickname",
+					Email:    "test@test.com",
+					Password: "testpassword",
+				},
+			},
+			wantErr: true,
 		},
 	}
 	g.DB().SetDryRun(true)
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gotUserInfoResp, err := Register(tt.args.ctx, tt.args.userInfo)
-			if err != nil && err.Error() != "user exist" {
-				t.Fatal(err)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Register() error = %v, wantErr %v", err, tt.wantErr)
+				return
 			}
 			t.Log("create user info success : ", gjson.MustEncodeString(gotUserInfoResp))
 		})

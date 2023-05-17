@@ -1,16 +1,16 @@
-$(function() {
+$(function () {
     let loginBtn = $("#login_btn");
     let registerBtn = $("#register_btn")
     let nicknameInput = $("#nickname_input");
     let emailPhoneInput = $("#email_phone_input");
     let passwordInput = $("#password_input");
     let passwordInputVerify = $("#password_verify_input");
-    loginBtn.click(function() {
+    loginBtn.click(function () {
         let emailPhoneInputText = emailPhoneInput.val()
         let passwordInputText = passwordInput.val()
         doLogin(emailPhoneInputText, passwordInputText)
     });
-    registerBtn.click(function() {
+    registerBtn.click(function () {
         let nicknameInputText = nicknameInput.val()
         let emailPhoneInputText = emailPhoneInput.val()
         let passwordInputText = passwordInput.val()
@@ -39,18 +39,19 @@ function doLogin(account, password) {
         method: 'POST',
         url: '/v1/api/user/login',
         data: JSON.stringify(postData),
-        success: function(data) {
+        success: function (data) {
             console.log(data)
             let jsonData = data
             if (jsonData.code !== 0) {
-                console.log("do login error ", jsonData.message)
+                ShowErrorAlert(jsonData.message)
             } else {
+                ShowSuccessAlert(jsonData.message)
                 setUserInfo(jsonData.data)
                 window.location.href = '/'
             }
         },
-        error: function(data) {
-
+        error: function (data) {
+            ShowErrorAlert(jsonData.message)
         }
     })
 }
@@ -77,7 +78,7 @@ function doRegister(nickname, account, password, vPassword) {
         method: 'POST',
         url: '/v1/api/user/register',
         data: JSON.stringify(postData),
-        success: function(data) {
+        success: function (data) {
             let jsonData = data
             if (jsonData.code !== 0) {
                 console.log("do register failed")
@@ -87,7 +88,7 @@ function doRegister(nickname, account, password, vPassword) {
                 window.location.href = '/'
             }
         },
-        error: function(data) {
+        error: function (data) {
         }
     })
 }

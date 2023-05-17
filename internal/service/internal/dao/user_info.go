@@ -67,6 +67,23 @@ func GetUserInfoByEmailAndPassword(ctx context.Context, email, password string) 
 	return
 }
 
+func GetUserInfoByEmailOrPhone(ctx context.Context, email, phone string) (entity entity.UserInfo, err error) {
+
+	if email == "" {
+		err = UserInfo.Ctx(ctx).Where("phone=?", phone).Scan(&entity)
+		if err != nil {
+			return
+		}
+	} else {
+		err = UserInfo.Ctx(ctx).Where("email=?", email).Scan(&entity)
+		if err != nil {
+			return
+		}
+	}
+
+	return
+}
+
 func GetUserInfoByUserId(ctx context.Context, userId string) (userInfoEntity entity.UserInfo, err error) {
 
 	err = UserInfo.Ctx(ctx).Where("id=?", userId).Scan(&userInfoEntity)

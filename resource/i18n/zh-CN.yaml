@@ -1,1 +1,7 @@
 play_list: "播放列表"
+login_sucess: "登录成功"
+username_or_password_not_right: "用户名或密码不正确"
+user_already_exist: "用户已经存在"
+register_sucess: "成功"
+listen_later_exist: "已经添加过了"
+add_listen_later_sucess: "添加成功"

@@ -22,6 +22,7 @@ func WebRouter(group *ghttp.RouterGroup) {
 }
 
 func V1ApiRouter(group *ghttp.RouterGroup) {
+	group.Middleware(middleware.SetI18nLang)
 	unAuthGroup := group.Group("/")
 	unAuthGroup.POST("/user/login", ctls.Ctl.DoLogin)
 	unAuthGroup.POST("/user/register", ctls.Ctl.DoRegister)

@@ -50,10 +50,13 @@ func (ctl *controller) AddListenLater(req *ghttp.Request) {
 
 	err = feedService.CreateListenLaterByUserIdAndFeedId(req.GetCtx(), reqData.UserId, reqData.ChannelId, reqData.ItemId)
 	if err != nil {
-		g.Log().Line().Error(req.GetCtx(), "add listen later failed :\n", err)
+		if err.Error() == consts.DB_DATA_ALREADY_EXIST {
+			middleware.JsonExit(req, 1, g.I18n().T(req.GetCtx(), `{#listen_later_exist}`), nil)
+		}
+		g.Log().Line().Error(req.GetCtx(), err)
 		middleware.JsonExit(req, 1, err.Error(), nil)
 	}
-	middleware.JsonExit(req, 0, "add listen later success", nil)
+	middleware.JsonExit(req, 0, g.I18n().T(req.GetCtx(), `{#add_listen_later_sucess}`), nil)
 
 }
 
