@@ -12,10 +12,11 @@ import (
 
 func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, from, size int) (esFeedItemList []entity.FeedItemESData, err error) {
 	multMatch := elastic.NewMultiMatchQuery(keyword, "title", "author", "textDescription")
-	multMatch.FieldWithBoost("title", 4)
-	multMatch.FieldWithBoost("textDescription", 3)
-	multMatch.FieldWithBoost("author", 2)
-	multMatch.FieldWithBoost("channelTitle", 2)
+	multMatch.FieldWithBoost("title", 10)
+	multMatch.FieldWithBoost("textDescription", 2)
+	multMatch.FieldWithBoost("author", 1)
+	multMatch.FieldWithBoost("channelTitle", 1)
+    multMatch.Type("most_fields")
 	highlight := elastic.NewHighlight()
 	highlight = highlight.PreTags("<span style='color: red;'>").PostTags("</span>")
 	highlight = highlight.Fields(elastic.NewHighlighterField("title"), elastic.NewHighlighterField("channelTitle"), elastic.NewHighlighterField("textDescription"), elastic.NewHighlighterField("author"))
