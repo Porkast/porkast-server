@@ -16,7 +16,7 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, from,
 	multMatch.FieldWithBoost("textDescription", 2)
 	multMatch.FieldWithBoost("author", 1)
 	multMatch.FieldWithBoost("channelTitle", 1)
-    multMatch.Type("most_fields")
+	multMatch.Type("most_fields")
 	highlight := elastic.NewHighlight()
 	highlight = highlight.PreTags("<span style='color: red;'>").PostTags("</span>")
 	highlight = highlight.Fields(elastic.NewHighlighterField("title"), elastic.NewHighlighterField("channelTitle"), elastic.NewHighlighterField("textDescription"), elastic.NewHighlighterField("author"))
