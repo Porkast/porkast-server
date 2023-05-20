@@ -61,7 +61,7 @@ function playOrPause(event, feedItemId, audioSource, audioType, itemTitle, chann
     bottomAudioTag.attr("current-type", audioType)
     doPlayOrPauseAudio(isPlay, feedItemId, audioSource, audioType)
     setBottomAudioAudioInfo(itemTitle, feedItemId, channelId, channelTitle, channelImageUrl)
-    SetMediaSession(itemTitle, channelTitle, channelTitle, channelImageUrl)
+    SetMediaSession(itemTitle, channelTitle, channelImageUrl)
     event.stopPropagation();
 }
 
@@ -121,20 +121,19 @@ function doPlayOrPauseAudio(isPlay, feedItemId, source, type) {
     }
 }
 
-function SetMediaSession(title, artist, album) {
+function SetMediaSession(title, artist, mediaSrc) {
     if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
             title: title,
             artist: artist,
-            album: album,
             artwork: [
                 {
                     src: mediaSrc,
+                    sizes: "96x96"
                 },
             ],
         });
     }
-
 }
 
 function SetButtonWhenPlay(feedItemId) {
