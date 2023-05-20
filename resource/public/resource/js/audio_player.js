@@ -1,22 +1,22 @@
-$(function () {
-    $("#bottom-audio-player").on("canplay", function () {
+$(function() {
+    $("#bottom-audio-player").on("canplay", function() {
         let duration = $(this)[0].duration
         let totalTime = secondsToHourMunitesSeconds(Math.floor(duration))
         $("#small-bottom-audio-range-duration").text(totalTime)
         $("#bottom-audio-range-duration").text(totalTime)
     })
 
-    $("#bottom-audio-player").on("pause", function () {
+    $("#bottom-audio-player").on("pause", function() {
         let feedItemId = $("#bottom-audio-player").attr("current-item-id")
         SetButtonWhenPause(feedItemId)
     })
 
-    $("#bottom-audio-player").on("play", function () {
+    $("#bottom-audio-player").on("play", function() {
         let feedItemId = $("#bottom-audio-player").attr("current-item-id")
         SetButtonWhenPlay(feedItemId)
     })
 
-    $("#bottom-audio-player").on("timeupdate", function () {
+    $("#bottom-audio-player").on("timeupdate", function() {
         let currentTime = $(this)[0].currentTime
         let duration = $(this)[0].duration
         let formatTime = secondsToHourMunitesSeconds(Math.floor(currentTime))
@@ -31,7 +31,7 @@ $(function () {
         smallRangeInput.val(currentRangeVal)
     })
 
-    $("#bottom-audio-range-input").change(function () {
+    $("#bottom-audio-range-input").change(function() {
         let onChangedValue = $(this).val()
         let bottomAudioPlayer = $("#bottom-audio-player")
         let duration = bottomAudioPlayer[0].duration
@@ -39,7 +39,7 @@ $(function () {
         setAudioCurrentTime(targetTime)
     })
 
-    $("#small-bottom-audio-range-input").change(function () {
+    $("#small-bottom-audio-range-input").change(function() {
         let onChangedValue = $(this).val()
         let bottomAudioPlayer = $("#bottom-audio-player")
         let duration = bottomAudioPlayer[0].duration
@@ -61,6 +61,7 @@ function playOrPause(event, feedItemId, audioSource, audioType, itemTitle, chann
     bottomAudioTag.attr("current-type", audioType)
     doPlayOrPauseAudio(isPlay, feedItemId, audioSource, audioType)
     setBottomAudioAudioInfo(itemTitle, feedItemId, channelId, channelTitle, channelImageUrl)
+    SetMediaSession(itemTitle, channelTitle, channelTitle, channelImageUrl)
     event.stopPropagation();
 }
 
@@ -118,6 +119,23 @@ function doPlayOrPauseAudio(isPlay, feedItemId, source, type) {
     } else {
         SetButtonWhenPlay(feedItemId)
     }
+}
+
+function SetMediaSession(title, artist, album, mediaSrc) {
+    if ("mediaSession" in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: title,
+            artist: artist,
+            album: album,
+            artwork: [
+                {
+                    src: mediaSrc,
+                    type: "mediaType",
+                },
+            ],
+        });
+    }
+
 }
 
 function SetButtonWhenPlay(feedItemId) {
