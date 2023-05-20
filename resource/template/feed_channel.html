@@ -53,13 +53,44 @@
                 <p class="mt-3 text-xs">{{.channelInfo.Copyright}}</p>
             </div>
             <!-- <div class="h-0.5 w-full bg-gray-100"></div> -->
-            <div class="w-full mt-3 flex justify-center">
+            <div class="flex justify-start mt-6">
+                <div class="text-gray-500 text-sm">{{.total_channe_items_count}}</div>
+            </div>
+            <div class="w-full flex justify-center">
                 {{include "module/list_item.html" .}}
+            </div>
+            <div class="flex justify-center mt-6 mb-6">
+                <div class="btn-group">
+                    <button class="btn" id="prePageBtn">«</button>
+                    <button class="btn">第{{.currentPage}}页</button>
+                    <button class="btn" id="nextPageBtn">»</button>
+                </div>
             </div>
         </div>
     </div>
     {{include "module/bottom_audio_player.html" .}}
     {{include "module/footer.html" .}}
 </body>
+<script>
+    $(function () {
+        let currentPage = parseInt('{{.currentPage}}')
+        let totalPage = parseInt('{{.totalPage}}')
+        let nextPage = currentPage + 1
+        let prePage = currentPage - 1
+        let keyword = '{{.searchKeyword}}'
+        $('#nextPageBtn').click(function (event) {
+            if (currentPage >= totalPage) {
+                return
+            }
+            window.location.href = "/feed/channel/{{.channelInfo.Id}}?page=" + nextPage;
+        });
+        $('#prePageBtn').click(function (event) {
+            if (currentPage == 1) {
+                return
+            }
+            window.location.href = "/feed/channel/{{.channelInfo.Id}}?page=" + prePage;
+        });
+    });
+</script>
 
 </html>

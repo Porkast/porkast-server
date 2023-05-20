@@ -7,13 +7,16 @@ import (
 	"guoshao-fm-web/internal/service/internal/dao"
 
 	"github.com/anaskhan96/soup"
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
-func GetChannelInfoByChannelId(ctx context.Context, channelId string) (feedInfo dto.FeedChannel, err error) {
+func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, limit int) (feedInfo dto.FeedChannel, err error) {
+	g.Log().Line().Debugf(ctx, "GetChannelInfoByChannelId channelId : %s, offset : %d, limit: %d", channelId, offset, limit)
 	var (
 		feedChannelInfo entity.FeedChannel
 		feedItemList    []entity.FeedItem
+		totalCount      int
 	)
 
 	feedChannelInfo, err = dao.GetFeedChannelInfoByChannelId(ctx, channelId)
@@ -22,10 +25,16 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string) (feedInfo 
 	}
 	gconv.Struct(feedChannelInfo, &feedInfo)
 
-	feedItemList, err = dao.GetFeedItemsByChannelId(ctx, channelId)
+	feedItemList, err = dao.GetFeedItemsByChannelId(ctx, channelId, offset, limit)
 	if err != nil {
 		return
 	}
+
+	totalCount, err = dao.GetFeedItemCountByChannelId(ctx, channelId)
+	if err != nil {
+		return
+	}
+	feedInfo.Count = totalCount
 
 	for _, item := range feedItemList {
 		var (
@@ -39,13 +48,13 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string) (feedInfo 
 		if feedItemDto.ChannelImageUrl != "" {
 			feedItemDto.HasThumbnail = true
 		}
-        if feedItemDto.HighlightTitle == "" {
-            feedItemDto.HighlightTitle = feedItemDto.Title
-        }
-        if feedItemDto.TextDescription == "" && feedItemDto.Description != "" {
+		if feedItemDto.HighlightTitle == "" {
+			feedItemDto.HighlightTitle = feedItemDto.Title
+		}
+		if feedItemDto.TextDescription == "" && feedItemDto.Description != "" {
 			rootDocs := soup.HTMLParse(feedItemDto.Description)
 			feedItemDto.TextDescription = rootDocs.FullText()
-        }
+		}
 		feedInfo.Items = append(feedInfo.Items, feedItemDto)
 	}
 

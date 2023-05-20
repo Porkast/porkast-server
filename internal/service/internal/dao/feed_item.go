@@ -25,9 +25,12 @@ var (
 )
 
 // Fill with you ideas below.
-func GetFeedItemsByChannelId(ctx context.Context, channelId string) (itemList []entity.FeedItem, err error) {
+func GetFeedItemsByChannelId(ctx context.Context, channelId string, offset, limit int) (itemList []entity.FeedItem, err error) {
 
-	err = FeedItem.Ctx(ctx).Where("channel_id=?", channelId).OrderDesc("pub_date").Scan(&itemList)
+	if limit == 0 {
+		limit = 10
+	}
+	err = FeedItem.Ctx(ctx).Where("channel_id=?", channelId).Offset(offset).Limit(limit).OrderDesc("pub_date").Scan(&itemList)
 	if err != nil {
 		return
 	}
@@ -45,6 +48,13 @@ func GetFeedItemById(ctx context.Context, channelId, itemId string) (item entity
 	if err != nil {
 		return
 	}
+
+	return
+}
+
+func GetFeedItemCountByChannelId(ctx context.Context, channelId string) (count int, err error) {
+
+	count, err = FeedItem.Ctx(ctx).Where("channel_id=?", channelId).Count()
 
 	return
 }

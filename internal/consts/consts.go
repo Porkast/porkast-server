@@ -14,6 +14,7 @@ const SEARCH_TOOK_TIME_TEXT_VALUE = "(%s 秒)"
 const FEED_ITEMS = "feedItems"
 const CHANNEL_INFO = "channelInfo"
 const ITEM_INFO = "itemInfo"
+const TOTAL_CHANNE_ITEMS_COUNT = "total_channe_items_count"
 
 const SEARCH_KEY_WORD = "searchKeyword"
 const CURRENT_PAGE = "currentPage"
