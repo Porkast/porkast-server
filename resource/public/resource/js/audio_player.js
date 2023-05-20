@@ -121,7 +121,7 @@ function doPlayOrPauseAudio(isPlay, feedItemId, source, type) {
     }
 }
 
-function SetMediaSession(title, artist, album, mediaSrc) {
+function SetMediaSession(title, artist, album) {
     if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
             title: title,
@@ -130,7 +130,6 @@ function SetMediaSession(title, artist, album, mediaSrc) {
             artwork: [
                 {
                     src: mediaSrc,
-                    type: "mediaType",
                 },
             ],
         });
