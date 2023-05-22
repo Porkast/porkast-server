@@ -40,6 +40,9 @@ func (ctl *controller) SearchResult(req *ghttp.Request) {
 		tookTimeStr = strconv.FormatFloat(tookTime, 'f', -3, 64)
 		totalCount = items[0].Count
 		totalPage = totalCount / 10
+        if totalCount % 10 > 0 {
+            totalPage = totalPage + 1
+        }
 	}
 	totalCountText = fmt.Sprintf(consts.SEARCH_RESULT_COUNT_TEXT_VALUE, totalCount)
 	tookTimeText = fmt.Sprintf(consts.SEARCH_TOOK_TIME_TEXT_VALUE, tookTimeStr)
