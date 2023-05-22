@@ -21,10 +21,16 @@
     {{include "module/header.html" .}}
     <div class="flex justify-center min-h-screen">
         <div class="w-full pl-6 pr-6 max-w-2xl">
-            <div class="w-full mb-10 mt-6">
-            </div>
-            <div class="w-full mt-3 flex justify-center">
+            <div class="w-full mt-6 text-gray-500 text-sm">{{.user_listen_later_total_count}}</div>
+            <div class="w-full flex justify-center">
                 {{include "module/listen_later_item_list.html" .}}
+            </div>
+            <div class="flex justify-center mt-6">
+                <div class="btn-group">
+                    <button class="btn" id="prePageBtn">«</button>
+                    <button class="btn">第{{.currentPage}}页</button>
+                    <button class="btn" id="nextPageBtn">»</button>
+                </div>
             </div>
         </div>
     </div>
@@ -41,5 +47,26 @@
         </div>
     </footer>
 </body>
+<script>
+    $(function () {
+        let currentPage = parseInt('{{.currentPage}}')
+        let totalPage = parseInt('{{.totalPage}}')
+        let nextPage = currentPage + 1
+        let prePage = currentPage - 1
+        console.log("totalPage : ", totalPage)
+        $('#nextPageBtn').click(function (event) {
+            if (currentPage >= totalPage) {
+                return
+            }
+            window.location.href = "/listenlater/playlist/{{.user_info.Id}}" + "?page=" + nextPage;
+        });
+        $('#prePageBtn').click(function (event) {
+            if (currentPage == 1) {
+                return
+            }
+            window.location.href = "/listenlater/playlist/{{.user_info.Id}}" + "?page=" + prePage;
+        });
+    });
+</script>
 
 </html>

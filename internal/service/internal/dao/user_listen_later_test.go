@@ -176,3 +176,35 @@ func TestGetListenLaterListByUserId(t *testing.T) {
 		})
 	}
 }
+
+func TestGetTotalListenLaterCountByUserId(t *testing.T) {
+    
+	type args struct {
+		ctx    context.Context
+		userId string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+        {
+            name: "get user listen later total count by user id",
+            args: args{
+                ctx: gctx.New(),
+                userId: "1t5z27w7h00csfdx7cluc20100do2yyq",
+            },
+            wantErr: false,
+        },
+    }
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			totalCount, err := GetTotalListenLaterCountByUserId(tt.args.ctx, tt.args.userId)
+			if (err != nil) != tt.wantErr {
+				t.Fatalf("GetTotalListenLaterCountByUserId() error = %v, wantErr %v", err, tt.wantErr)
+			} 
+
+            t.Logf("the total count is %d", totalCount)
+		})
+	}
+}

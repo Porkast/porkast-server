@@ -79,3 +79,15 @@ func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limi
 
 	return
 }
+
+func GetTotalListenLaterCountByUserId(ctx context.Context, userId string) (totalCount int , err error) {
+    
+	if userId == "" {
+		err = gerror.New(gcode.CodeMissingParameter.Message())
+		return
+	}
+
+    totalCount, err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Count()
+
+    return
+}

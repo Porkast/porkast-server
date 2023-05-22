@@ -67,9 +67,15 @@ func GetListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, ite
 func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limit int) (userListenLaterDtoList []dto.UserListenLater, err error) {
 	var (
 		userListenLaterEntityList []entity.UserListenLaterFeed
+        totalCount int
 	)
 
 	userListenLaterEntityList, err = dao.GetListenLaterListByUserId(ctx, userId, offset, limit)
+	if err != nil {
+		return
+	}
+
+    totalCount, err = dao.GetTotalListenLaterCountByUserId(ctx, userId)
 	if err != nil {
 		return
 	}
@@ -89,6 +95,7 @@ func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limi
 		dtoItem.PubDate = formatPubDate(dtoItem.PubDate)
 		dtoItem.Duration = formatDuration(dtoItem.Duration)
 		dtoItem.RegDate = consts.ADD_ON_TEXT + formatPubDate(dtoItem.RegDate)
+        dtoItem.Count = totalCount
 		userListenLaterDtoList = append(userListenLaterDtoList, dtoItem)
 	}
 

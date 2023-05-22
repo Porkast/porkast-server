@@ -11,6 +11,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gctx"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 func (ctl *controller) ListenLaterTpl(req *ghttp.Request) {
@@ -20,20 +21,38 @@ func (ctl *controller) ListenLaterTpl(req *ghttp.Request) {
 		tplMap                     = consts.GetCommonTplMap()
 		userId                     string
 		userInfo                   dto.UserInfo
+		totalCount                 int
+		page                       int
+		offset                     int
+		totalPage                  int
 		userListenLaterItemDtoList []dto.UserListenLater
 	)
 
 	userId = req.Get("userId").String()
+	page = req.GetQuery("page").Int()
+	if page == 0 {
+		page = 1
+		offset = 0
+	} else {
+		offset = (page - 1) * 10
+	}
 	userInfo, err = userService.GetUserInfoByUserId(ctx, userId)
 	if err != nil {
 		// TODO: redirect to error page
 	}
-	userListenLaterItemDtoList, err = feedService.GetListenLaterListByUserId(ctx, userId, 0, 10)
+	userListenLaterItemDtoList, err = feedService.GetListenLaterListByUserId(ctx, userId, offset, 10)
 	if err != nil {
 		// TODO: redirect to error page
 	}
+	if len(userListenLaterItemDtoList) > 0 {
+		totalCount = userListenLaterItemDtoList[0].Count
+		totalPage = totalCount / 10
+	}
 	tplMap[consts.LISTEN_LATER_ITEM_LIST] = userListenLaterItemDtoList
 	tplMap[consts.USER_INFO] = userInfo
+	tplMap[consts.CURRENT_PAGE] = page
+	tplMap[consts.TOTAL_PAGE] = totalPage
+	tplMap[consts.USER_LISTEN_LATER_TOTAL_COUNT] = gconv.String(totalCount) + g.I18n().T(ctx, `{#total_channe_items_count}`)
 	tplMap[consts.LISTEN_LATER_PLAYLIST_NAME] = g.I18n().T(ctx, `{#play_list}`)
 	req.Response.WriteTpl("listen_later_playlist.html", tplMap)
 }
