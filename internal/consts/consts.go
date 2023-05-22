@@ -19,7 +19,7 @@ const TOTAL_CHANNE_ITEMS_COUNT = "total_channe_items_count"
 const SEARCH_KEY_WORD = "searchKeyword"
 const CURRENT_PAGE = "currentPage"
 
-const LISTEN_LATER_HEADER_TAG_TEXT = "稍后听"
+const LISTEN_LATER_HEADER_TAG_TEXT = "稍后再听"
 const LISTEN_LATER_HEADER_TAG = "listen_later_header_tag"
 const MY_ACCOUNT_TAG = "my_account_tag"
 const MY_ACCOUNT_TAG_VALUE = "我的账号"
