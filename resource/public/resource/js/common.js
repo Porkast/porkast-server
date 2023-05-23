@@ -72,7 +72,7 @@ function ShowSuccessAlert(alertMsg) {
     let alertMsgElem = $("#success-alert-msg")
     alertMsgElem.text(alertMsg)
     alertElem.removeClass("hidden")
-    setTimeout(function () {
+    setTimeout(function() {
         alertElem.addClass("hidden")
     }, 5000);
 }
@@ -82,7 +82,25 @@ function ShowErrorAlert(alertMsg) {
     let alertMsgElem = $("#erro-alert-msg")
     alertMsgElem.text(alertMsg)
     alertElem.removeClass("hidden")
-    setTimeout(function () {
+    setTimeout(function() {
         alertElem.addClass("hidden")
     }, 5000);
+}
+
+function ShowToLoginAlert(alertMsg) {
+    let alertElem = $("#login-alert-elem")
+    let alertMsgElem = $("#login-alert-msg")
+    alertMsgElem.text("还没登录，先去登录或者注册吧")
+    alertElem.removeClass("hidden")
+}
+
+function loginAlertCancel() {
+    let alertElem = $("#login-alert-elem")
+    alertElem.addClass("hidden")
+}
+
+function loginAlertConfirm() {
+    let alertElem = $("#login-alert-elem")
+    alertElem.addClass("hidden")
+    window.location.href = '/login'
 }

@@ -31,6 +31,8 @@ const LOGOUT_TAG_VALUE = "登出"
 const ADD_ON = "add_on"
 const ADD_ON_TEXT = "添加于"
 
+const PAST_FEED_ITEMS = "past_feed_items"
+
 func GetCommonTplMap() (tplMap g.Map) {
 
 	tplMap = g.Map{

@@ -1,6 +1,10 @@
 function AddToListenLater(channelId, itemId) {
 
     let userInfo = getUserInfo()
+    if (userInfo === undefined || userInfo === null) {
+        ShowToLoginAlert("")
+        return
+    }
     let userId = userInfo['id']
 
     if (userId === "") {
@@ -20,7 +24,7 @@ function AddToListenLater(channelId, itemId) {
         },
         url: '/v1/api/listenlater/item',
         data: JSON.stringify(postData),
-        success: function (data) {
+        success: function(data) {
             let jsonData = data
             if (jsonData.code !== 0) {
                 ShowSuccessAlert(jsonData.message)
@@ -28,7 +32,7 @@ function AddToListenLater(channelId, itemId) {
                 ShowSuccessAlert(jsonData.message)
             }
         },
-        error: function (data) {
+        error: function(data) {
             ShowErrorAlert(data.message)
         }
     })
