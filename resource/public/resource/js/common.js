@@ -87,7 +87,7 @@ function ShowErrorAlert(alertMsg) {
     }, 5000);
 }
 
-function ShowToLoginAlert(alertMsg) {
+function ShowToLoginAlert() {
     let alertElem = $("#login-alert-elem")
     let alertMsgElem = $("#login-alert-msg")
     alertMsgElem.text("还没登录，先去登录或者注册吧")
