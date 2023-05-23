@@ -45,11 +45,11 @@ function isMobile(mobile) {
 }
 
 
-function share(id) {
+function share(channelId, itemId) {
     let domain = window.location.host
-    let shareUrl = 'http://' + domain + '/view/f/i/s/' + id
-    $('#clipboard-temp-holder-' + id).text(shareUrl)
-    copyToClickBoard('clipboard-temp-holder-' + id)
+    let shareUrl = 'http://' + domain + '/share/feed/' + channelId + '/item/' + itemId
+    $('#clipboard-temp-holder-' + itemId).text(shareUrl)
+    copyToClickBoard('clipboard-temp-holder-' + itemId)
 
 }
 
@@ -57,10 +57,7 @@ function copyToClickBoard(elemId) {
     var content = document.getElementById(elemId).innerHTML;
     navigator.clipboard.writeText(content)
         .then(() => {
-            mdui.snackbar({
-                message: '已复制到剪贴板',
-                position: 'top'
-            })
+            ShowSuccessAlert('已复制到剪贴板')
         })
         .catch(err => {
             console.log('Something went wrong', err);
