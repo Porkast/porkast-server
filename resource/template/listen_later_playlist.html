@@ -19,6 +19,7 @@
 <body style="margin: 0; display:inherit;" class="bg-gray-100">
     <!-- nav header -->
     {{include "module/header.html" .}}
+    {{include "module/alert.html" .}}
     <div class="flex justify-center min-h-screen">
         <div class="w-full pl-6 pr-6 max-w-2xl">
             <div class="w-full mt-6 text-gray-500 text-sm">{{.user_listen_later_total_count}}</div>
@@ -53,7 +54,6 @@
         let totalPage = parseInt('{{.totalPage}}')
         let nextPage = currentPage + 1
         let prePage = currentPage - 1
-        console.log("totalPage : ", totalPage)
         $('#nextPageBtn').click(function (event) {
             if (currentPage >= totalPage) {
                 return

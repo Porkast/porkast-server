@@ -40,7 +40,6 @@ function doLogin(account, password) {
         url: '/v1/api/user/login',
         data: JSON.stringify(postData),
         success: function (data) {
-            console.log(data)
             let jsonData = data
             if (jsonData.code !== 0) {
                 ShowErrorAlert(jsonData.message)
