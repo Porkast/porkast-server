@@ -57,12 +57,12 @@
                     </button>
                     <div class="text-base text-gray-500 w-20">{{$item.Duration}}</div>
                     <button class="bg-gray-200 w-20 h-8 flex items-center rounded-lg"
-                        onclick="share('{{$item.ChannelId}}', '{{$item.Id}}')"><img class="w-4 ml-2 mr-1"
+                        onclick="share('{{$item.ChannelId}}', '{{$item.ItemId}}')"><img class="w-4 ml-2 mr-1"
                             src="/resource/image/share.png" alt=""><span
                             class="font-bold text-sm mr-2">分享</span></button>
                 </div>
             </div>
-            <textarea style="display: none;" id="clipboard-temp-holder-{{$item.Id}}"></textarea>
+            <textarea style="display: none;" id="clipboard-temp-holder-{{$item.ItemId}}"></textarea>
         </div>
         {{end}}
     </div>

@@ -64,11 +64,18 @@
                             class="w-6 h-6 hidden" alt="">
                     </button>
                     <div class="text-base text-gray-500 ml-3 w-20">{{.itemInfo.Duration}}</div>
-                    <button class="bg-gray-200 w-24 h-8 ml-4 flex items-center rounded-lg"
-                        onclick="AddToListenLater('{{.itemInfo.ChannelId}}', '{{.itemInfo.Id}}')"><img
-                            class="w-4 ml-2 mr-2" src="/resource/image/save.png" alt=""><span
-                            class="font-bold text-sm">稍后再听</span></button>
+                    <button class="bg-gray-200 w-22 md:w-24 h-8 flex items-center rounded-lg mr-1 md:mr-2"
+                        onclick="AddToListenLater('{{.itemInfo.ChannelId}}', '{{.itemInfo.Id}}')">
+                        <img class="w-3 md:w-4 ml-1 md:ml-2 mr-1" src="/resource/image/save.png" alt="">
+                        <span class="font-bold text-xs md:text-sm mr-2">稍后再听</span>
+                    </button>
+                    <button class="bg-gray-200 w-14 md:w-20 h-8 flex items-center rounded-lg"
+                        onclick="share('{{.itemInfo.ChannelId}}', '{{.itemInfo.Id}}')">
+                        <img class="w-3 md:w-4 ml-1 md:ml-2 mr-1" src="/resource/image/share.png" alt="">
+                        <span class="font-bold text-xs md:text-sm mr-1 md:mr-2">分享</span>
+                    </button>
                 </div>
+                <textarea style="display: none;" id="clipboard-temp-holder-{{.itemInfo.Id}}"></textarea>
             </div>
             <div class="card w-full max-w-2xl bg-base-100 shadow-xl mt-6">
                 <div class="card-body">
