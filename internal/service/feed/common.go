@@ -32,7 +32,9 @@ func formatDuration(duration string) (formatDuration string) {
 		splits = gstr.Split(duration, ":")
 		if len(splits) < 3 {
 			formatDuration = "00:" + duration
-		}
+        } else {
+            formatDuration = duration
+        }
 	}
 	return
 }
