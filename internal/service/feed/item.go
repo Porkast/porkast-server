@@ -32,7 +32,14 @@ func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedCha
 	feedItemInfoDto.ChannelTitle = feedChannelModel.Title
 	feedItemInfoDto.FeedLink = feedChannelModel.FeedLink
 	feedItemInfoDto.Link = formatSourceLink(feedItemInfoDto.Link)
-	if feedItemInfoDto.ChannelImageUrl != "" {
+	if feedItemInfoDto.ImageUrl == "" {
+		if feedItemInfoDto.ChannelImageUrl != "" {
+			feedItemInfoDto.ImageUrl = feedItemInfoDto.ChannelImageUrl
+			feedItemInfoDto.HasThumbnail = true
+        } else {
+			feedItemInfoDto.HasThumbnail = false
+        }
+	} else {
 		feedItemInfoDto.HasThumbnail = true
 	}
 
@@ -62,7 +69,10 @@ func SearchFeedItemsByKeyword(ctx context.Context, keyword string, page, size in
 		var itemDto dto.FeedItem
 		gconv.Struct(feedItemES, &itemDto)
 		itemDto.Link = formatSourceLink(itemDto.Link)
-		if itemDto.ChannelImageUrl != "" {
+		if itemDto.ImageUrl != "" {
+			itemDto.HasThumbnail = true
+		} else if itemDto.ChannelImageUrl != "" {
+			itemDto.ImageUrl = itemDto.ChannelImageUrl
 			itemDto.HasThumbnail = true
 		} else {
 			itemDto.HasThumbnail = false

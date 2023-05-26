@@ -45,9 +45,14 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, li
 		feedItemDto.ChannelTitle = feedInfo.Title
 		feedItemDto.Duration = formatDuration(feedItemDto.Duration)
 		feedItemDto.PubDate = formatPubDate(feedItemDto.PubDate)
-		if feedItemDto.ChannelImageUrl != "" {
+		if feedItemDto.ImageUrl != "" {
 			feedItemDto.HasThumbnail = true
-		}
+        } else if feedItemDto.ChannelImageUrl != "" {
+            feedItemDto.ImageUrl = feedItemDto.ChannelImageUrl
+			feedItemDto.HasThumbnail = true
+        } else {
+			feedItemDto.HasThumbnail = false
+        }
 		if feedItemDto.HighlightTitle == "" {
 			feedItemDto.HighlightTitle = feedItemDto.Title
 		}
