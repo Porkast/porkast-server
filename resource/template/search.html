@@ -3,17 +3,7 @@
 
 <head>
     <title>{{.searchKeyword}} - {{.appname}}</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="/resource/image/favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="/resource/js/audio_player.js"></script>
-    <script src="/resource/js/search.js"></script>
-    <script src="/resource/js/common.js"></script>
-    <script src="/resource/js/header.js"></script>
-    <script src="/resource/js/listen_later.js"></script>
+    {{include "module/common_header_link.html" .}}
 </head>
 
 <body style="margin: 0; display:inherit;" class="bg-gray-100">
