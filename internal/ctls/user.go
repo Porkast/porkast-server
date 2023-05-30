@@ -86,3 +86,12 @@ func (ctl *controller) DoRegister(req *ghttp.Request) {
 	}
 	middleware.JsonExit(req, 0, g.I18n().T(req.GetCtx(), `{#register_sucess}`), userInfoDto)
 }
+
+func (ctl *controller) UserInfoTpl(req *ghttp.Request) {
+
+	var tplMap = consts.GetCommonTplMap()
+    tplMap[consts.NICKANME_TEXT] = g.I18n().T(req.GetCtx(), `{#nickname}`)
+    tplMap[consts.ACCOUNT_TEXT] = g.I18n().T(req.GetCtx(), `{#account}`)
+    tplMap[consts.REG_DATE_TEXT] = g.I18n().T(req.GetCtx(), `{#reg_date}`)
+	req.Response.WriteTpl("user/account_info.html", tplMap)
+}

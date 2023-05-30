@@ -37,3 +37,7 @@ const REGISTER_PASSWORD_CONFIRM_VALUE = "请确认密码"
 
 const REGISTER_BTN_TEXT = "register_btn_text"
 const REGISTER_BTN_TEXT_VALUE = "注册"
+
+const NICKANME_TEXT = "nickname"
+const ACCOUNT_TEXT = "account"
+const REG_DATE_TEXT = "reg_date"

@@ -20,6 +20,7 @@ func WebRouter(group *ghttp.RouterGroup) {
 
 	group.GET("/listenlater/playlist/:userId", ctls.Ctl.ListenLaterTpl)
 
+	group.GET("/user/info/:id", ctls.Ctl.UserInfoTpl)
 }
 
 func V1ApiRouter(group *ghttp.RouterGroup) {
