@@ -11,7 +11,7 @@
                 {{if eq "" .searchKeyword}}
                 <input id="searchInput" type="text" placeholder="输入关键词搜索" class="input input-bordered" />
                 {{else}}
-                <input id="searchInput" type="text" placeholder="{{.searchKeyword}}" value='{{.searchKeyword}}'
+                <input id="searchInput" type="text" placeholder='{{.searchKeyword}}' value='{{.searchKeyword}}'
                     class="input input-bordered" />
                 {{end}}
             </div>
@@ -67,7 +67,7 @@
             {{if eq "" .searchKeyword}}
             <input id="searchInputBottom" type="text" placeholder="输入关键词搜索" class="input input-sm input-bordered" />
             {{else}}
-            <input id="searchInputBottom" type="text" value="{{.searchKeyword}}"
+            <input id="searchInputBottom" type="text" value='{{.searchKeyword}}'
                 class="input input-sm input-bordered" />
             {{end}}
         </div>
