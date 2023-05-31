@@ -44,7 +44,7 @@ func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedCha
 	}
 
     if feedItemInfoDto.Author == "" {
-        feedChannelDto.Author = feedChannelDto.Author
+        feedItemInfoDto.Author = feedChannelDto.Author
     }
 
 	return
