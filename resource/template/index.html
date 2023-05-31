@@ -39,7 +39,7 @@
                         <div id="header_account_text" class="mt-4 text-gray-500">__</div>
                     </div>
                     <li class="h-12 border-t border-gray-200">
-                        <a class="w-full flex justify-start">
+                        <a id="header_account_info_a_tag" class="w-full flex justify-start">
                             <img class="w-6" src="/resource/image/account.png" alt="">{{.my_account_tag}}
                         </a>
                     </li>
@@ -113,10 +113,12 @@
     function SetHeaderUserInfo(userId, nickname, account) {
         let nicknameElem = $("#header_nickname_text")
         let accountElem = $("#header_account_text")
+        let accountATagElem = $("#header_account_info_a_tag")
         let listenLaterTag = $("#header_listen_later_playlist_tag")
         nicknameElem.text(nickname)
         accountElem.text("@" + account)
         listenLaterTag.attr("href", "/listenlater/playlist/" + userId)
+        accountATagElem.attr("href", "/user/info/" + userId)
     }
 </script>
 

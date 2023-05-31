@@ -10,22 +10,22 @@
     {{include "module/header.html" .}}
     {{include "module/alert.html" .}}
     <div class="flex justify-center mt-4 min-h-screen">
-        <div class="w-full ml-6 mr-6 max-w-2xl bg-white min-h-screen">
+        <div class="w-full ml-6 mr-6 mb-6 max-w-2xl bg-white min-h-screen">
             <div class="w-full max-2w-xl">
                 <div class="flex justify-start w-full max-w-xl mr-6 ml-6 mt-6">
-                    <div class="avatar">
-                        <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <div class="avatar w-20 h-20 md:w-24 md:h-24">
+                        <div class="w-20 h-20 md:w-24 md:h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                             <img id="avatar_elem" src="/resource/image/user-fill.png" />
                         </div>
                     </div>
                     <div class="ml-6">
-                        <div id="nickname_elem" class="text-gray-500">
+                        <div id="nickname_elem" class="text-lg">
                             {{.nickname}}:<span id="nickname_span"></span>
                         </div>
-                        <div id="account_elem" class="mt-4 text-gray-500">
+                        <div id="account_elem" class="mt-1 text-gray-500">
                             {{.account}}:<span id="account_span"></span>
                         </div>
-                        <div id="reg_date_elem" class="mt-4 text-gray-500">
+                        <div id="reg_date_elem" class="mt-1 text-gray-500">
                             {{.reg_date}}:<span id="reg_date_span"></span>
                         </div>
                     </div>
