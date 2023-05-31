@@ -43,6 +43,10 @@ func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedCha
 		feedItemInfoDto.HasThumbnail = true
 	}
 
+    if feedItemInfoDto.Author == "" {
+        feedChannelDto.Author = feedChannelDto.Author
+    }
+
 	return
 }
 
