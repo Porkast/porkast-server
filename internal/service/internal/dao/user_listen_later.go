@@ -7,6 +7,7 @@ package dao
 import (
 	"context"
 	"guoshao-fm-web/internal/consts"
+	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/model/entity"
 	"guoshao-fm-web/internal/service/internal/dao/internal"
 
@@ -61,7 +62,7 @@ func GetListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, ite
 	return
 }
 
-func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limit int) (entityList []entity.UserListenLaterFeed, err error) {
+func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limit int) (dtoList []dto.UserListenLater, err error) {
 
 	if userId == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
@@ -71,23 +72,23 @@ func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limi
 	g.Model("user_listen_later ull").
 		InnerJoin("feed_item fi", "ull.item_id = fi.id").
 		InnerJoin("feed_channel fc", "fi.channel_id = fc.id").
-		Fields("ull.*, fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title").
+		Fields("ull.*, fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
 		Offset(offset).
 		Limit(limit).
 		Order("ull.reg_date desc").
-		Scan(&entityList)
+		Scan(&dtoList)
 
 	return
 }
 
-func GetTotalListenLaterCountByUserId(ctx context.Context, userId string) (totalCount int , err error) {
-    
+func GetTotalListenLaterCountByUserId(ctx context.Context, userId string) (totalCount int, err error) {
+
 	if userId == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
 		return
 	}
 
-    totalCount, err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Count()
+	totalCount, err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Count()
 
-    return
+	return
 }

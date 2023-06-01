@@ -24,6 +24,7 @@ type UserListenLater struct {
 	TextDescription string
 	ChannelImageUrl string
 	ChannelTitle    string
+	ChannelAuthor   string
 	FeedLink        string
 	Count           int
 	HasThumbnail    bool

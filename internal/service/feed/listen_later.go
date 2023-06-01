@@ -66,37 +66,44 @@ func GetListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, ite
 
 func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limit int) (userListenLaterDtoList []dto.UserListenLater, err error) {
 	var (
-		userListenLaterEntityList []entity.UserListenLaterFeed
-        totalCount int
+		totalCount int
 	)
 
-	userListenLaterEntityList, err = dao.GetListenLaterListByUserId(ctx, userId, offset, limit)
+	userListenLaterDtoList, err = dao.GetListenLaterListByUserId(ctx, userId, offset, limit)
 	if err != nil {
 		return
 	}
 
-    totalCount, err = dao.GetTotalListenLaterCountByUserId(ctx, userId)
+	totalCount, err = dao.GetTotalListenLaterCountByUserId(ctx, userId)
 	if err != nil {
 		return
 	}
 
-	for _, entityItem := range userListenLaterEntityList {
-		var dtoItem dto.UserListenLater
-		gconv.Struct(entityItem, &dtoItem)
-		if entityItem.ChannelImageUrl != "" {
-			dtoItem.HasThumbnail = true
+	for i := 0; i < len(userListenLaterDtoList); i++ {
+		var dtoItem = userListenLaterDtoList[i]
+		if dtoItem.ImageUrl == "" {
+			if dtoItem.ChannelImageUrl == "" {
+				dtoItem.HasThumbnail = false
+			} else {
+				dtoItem.ImageUrl = dtoItem.ChannelImageUrl
+				dtoItem.HasThumbnail = true
+			}
 		} else {
-			dtoItem.HasThumbnail = false
+			dtoItem.HasThumbnail = true
 		}
+
 		if dtoItem.TextDescription == "" && dtoItem.Description != "" {
 			rootDocs := soup.HTMLParse(dtoItem.Description)
 			dtoItem.TextDescription = rootDocs.FullText()
 		}
+		if dtoItem.Author == "" {
+			dtoItem.Author = dtoItem.ChannelAuthor
+		}
 		dtoItem.PubDate = formatPubDate(dtoItem.PubDate)
 		dtoItem.Duration = formatDuration(dtoItem.Duration)
 		dtoItem.RegDate = consts.ADD_ON_TEXT + formatPubDate(dtoItem.RegDate)
-        dtoItem.Count = totalCount
-		userListenLaterDtoList = append(userListenLaterDtoList, dtoItem)
+		dtoItem.Count = totalCount
+        userListenLaterDtoList[i] = dtoItem
 	}
 
 	return
