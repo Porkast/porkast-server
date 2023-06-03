@@ -4,6 +4,7 @@ import (
 	"context"
 	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/model/entity"
+	"guoshao-fm-web/internal/service/elasticsearch"
 	"guoshao-fm-web/internal/service/internal/dao"
 
 	"github.com/anaskhan96/soup"
@@ -47,12 +48,12 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, li
 		feedItemDto.PubDate = formatPubDate(feedItemDto.PubDate)
 		if feedItemDto.ImageUrl != "" {
 			feedItemDto.HasThumbnail = true
-        } else if feedItemDto.ChannelImageUrl != "" {
-            feedItemDto.ImageUrl = feedItemDto.ChannelImageUrl
+		} else if feedItemDto.ChannelImageUrl != "" {
+			feedItemDto.ImageUrl = feedItemDto.ChannelImageUrl
 			feedItemDto.HasThumbnail = true
-        } else {
+		} else {
 			feedItemDto.HasThumbnail = false
-        }
+		}
 		if feedItemDto.HighlightTitle == "" {
 			feedItemDto.HighlightTitle = feedItemDto.Title
 		}
@@ -61,6 +62,40 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, li
 			feedItemDto.TextDescription = rootDocs.FullText()
 		}
 		feedInfo.Items = append(feedInfo.Items, feedItemDto)
+	}
+
+	return
+}
+
+func QueryFeedChannelByKeyword(ctx context.Context, keyword string, page, size int) (esChannelList []dto.FeedChannel, err error) {
+	var (
+		esChannelEntityList []entity.FeedChannelESData
+	)
+
+	if size == 0 {
+		size = 10
+	}
+
+	if page >= 1 {
+		page = (page - 1) * size
+	} else {
+		page = page * size
+	}
+
+	esChannelEntityList, err = elasticsearch.GetClient().QueryFeedChannelFull(ctx, keyword, page, size)
+	if err != nil {
+		return
+	}
+
+	for _, esChannelEntity := range esChannelEntityList {
+		var esChannelDto dto.FeedChannel
+		gconv.Struct(esChannelEntity, &esChannelDto)
+		if esChannelDto.ImageUrl == "" {
+			esChannelDto.HasThumbnail = false
+		} else {
+			esChannelDto.HasThumbnail = true
+		}
+		esChannelList = append(esChannelList, esChannelDto)
 	}
 
 	return

@@ -1,0 +1,20 @@
+<div class="w-full flex justify-start">
+    <div class="carousel rounded-box">
+        {{range $index, $item := .feedChannels}}
+        <a href="/feed/channel/{{$item.Id}}" class="carousel-item bg-white mr-4 w-24">
+            <div class="ml-2 mr-2 mt-2 mb-2">
+                <div class="avatar">
+                    <div class="w-20 rounded">
+                        {{if $item.HasThumbnail}}
+                        <img src="{{$item.ImageUrl}}" />
+                        {{else}}
+                        <img src="/resource/image/logo192.png" />
+                        {{end}}
+                    </div>
+                </div>
+                <div class="w-20 text-base truncate">{{$item.Title}}</div>
+            </div>
+        </a>
+        {{end}}
+    </div>
+</div>

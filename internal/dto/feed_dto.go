@@ -48,4 +48,6 @@ type FeedChannel struct {
 	Count           int
 	Copyright       string
 	Language        string
+	TookTime        float64
+	HasThumbnail    bool
 }

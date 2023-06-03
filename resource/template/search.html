@@ -17,6 +17,9 @@
                 <span>&nbsp;</span>
                 <div class="text-gray-500 text-sm">{{.searchTookTime}}</div>
             </div>
+            <div class="w-full mt-3 flex justify-center">
+                {{include "module/channel_horizontal_list.html" .}}
+            </div>
             <!-- feed channel item list -->
             <div class="w-full mt-3 flex justify-center">
                 {{include "module/search_list_item.html" .}}
