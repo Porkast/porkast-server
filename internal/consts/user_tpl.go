@@ -17,7 +17,6 @@ const LOGIN_BTN_TEXT_VALUE = "登录"
 const TO_REGISTER_TEXT = "to_register_hint"
 const TO_REGISTER_TEXT_VALUE = "没有账号？去注册吧"
 
-
 const REGISTER_NICKNAME_INPUT_HINT = "register_nickname_input_hint"
 const REGISTER_NICKNAME_INPUT_HINT_VALUE = "昵称"
 const REGISTER_NICKNAME_INPUT_PLACEHOLDER_HINT = "register_nickname_input_placeholder_hint"

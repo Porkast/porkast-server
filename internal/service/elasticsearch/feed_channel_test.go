@@ -29,7 +29,7 @@ func TestQueryFeedChannelFull(t *testing.T) {
 				offset:  0,
 				limit:   10,
 			},
-            wantErr: false,
+			wantErr: false,
 		},
 	}
 
@@ -43,7 +43,7 @@ func TestQueryFeedChannelFull(t *testing.T) {
 				t.Fatalf("QueryFeedChannelFull() error = %v, wantErr %v", err, tt.wantErr)
 			}
 
-            t.Logf("QueryFeedChannelFull() channelEsInfoList size :%d  %+v", len(channelESInfoList), channelESInfoList)
+			t.Logf("QueryFeedChannelFull() channelEsInfoList size :%d  %+v", len(channelESInfoList), channelESInfoList)
 		})
 	}
 }

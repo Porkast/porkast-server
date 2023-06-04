@@ -32,11 +32,11 @@ func (ctl *controller) FeedItemDetail(req *ghttp.Request) {
 
 func (ctl *controller) ShareFeedItemTpl(req *ghttp.Request) {
 	var (
-		err          error
-		itemInfo     dto.FeedItem
-		channelInfo  dto.FeedChannel
-		itemId       string
-		channelId    string
+		err         error
+		itemInfo    dto.FeedItem
+		channelInfo dto.FeedChannel
+		itemId      string
+		channelId   string
 	)
 	itemId = req.Get("itemId").String()
 	channelId = req.Get("channelId").String()

@@ -19,7 +19,7 @@ func Test_initRedisClient(t *testing.T) {
 		}
 		_, err = redisClient.Do(ctx, "SET", "Test", "test_value")
 		if err != nil {
-            t.Fatal("init redis client failed : \n", err)
+			t.Fatal("init redis client failed : \n", err)
 		}
 	})
 }

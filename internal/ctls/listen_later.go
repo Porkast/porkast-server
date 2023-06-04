@@ -47,9 +47,9 @@ func (ctl *controller) ListenLaterTpl(req *ghttp.Request) {
 	if len(userListenLaterItemDtoList) > 0 {
 		totalCount = userListenLaterItemDtoList[0].Count
 		totalPage = totalCount / 10
-        if userListenLaterItemDtoList[0].Count % 10 > 0 {
-            totalPage = totalPage + 1
-        }
+		if userListenLaterItemDtoList[0].Count%10 > 0 {
+			totalPage = totalPage + 1
+		}
 	}
 	tplMap[consts.LISTEN_LATER_ITEM_LIST] = userListenLaterItemDtoList
 	tplMap[consts.USER_INFO] = userInfo

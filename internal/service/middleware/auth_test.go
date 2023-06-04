@@ -41,9 +41,9 @@ func TestParseToken(t *testing.T) {
 	)
 
 	tokenModel, err = ParseToken(tokenStr)
-    if err != nil {
-        t.Fatal("Parse token failed : ", err)
-    }
+	if err != nil {
+		t.Fatal("Parse token failed : ", err)
+	}
 
-    t.Log("Prase token success : ", gjson.MustEncodeString(tokenModel))
+	t.Log("Prase token success : ", gjson.MustEncodeString(tokenModel))
 }

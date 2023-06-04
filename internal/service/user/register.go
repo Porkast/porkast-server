@@ -33,7 +33,7 @@ func Register(ctx context.Context, userInfo dto.UserInfo) (userInfoResp dto.User
 
 	existEntity, _ = dao.GetUserInfoByEmailOrPhone(ctx, userInfo.Email, userInfo.Phone)
 	if existEntity.Id != "" {
-		return userInfoResp, gerror.New(g.I18n().T(ctx,`{#user_already_exist}`))
+		return userInfoResp, gerror.New(g.I18n().T(ctx, `{#user_already_exist}`))
 	}
 
 	err = dao.CreateUserInfo(ctx, userInfoEntity)

@@ -26,8 +26,8 @@ func GetUserInfoByUserId(ctx context.Context, userId string) (userInfoDto dto.Us
 		return
 	}
 
-    gconv.Struct(userInfoEntity, &userInfoDto)
-    userInfoDto.Password = ""
+	gconv.Struct(userInfoEntity, &userInfoDto)
+	userInfoDto.Password = ""
 
 	return
 }

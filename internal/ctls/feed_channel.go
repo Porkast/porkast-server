@@ -37,9 +37,9 @@ func (ctl *controller) FeedChannelDetail(req *ghttp.Request) {
 
 	if len(channelInfo.Items) > 0 {
 		totalPage = channelInfo.Count / 10
-        if channelInfo.Count % 10 > 0 {
-            totalPage = totalPage + 1
-        }
+		if channelInfo.Count%10 > 0 {
+			totalPage = totalPage + 1
+		}
 	}
 
 	var tplMap = consts.GetCommonTplMap()
