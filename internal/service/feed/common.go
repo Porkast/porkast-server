@@ -3,7 +3,10 @@ package feed
 import (
 	"fmt"
 
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/os/gtime"
+	"github.com/gogf/gf/v2/text/gregex"
 	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 )
@@ -32,9 +35,9 @@ func formatDuration(duration string) (formatDuration string) {
 		splits = gstr.Split(duration, ":")
 		if len(splits) < 3 {
 			formatDuration = "00:" + duration
-        } else {
-            formatDuration = duration
-        }
+		} else {
+			formatDuration = duration
+		}
 	}
 	return
 }
@@ -44,6 +47,32 @@ func formatSourceLink(link string) (formatLink string) {
 		formatLink = gstr.Replace(link, "ximalaya.com//", "ximalaya.com/")
 	} else {
 		formatLink = link
+	}
+
+	return
+}
+
+func formatItemShownotes(shownots string) (formatShownotes string) {
+	var (
+		matches [][]string
+		err     error
+	)
+
+	matches, err = gregex.MatchAllString(`([0-5][0-9]):([0-5]\d)`, shownots)
+	if err != nil {
+		g.Log().Line().Debug(gctx.New(), err)
+		return shownots
+	} else if len(matches) == 0 {
+		g.Log().Line().Debug(gctx.New(), "the matches is empty")
+		return shownots
+	} else {
+		g.Log().Line().Debug(gctx.New(), matches)
+	}
+
+	formatShownotes = shownots
+	for _, match := range matches {
+		var matchItem = match[0]
+		formatShownotes = gstr.Replace(formatShownotes, matchItem, `<span class='underline hover:cursor-pointer' onclick='playAt("`+matchItem+`")'>`+matchItem+`</span>`)
 	}
 
 	return

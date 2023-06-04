@@ -25,7 +25,8 @@
                         </div>
                     </div>
                     <div class="">
-                        <a href="/feed/channel/{{.itemInfo.ChannelId}}" class="text-sm font-lg ml-3">频道: {{.itemInfo.ChannelTitle}}</a>
+                        <a href="/feed/channel/{{.itemInfo.ChannelId}}" class="text-sm font-lg ml-3">频道:
+                            {{.itemInfo.ChannelTitle}}</a>
                         <div class="text-sm font-medium text-gray-500 ml-3">主播: {{.itemInfo.Author}}</div>
                         <div class="flex justify-start ml-3 mt-3">
                             <a href="{{.itemInfo.FeedLink}}" target="_blank">
@@ -68,7 +69,7 @@
                 <textarea style="display: none;" id="clipboard-temp-holder-{{.itemInfo.Id}}"></textarea>
             </div>
             <div class="card w-full max-w-2xl bg-base-100 shadow-xl mt-6">
-                <div class="card-body">
+                <div id="item-detail-feed-item-description" class="card-body">
                     <h2 class="card-title">节目详情</h2>
                     <p class="mt-6">{{.itemInfo.Description}}</p>
                 </div>
@@ -78,5 +79,19 @@
     {{include "module/bottom_audio_player.html" .}}
     {{include "module/footer.html" .}}
 </body>
+
+<script>
+    $(function () {
+        RefineStyleForShowNotes()
+
+    });
+
+    function RefineStyleForShowNotes() {
+        // set underline to a tag
+        let itemDescriptionElem = $('#item-detail-feed-item-description')
+        itemDescriptionElem.find('a').addClass('underline');
+    }
+
+</script>
 
 </html>

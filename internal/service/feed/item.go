@@ -36,16 +36,20 @@ func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedCha
 		if feedItemInfoDto.ChannelImageUrl != "" {
 			feedItemInfoDto.ImageUrl = feedItemInfoDto.ChannelImageUrl
 			feedItemInfoDto.HasThumbnail = true
-        } else {
+		} else {
 			feedItemInfoDto.HasThumbnail = false
-        }
+		}
 	} else {
 		feedItemInfoDto.HasThumbnail = true
 	}
 
-    if feedItemInfoDto.Author == "" {
-        feedItemInfoDto.Author = feedChannelDto.Author
-    }
+	if feedItemInfoDto.Author == "" {
+		feedItemInfoDto.Author = feedChannelDto.Author
+	}
+
+	if feedItemInfoDto.Description != "" {
+		feedItemInfoDto.Description = formatItemShownotes(feedItemInfoDto.Description)
+	}
 
 	return
 }

@@ -226,3 +226,28 @@ function secondsToHourMunitesSeconds(totalSeconds) {
 function caculateRangeInputVal(currentTime, totalTime) {
     return Math.round((currentTime / totalTime) * 10000)
 }
+
+
+function playAt(timeAt) {
+    console.log("timeAt : ", timeAt)
+    let currentTime
+    if (timeAt.includes(":")) {
+        let splitArray = timeAt.split(":");
+        if (splitArray.length == 2) {
+            currentTime = parseInt(splitArray[0]) * 60
+            currentTime = currentTime + parseInt(splitArray[1])
+        } else if (splitArray.length == 3) {
+            currentTime = parseInt(splitArray[0]) * 60 * 60
+            currentTime = currentTime + parseInt(splitArray[1]) * 60
+            currentTime = currentTime + parseInt(splitArray[2])
+        }
+    } else {
+        currentTime = timeAt
+    }
+    console.log("the current time is ", currentTime)
+    if ($("#bottom-audio-player").attr("current-item-id") == "") {
+        return
+    }
+    let playerElement = $("#bottom-audio-player")
+    playerElement[0].currentTime = currentTime
+}
