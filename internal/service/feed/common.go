@@ -58,15 +58,10 @@ func formatItemShownotes(shownots string) (formatShownotes string) {
 		err     error
 	)
 
-	matches, err = gregex.MatchAllString(`([0-5][0-9]):([0-5]\d)`, shownots)
+	matches, err = gregex.MatchAllString(`((\d\d):([0-5][0-9]):([0-5]\d))|([0-5][0-9]):([0-5]\d)`, shownots)
 	if err != nil {
 		g.Log().Line().Debug(gctx.New(), err)
 		return shownots
-	} else if len(matches) == 0 {
-		g.Log().Line().Debug(gctx.New(), "the matches is empty")
-		return shownots
-	} else {
-		g.Log().Line().Debug(gctx.New(), matches)
 	}
 
 	formatShownotes = shownots
