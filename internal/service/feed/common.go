@@ -72,3 +72,14 @@ func formatItemShownotes(shownots string) (formatShownotes string) {
 
 	return
 }
+
+func formatFeedAuthor(author string) (formatAuthor string) {
+
+	if author != "" && gstr.HasSuffix(author, "|") {
+		formatAuthor = author[:len(author)-1]
+	} else {
+		formatAuthor = author
+	}
+
+	return
+}

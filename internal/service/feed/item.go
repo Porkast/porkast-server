@@ -47,6 +47,8 @@ func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedCha
 		feedItemInfoDto.Author = feedChannelDto.Author
 	}
 
+	feedItemInfoDto.Author = formatFeedAuthor(feedItemInfoDto.Author)
+
 	if feedItemInfoDto.Description != "" {
 		feedItemInfoDto.Description = formatItemShownotes(feedItemInfoDto.Description)
 	}
@@ -93,6 +95,7 @@ func SearchFeedItemsByKeyword(ctx context.Context, keyword string, page, size in
 			itemDto.TextDescription = rootDocs.FullText()
 
 		}
+		itemDto.Author = formatFeedAuthor(itemDto.Author)
 		itemDto.PubDate = formatPubDate(itemDto.PubDate)
 		itemDto.Duration = formatDuration(itemDto.Duration)
 		items = append(items, itemDto)

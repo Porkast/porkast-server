@@ -25,6 +25,7 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, li
 		return
 	}
 	gconv.Struct(feedChannelInfo, &feedInfo)
+	feedInfo.Author = formatFeedAuthor(feedInfo.Author)
 
 	feedItemList, err = dao.GetFeedItemsByChannelId(ctx, channelId, offset, limit)
 	if err != nil {
@@ -95,6 +96,7 @@ func QueryFeedChannelByKeyword(ctx context.Context, keyword string, page, size i
 		} else {
 			esChannelDto.HasThumbnail = true
 		}
+		esChannelDto.Author = formatFeedAuthor(esChannelDto.Author)
 		esChannelList = append(esChannelList, esChannelDto)
 	}
 
