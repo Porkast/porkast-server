@@ -1,55 +1,69 @@
-$(function() {
+$(function () {
     // let searchClearBtn = $("#searchClearBtn");
     let searchBtn = $("#homeSearchBtn");
     let searchInput = $("#searchInput");
     let searchBtnBottom = $("#homeSearchBtnBottom");
     let searchInputBottom = $("#searchInputBottom");
-    let searchOptionElem = $("#search-options")
-    searchInput.keypress(function(event) {
+    let searchOptionElem = $("#searchOptions")
+    let searchOptionBottomElem = $("#searchOptionsBottom")
+    let isScopeChannel = searchBtn.attr("scope-channel")
+    searchOptionElem.change(function () {
+        let value = $(this).val()
+        searchOptionBottomElem.val(value)
+    })
+
+    searchOptionBottomElem.change(function () {
+        let value = $(this).val()
+        searchOptionElem.val(value)
+    })
+
+    searchInput.keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             let keyword = $(this).val()
             let optionValue = searchOptionElem.val()
-            if (optionValue === "sortByDate") {
-                window.location.href = "/search?q=" + keyword + "&page=1&sortByDate=1";
-            } else {
-                window.location.href = "/search?q=" + keyword + "&page=1";
-            }
+            doSearch(optionValue, isScopeChannel, keyword)
         }
         event.stopPropagation();
     });
-    searchBtn.click(function() {
+    searchBtn.click(function () {
         let keyword = searchInput.val()
         let optionValue = searchOptionElem.val()
-        if (optionValue === "sortByDate") {
-            window.location.href = "/search?q=" + keyword + "&page=1&sortByDate=1";
-        } else {
-            window.location.href = "/search?q=" + keyword + "&page=1";
-        }
+        doSearch(optionValue, isScopeChannel, keyword)
     });
-    searchInputBottom.keypress(function(event) {
+    searchInputBottom.keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             let keyword = $(this).val()
             let optionValue = searchOptionElem.val()
-            if (optionValue === "sortByDate") {
-                window.location.href = "/search?q=" + keyword + "&page=1&sortByDate=1";
-            } else {
-                window.location.href = "/search?q=" + keyword + "&page=1";
-            }
+            doSearch(optionValue, isScopeChannel, keyword)
         }
         event.stopPropagation();
     });
-    searchBtnBottom.click(function() {
+    searchBtnBottom.click(function () {
         let keyword = searchInputBottom.val()
         let optionValue = searchOptionElem.val()
-        if (optionValue === "sortByDate") {
-            window.location.href = "/search?q=" + keyword + "&page=1&sortByDate=1";
-        } else {
-            window.location.href = "/search?q=" + keyword + "&page=1";
-        }
+        doSearch(optionValue, isScopeChannel, keyword)
     });
 });
+
+function doSearch(optionValue, isScopeChannel, keyword) {
+    let sortByDate
+    let scope
+    if (optionValue === "sortByDate") {
+        sortByDate = 1
+    } else {
+        sortByDate = 0
+    }
+
+    if (isScopeChannel) {
+        scope = "channel"
+    } else {
+        scope = "item"
+    }
+
+    window.location.href = "/search?q=" + keyword + "&page=1&sortByDate=" + sortByDate + "&scope=" + scope;
+}
 
 function SearchFeedChannel() {
     let searchInput = $("#searchInput");

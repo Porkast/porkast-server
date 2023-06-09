@@ -60,33 +60,44 @@
         let nextPage = currentPage + 1
         let prePage = currentPage - 1
         let keyword = '{{.searchKeyword}}'
-        let searchOptionElem = $("#search-options")
-        let optionValue = searchOptionElem.val()
-        let sortByDate;
-        if (optionValue === "sortByDate") {
-            sortByDate = 1
-        } else {
-            sortByDate = 0
-        }
+        let searchOptionElem = $("#searchOptions")
         $('#nextPageBtn').click(function (event) {
             if (currentPage >= totalPage) {
                 return
             }
+            let scope
             if (isSearchChannel) {
-                window.location.href = "/search?q=" + keyword + "&page=" + nextPage + "&scope=channel&sortByDate=" + sortByDate;
+                scope = "channel"
             } else {
-                window.location.href = "/search?q=" + keyword + "&page=" + nextPage + "&sortByDate=" + sortByDate;
+                scope = "item"
             }
+            let optionValue = searchOptionElem.val()
+            let sortByDate;
+            if (optionValue === "sortByDate") {
+                sortByDate = 1
+            } else {
+                sortByDate = 0
+            }
+            window.location.href = "/search?q=" + keyword + "&page=" + nextPage + "&scope=" + scope + "&sortByDate=" + sortByDate;
         });
         $('#prePageBtn').click(function (event) {
             if (currentPage == 1) {
                 return
             }
+            let scope
             if (isSearchChannel) {
-                window.location.href = "/search?q=" + keyword + "&page=" + prePage + "&scope=channel&sortByDate=" + sortByDate;
+                scope = "channel"
             } else {
-                window.location.href = "/search?q=" + keyword + "&page=" + prePage + "&sortByDate=" + sortByDate;
+                scope = "item"
             }
+            let optionValue = searchOptionElem.val()
+            let sortByDate;
+            if (optionValue === "sortByDate") {
+                sortByDate = 1
+            } else {
+                sortByDate = 0
+            }
+            window.location.href = "/search?q=" + keyword + "&page=" + prePage + "&scope=" + scope + "&sortByDate=" + sortByDate;
         });
     });
 </script>
