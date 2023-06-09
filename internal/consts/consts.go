@@ -17,8 +17,10 @@ const CHANNEL_INFO = "channelInfo"
 const ITEM_INFO = "itemInfo"
 const TOTAL_CHANNE_ITEMS_COUNT = "total_channe_items_count"
 
-const SEARCH_KEY_WORD = "searchKeyword"
+const SEARCH_KEYWORD = "searchKeyword"
 const CURRENT_PAGE = "currentPage"
+const SEARCH_CHANNEL = "search_channel"
+const SEARCH_CHANNEL_SCOPE = "channel"
 
 const LISTEN_LATER_HEADER_TAG_TEXT = "稍后再听"
 const LISTEN_LATER_HEADER_TAG = "listen_later_header_tag"

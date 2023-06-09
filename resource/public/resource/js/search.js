@@ -29,3 +29,15 @@ $(function() {
         window.location.href = "/search?q=" + keyword + "&page=1";
     });
 });
+
+function SearchFeedChannel() {
+    let searchInput = $("#searchInput");
+    let keyword = searchInput.val()
+    window.location.href = "/search?q=" + keyword + "&page=1&scope=channel";
+}
+
+function SearchFeedItem() {
+    let searchInput = $("#searchInput");
+    let keyword = searchInput.val()
+    window.location.href = "/search?q=" + keyword + "&page=1";
+}

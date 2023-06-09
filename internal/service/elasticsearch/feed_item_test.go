@@ -18,7 +18,7 @@ func TestESClient_QueryFeedItemFull(t *testing.T) {
 	genv.Set("GF_GCFG_FILE", "config.dev.yaml")
 	InitES(ctx)
 	gsElastic = GetClient()
-	resultList, err = gsElastic.QueryFeedItemFull(ctx, "推荐", 0, 10)
+	resultList, err = gsElastic.QueryFeedItemFull(ctx, "推荐", 1, 0, 10)
 	if err != nil {
 		t.Fatal(err)
 	}

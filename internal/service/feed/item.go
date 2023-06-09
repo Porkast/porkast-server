@@ -56,22 +56,22 @@ func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedCha
 	return
 }
 
-func SearchFeedItemsByKeyword(ctx context.Context, keyword string, page, size int) (items []dto.FeedItem, err error) {
+func SearchFeedItemsByKeyword(ctx context.Context, params SearchParams) (items []dto.FeedItem, err error) {
 	var (
 		feedItemESDatalList []entity.FeedItemESData
 	)
 
-	if size == 0 {
-		size = 10
+	if params.Size == 0 {
+		params.Size = 10
 	}
 
-	if page >= 1 {
-		page = (page - 1) * size
+	if params.Page >= 1 {
+		params.Page = (params.Page - 1) * params.Size
 	} else {
-		page = page * size
+		params.Page = params.Page * params.Size
 	}
 
-	feedItemESDatalList, err = elasticsearch.GetClient().QueryFeedItemFull(ctx, keyword, page, size)
+	feedItemESDatalList, err = elasticsearch.GetClient().QueryFeedItemFull(ctx, params.Keyword, params.SortByDate, params.Page, params.Size)
 	if err != nil {
 		return
 	}

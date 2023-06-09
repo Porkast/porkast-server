@@ -10,7 +10,7 @@ import (
 	"github.com/olivere/elastic/v7"
 )
 
-func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, from, size int) (esFeedItemList []entity.FeedItemESData, err error) {
+func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, sortByDate, from, size int) (esFeedItemList []entity.FeedItemESData, err error) {
 	simpleStringQuery := elastic.NewSimpleQueryStringQuery(keyword)
 	simpleStringQuery.FieldWithBoost("title", 10)
 	simpleStringQuery.FieldWithBoost("textDescription", 2)
@@ -19,13 +19,18 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, from,
 	highlight := elastic.NewHighlight()
 	highlight = highlight.PreTags("<span style='color: red;'>").PostTags("</span>")
 	highlight = highlight.Fields(elastic.NewHighlighterField("title"), elastic.NewHighlighterField("channelTitle"), elastic.NewHighlighterField("textDescription"), elastic.NewHighlighterField("author"))
-	searchResult, err := c.Client.Search().
+	searchService := c.Client.Search().
 		Index("feed_item").
 		Query(simpleStringQuery).
 		Highlight(highlight).
 		From(from).Size(size).
-		Pretty(true).
-		Do(ctx)
+		Pretty(true)
+
+	if sortByDate == 1 {
+		searchService.Sort("pubDate", false)
+	}
+
+	searchResult, err := searchService.Do(ctx)
 	if err != nil {
 		g.Log().Line().Error(ctx, err)
 		return

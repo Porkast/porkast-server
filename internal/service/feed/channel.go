@@ -68,22 +68,22 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, li
 	return
 }
 
-func QueryFeedChannelByKeyword(ctx context.Context, keyword string, page, size int) (esChannelList []dto.FeedChannel, err error) {
+func QueryFeedChannelByKeyword(ctx context.Context, params SearchParams) (esChannelList []dto.FeedChannel, err error) {
 	var (
 		esChannelEntityList []entity.FeedChannelESData
 	)
 
-	if size == 0 {
-		size = 10
+	if params.Size == 0 {
+		params.Size = 10
 	}
 
-	if page >= 1 {
-		page = (page - 1) * size
+	if params.Page >= 1 {
+		params.Page = (params.Page - 1) * params.Size
 	} else {
-		page = page * size
+		params.Page = params.Page * params.Size
 	}
 
-	esChannelEntityList, err = elasticsearch.GetClient().QueryFeedChannelFull(ctx, keyword, page, size)
+	esChannelEntityList, err = elasticsearch.GetClient().QueryFeedChannelFull(ctx, params.Keyword, params.Page, params.Size)
 	if err != nil {
 		return
 	}

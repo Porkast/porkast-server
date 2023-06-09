@@ -53,6 +53,14 @@ function share(channelId, itemId) {
 
 }
 
+function shareChannel(channelId) {
+    let domain = window.location.host
+    let shareUrl = 'http://' + domain + '/share/feed/channel/' + channelId
+    $('#clipboard-temp-holder-' + channelId).text(shareUrl)
+    copyToClickBoard('clipboard-temp-holder-' + channelId)
+
+}
+
 function copyToClickBoard(elemId) {
     var content = document.getElementById(elemId).innerHTML;
     navigator.clipboard.writeText(content)

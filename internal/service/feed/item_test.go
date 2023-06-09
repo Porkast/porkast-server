@@ -11,18 +11,25 @@ import (
 
 func TestSearchFeedItemsByKeyword(t *testing.T) {
 	var (
-		ctx         = gctx.New()
-		err         error
-		itemDtoList []dto.FeedItem
-		keyword     = "推荐"
-		from        = 0
-		size        = 10
+		ctx          = gctx.New()
+		err          error
+		itemDtoList  []dto.FeedItem
+		keyword      = "推荐"
+		from         = 0
+		size         = 10
+		searchParams SearchParams
 	)
 
 	genv.Set("GF_GCFG_FILE", "config.dev.yaml")
 	elasticsearch.InitES(ctx)
+    searchParams = SearchParams{
+        Keyword: keyword,
+        Page: from,
+        Size: size,
+        SortByDate: 1,
+    }
 
-	itemDtoList, err = SearchFeedItemsByKeyword(ctx, keyword, from, size)
+	itemDtoList, err = SearchFeedItemsByKeyword(ctx, searchParams)
 	if err != nil {
 		t.Fatal(err)
 	}

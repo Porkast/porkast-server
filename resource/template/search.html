@@ -17,12 +17,20 @@
                 <span>&nbsp;</span>
                 <div class="text-gray-500 text-sm">{{.searchTookTime}}</div>
             </div>
+
+            {{if .search_channel }}
+            {{else}}
             <div class="w-full mt-3 flex justify-center">
                 {{include "module/channel_horizontal_list.html" .}}
             </div>
+            {{end}}
             <!-- feed channel item list -->
             <div class="w-full mt-3 flex justify-center">
+                {{if .search_channel }}
+                {{include "module/search_list_channel.html" .}}
+                {{else}}
                 {{include "module/search_list_item.html" .}}
+                {{end}}
             </div>
             <div class="flex justify-center mt-6">
                 <div class="btn-group">
@@ -46,6 +54,7 @@
 </body>
 <script>
     $(function () {
+        let isSearchChannel = ('{{.search_channel}}')
         let currentPage = parseInt('{{.currentPage}}')
         let totalPage = parseInt('{{.totalPage}}')
         let nextPage = currentPage + 1
@@ -55,13 +64,21 @@
             if (currentPage >= totalPage) {
                 return
             }
-            window.location.href = "/search?q=" + keyword + "&page=" + nextPage;
+            if (isSearchChannel) {
+                window.location.href = "/search?q=" + keyword + "&page=" + nextPage + "&scope=channel";
+            } else {
+                window.location.href = "/search?q=" + keyword + "&page=" + nextPage;
+            }
         });
         $('#prePageBtn').click(function (event) {
             if (currentPage == 1) {
                 return
             }
-            window.location.href = "/search?q=" + keyword + "&page=" + prePage;
+            if (isSearchChannel) {
+                window.location.href = "/search?q=" + keyword + "&page=" + prePage + "&scope=channel";
+            } else {
+                window.location.href = "/search?q=" + keyword + "&page=" + prePage;
+            }
         });
     });
 </script>
