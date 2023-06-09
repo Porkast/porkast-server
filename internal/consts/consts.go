@@ -21,6 +21,7 @@ const SEARCH_KEYWORD = "searchKeyword"
 const CURRENT_PAGE = "currentPage"
 const SEARCH_CHANNEL = "search_channel"
 const SEARCH_CHANNEL_SCOPE = "channel"
+const SEARCH_ORDER_BY_DATE = "search_order_by_date"
 
 const LISTEN_LATER_HEADER_TAG_TEXT = "稍后再听"
 const LISTEN_LATER_HEADER_TAG = "listen_later_header_tag"

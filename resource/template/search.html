@@ -60,14 +60,22 @@
         let nextPage = currentPage + 1
         let prePage = currentPage - 1
         let keyword = '{{.searchKeyword}}'
+        let searchOptionElem = $("#search-options")
+        let optionValue = searchOptionElem.val()
+        let sortByDate;
+        if (optionValue === "sortByDate") {
+            sortByDate = 1
+        } else {
+            sortByDate = 0
+        }
         $('#nextPageBtn').click(function (event) {
             if (currentPage >= totalPage) {
                 return
             }
             if (isSearchChannel) {
-                window.location.href = "/search?q=" + keyword + "&page=" + nextPage + "&scope=channel";
+                window.location.href = "/search?q=" + keyword + "&page=" + nextPage + "&scope=channel&sortByDate=" + sortByDate;
             } else {
-                window.location.href = "/search?q=" + keyword + "&page=" + nextPage;
+                window.location.href = "/search?q=" + keyword + "&page=" + nextPage + "&sortByDate=" + sortByDate;
             }
         });
         $('#prePageBtn').click(function (event) {
@@ -75,9 +83,9 @@
                 return
             }
             if (isSearchChannel) {
-                window.location.href = "/search?q=" + keyword + "&page=" + prePage + "&scope=channel";
+                window.location.href = "/search?q=" + keyword + "&page=" + prePage + "&scope=channel&sortByDate=" + sortByDate;
             } else {
-                window.location.href = "/search?q=" + keyword + "&page=" + prePage;
+                window.location.href = "/search?q=" + keyword + "&page=" + prePage + "&sortByDate=" + sortByDate;
             }
         });
     });

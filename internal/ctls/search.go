@@ -17,6 +17,7 @@ func (ctl *controller) SearchResult(req *ghttp.Request) {
 		searchKeyword string
 		scope         string
 		page          int
+		sortByDate    int
 		searchParam   feedService.SearchParams
 		tplMap        map[string]interface{}
 	)
@@ -24,12 +25,13 @@ func (ctl *controller) SearchResult(req *ghttp.Request) {
 	searchKeyword = req.GetQuery("q").String()
 	scope = req.GetQuery("scope").String()
 	page = req.GetQuery("page").Int()
+	sortByDate = req.GetQuery("sortByDate").Int()
 
 	searchParam = feedService.SearchParams{
 		Keyword:    searchKeyword,
 		Page:       page,
 		Scope:      scope,
-		SortByDate: 0,
+		SortByDate: sortByDate,
 	}
 
 	if scope == consts.SEARCH_CHANNEL_SCOPE {
@@ -89,6 +91,9 @@ func searchFeedItems(ctx context.Context, searchParam feedService.SearchParams) 
 	tplMap[consts.SEARCH_TOOK_TIME_TEXT] = tookTimeText
 	tplMap[consts.FEED_ITEMS] = items
 	tplMap[consts.FEED_CHANNELS] = channels
+	if searchParam.SortByDate == 1 {
+		tplMap[consts.SEARCH_ORDER_BY_DATE] = true
+	}
 
 	return tplMap, nil
 }
@@ -129,7 +134,10 @@ func searchFeedChannels(ctx context.Context, searchParam feedService.SearchParam
 	tplMap[consts.SEARCH_RESULT_COUNT_TEXT] = totalCountText
 	tplMap[consts.SEARCH_TOOK_TIME_TEXT] = tookTimeText
 	tplMap[consts.FEED_CHANNELS] = channels
-    tplMap[consts.SEARCH_CHANNEL] = true
+	tplMap[consts.SEARCH_CHANNEL] = true
+	if searchParam.SortByDate == 1 {
+		tplMap[consts.SEARCH_ORDER_BY_DATE] = true
+	}
 
 	return tplMap, nil
 }

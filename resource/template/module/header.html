@@ -22,14 +22,23 @@
                         <div class="md:w-4/6 block justify-center">
                             <div class="form-control w-full max-w-2xl justify-center">
                                 <div class="flex shadow-none">
-                                    <div
-                                        class="flex items-center md:text-sm text-xs hover:cursor-pointer hover:text-gray-500" onclick="SearchFeedItem()">
+                                    <div class="flex items-center md:text-sm text-xs hover:cursor-pointer hover:text-gray-500"
+                                        onclick="SearchFeedItem()">
                                         <img class="w-4 mr-2" src="/resource/image/audio.png" alt="">单集节目
                                     </div>
-                                    <div
-                                        class="flex items-center ml-4 md:text-sm text-xs hover:cursor-pointer hover:text-gray-500" onclick="SearchFeedChannel()" >
+                                    <div class="flex items-center ml-4 md:text-sm text-xs hover:cursor-pointer hover:text-gray-500"
+                                        onclick="SearchFeedChannel()">
                                         <img class="w-4 mr-2" src="/resource/image/podcasts.png" alt="">播客
                                     </div>
+                                    <select id="search-options" class="select select-bordered select-xs ml-4">
+                                        {{if .search_order_by_date}}
+                                        <option value="sortByDate">时间</option>
+                                        <option value="relevant">相关性</option>
+                                        {{else}}
+                                        <option value="relevant">相关性</option>
+                                        <option value="sortByDate">时间</option>
+                                        {{end}}
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -100,11 +109,12 @@
                 <div class="md:w-4/6 block justify-center">
                     <div class="form-control w-full max-w-2xl justify-center">
                         <div class="flex shadow-none">
-                            <div class="flex items-center md:text-sm text-xs hover:cursor-pointer hover:text-gray-500" onclick="SearchFeedItem()">
+                            <div class="flex items-center md:text-sm text-xs hover:cursor-pointer hover:text-gray-500"
+                                onclick="SearchFeedItem()">
                                 <img class="w-4 mr-2" src="/resource/image/audio.png" alt="">单集节目
                             </div>
-                            <div
-                                class="flex items-center ml-4 md:text-sm text-xs hover:cursor-pointer hover:text-gray-500" onclick="SearchFeedChannel()" >
+                            <div class="flex items-center ml-4 md:text-sm text-xs hover:cursor-pointer hover:text-gray-500"
+                                onclick="SearchFeedChannel()">
                                 <img class="w-4 mr-2" src="/resource/image/podcasts.png" alt="">播客
                             </div>
                         </div>
