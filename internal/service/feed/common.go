@@ -3,6 +3,7 @@ package feed
 import (
 	"fmt"
 
+	"github.com/anaskhan96/soup"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/os/gtime"
@@ -81,5 +82,18 @@ func formatFeedAuthor(author string) (formatAuthor string) {
 		formatAuthor = author
 	}
 
+	return
+}
+
+func formatTitle(title string) (formatTitle string) {
+
+	formatTitle = title
+	if title != "" {
+		docs := soup.HTMLParse(title)
+		if docs.Error == nil {
+			formatTitle = docs.FullText()
+		}
+	}
+	
 	return
 }

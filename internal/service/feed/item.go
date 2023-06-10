@@ -93,11 +93,12 @@ func SearchFeedItemsByKeyword(ctx context.Context, params SearchParams) (items [
 		if itemDto.TextDescription == "" && itemDto.Description != "" {
 			rootDocs := soup.HTMLParse(itemDto.Description)
 			itemDto.TextDescription = rootDocs.FullText()
-
 		}
 		itemDto.Author = formatFeedAuthor(itemDto.Author)
 		itemDto.PubDate = formatPubDate(itemDto.PubDate)
 		itemDto.Duration = formatDuration(itemDto.Duration)
+		itemDto.HighlightChannelTitle = itemDto.ChannelTitle
+		itemDto.ChannelTitle = formatTitle(itemDto.HighlightChannelTitle)
 		items = append(items, itemDto)
 	}
 
