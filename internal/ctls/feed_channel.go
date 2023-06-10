@@ -50,3 +50,31 @@ func (ctl *controller) FeedChannelDetail(req *ghttp.Request) {
 	tplMap[consts.TOTAL_CHANNE_ITEMS_COUNT] = gconv.String(channelInfo.Count) + g.I18n().T(req.GetCtx(), `{#total_channe_items_count}`)
 	req.Response.WriteTpl("feed_channel.html", tplMap)
 }
+
+func (ctl *controller) ShareFeedChannelTpl(req *ghttp.Request) {
+	var (
+		err         error
+		itemInfo    dto.FeedItem
+		channelInfo dto.FeedChannel
+		itemId      string
+		channelId   string
+	)
+	itemId = req.Get("itemId").String()
+	channelId = req.Get("channelId").String()
+	_, itemInfo, err = feedService.GetFeedItemByItemId(req.Context(), channelId, itemId)
+	if err != nil {
+		// TODO: redirect to error page
+	}
+
+	channelInfo, err = feedService.GetChannelInfoByChannelId(req.Context(), channelId, 0, 10)
+	if err != nil {
+		// TODO: redirect to error page
+	}
+
+	var tplMap = consts.GetCommonTplMap()
+	tplMap[consts.ITEM_INFO] = itemInfo
+	tplMap[consts.CHANNEL_INFO] = channelInfo
+	tplMap[consts.FEED_ITEMS] = channelInfo.Items
+	tplMap[consts.PAST_FEED_ITEMS] = g.I18n().T(req.GetCtx(), `{#past_feed_item}`)
+	req.Response.WriteTpl("share_feed_channel.html", tplMap)
+}

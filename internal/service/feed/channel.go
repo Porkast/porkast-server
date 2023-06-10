@@ -26,11 +26,11 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, li
 	}
 	gconv.Struct(feedChannelInfo, &feedInfo)
 	feedInfo.Author = formatFeedAuthor(feedInfo.Author)
-    if feedInfo.ImageUrl == "" {
-        feedInfo.HasThumbnail = false
-    } else {
-        feedInfo.HasThumbnail = true
-    }
+	if feedInfo.ImageUrl == "" {
+		feedInfo.HasThumbnail = false
+	} else {
+		feedInfo.HasThumbnail = true
+	}
 
 	feedItemList, err = dao.GetFeedItemsByChannelId(ctx, channelId, offset, limit)
 	if err != nil {
@@ -52,6 +52,7 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, li
 		feedItemDto.ChannelTitle = feedInfo.Title
 		feedItemDto.Duration = formatDuration(feedItemDto.Duration)
 		feedItemDto.PubDate = formatPubDate(feedItemDto.PubDate)
+		feedItemDto.Author = formatFeedAuthor(feedItemDto.Author)
 		if feedItemDto.ImageUrl != "" {
 			feedItemDto.HasThumbnail = true
 		} else if feedItemDto.ChannelImageUrl != "" {
