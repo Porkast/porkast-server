@@ -48,6 +48,13 @@
                 <div class="card-body">
                     <h2 class="card-title">节目详情</h2>
                     <p class="mt-6">{{.channelInfo.ChannelDesc}}</p>
+                    <div class="carousel rounded-box pt-4">
+                        {{range $index, $category := .channelInfo.Categories}}
+                        <div class="carousel-item rounded-md mr-2 bg-gray-200">
+                            <span class="md:text-sm font-bold text-xs pl-1 pr-1">{{$category}}</span>
+                        </div>
+                        {{end}}
+                    </div>
                 </div>
             </div>
             <div class="mt-12 flex items-center">

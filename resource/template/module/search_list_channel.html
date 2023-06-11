@@ -52,7 +52,14 @@
                         <p>{{$item.TextChannelDesc}}</p>
                     </div>
                 </a>
-                <button class="bg-gray-200 w-14 md:w-20 h-8 flex items-center rounded-lg"
+                <div class="carousel rounded-box pt-4">
+                    {{range $index, $category := $item.Categories}}
+                    <div class="carousel-item rounded-md mr-2 bg-gray-200">
+                        <span class="md:text-sm font-bold text-xs pl-1 pr-1">{{$category}}</span>
+                    </div>
+                    {{end}}
+                </div>
+                <button class="bg-gray-200 w-14 md:w-20 h-8 mt-2 flex items-center rounded-lg"
                     onclick="shareChannel('{{$item.Id}}')">
                     <img class="w-3 md:w-4 ml-1 md:ml-2 mr-1" src="/resource/image/share.png" alt="">
                     <span class="font-bold text-xs md:text-sm mr-1 md:mr-2">分享</span>

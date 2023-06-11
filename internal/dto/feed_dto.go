@@ -41,7 +41,7 @@ type FeedChannel struct {
 	FeedLink        string
 	Launguage       string
 	FeedType        string
-	Categories      string
+	Categories      []string
 	Author          string
 	OwnerName       string
 	OwnerEmail      string

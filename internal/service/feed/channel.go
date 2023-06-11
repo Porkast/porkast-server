@@ -9,6 +9,7 @@ import (
 
 	"github.com/anaskhan96/soup"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -30,6 +31,10 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, li
 		feedInfo.HasThumbnail = false
 	} else {
 		feedInfo.HasThumbnail = true
+	}
+
+	if feedChannelInfo.Categories != "" {
+		feedInfo.Categories = gstr.Split(feedChannelInfo.Categories, ",")
 	}
 
 	feedItemList, err = dao.GetFeedItemsByChannelId(ctx, channelId, offset, limit)
@@ -101,6 +106,9 @@ func QueryFeedChannelByKeyword(ctx context.Context, params SearchParams) (esChan
 			esChannelDto.HasThumbnail = false
 		} else {
 			esChannelDto.HasThumbnail = true
+		}
+		if esChannelEntity.Categories != "" {
+			esChannelDto.Categories = gstr.Split(esChannelEntity.Categories, ",")
 		}
 		esChannelDto.Author = formatFeedAuthor(esChannelDto.Author)
 		esChannelList = append(esChannelList, esChannelDto)
