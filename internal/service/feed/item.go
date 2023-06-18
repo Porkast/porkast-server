@@ -110,9 +110,9 @@ func SearchFeedItemsByKeyword(ctx context.Context, params SearchParams) (items [
 	return
 }
 
-func GetAllFeedItemCount(ctx context.Context) (count int, err error) {
+func GetFeedItemCountByChannelId(ctx context.Context, channelId string) (count int, err error) {
 
-	count, err = dao.GetFeedItemTotalCount(ctx)
+	count, err = dao.GetFeedItemCountByChannelId(ctx, channelId)
 
 	return
 }

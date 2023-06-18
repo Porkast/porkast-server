@@ -130,7 +130,7 @@ func GetAllFeedChannelCount(ctx context.Context) (count int, err error) {
 		count = countVar.Int()
 		return
 	} else {
-		count, err = dao.GetFeedChannelTotalCount(ctx)
+		count, err = dao.GetZHFeedChannelTotalCount(ctx)
 	}
 
 	return

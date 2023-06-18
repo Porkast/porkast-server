@@ -30,12 +30,41 @@ func TestGetFeedChannelTotalCount(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			totalCount, err := GetFeedChannelTotalCount(tt.args.ctx)
+			totalCount, err := GetZHFeedChannelTotalCount(tt.args.ctx)
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("GetFeedChannelTotalCount() error = %v, wantErr %v", err, tt.wantErr)
 			}
 
 			t.Log("The channel total count is ", totalCount)
+		})
+	}
+}
+
+func TestGetZHFeedChannelList(t *testing.T) {
+	type args struct {
+		ctx context.Context
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Get All Chinese channel list",
+			args: args{
+				ctx: gctx.New(),
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotEntities, err := GetZHFeedChannelList(tt.args.ctx)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetZHFeedChannelList() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			t.Log("The Chinese channel total count : ", len(gotEntities))
 		})
 	}
 }
