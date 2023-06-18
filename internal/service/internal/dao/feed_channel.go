@@ -31,3 +31,10 @@ func GetFeedChannelInfoByChannelId(ctx context.Context, channelId string) (feedI
 
 	return
 }
+
+func GetFeedChannelTotalCount(ctx context.Context) (count int, err error) {
+
+	count, err = FeedChannel.Ctx(ctx).Count()
+	
+	return
+}

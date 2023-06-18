@@ -1,0 +1,41 @@
+package jobs
+
+import (
+	"context"
+	"guoshao-fm-web/internal/consts"
+	"guoshao-fm-web/internal/service/cache"
+	"guoshao-fm-web/internal/service/feed"
+
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gcron"
+	"github.com/gogf/gf/v2/util/gconv"
+)
+
+func SetChannelTotalCountJob(ctx context.Context) {
+	var (
+		err error
+	)
+
+	_, err = gcron.Add(ctx, "0 0 2 * * *", func(ctx context.Context) {
+		_ = setChannelTotalCountToCache(ctx)
+	}, consts.FEED_CHANNEL_TOTAL_COUNT)
+
+	if err != nil {
+		g.Log().Line().Error(ctx, "The ChannelTotalCount job start failed : ", err)
+	}
+}
+
+func setChannelTotalCountToCache(ctx context.Context) (err error) {
+	var (
+		totalCount int
+	)
+
+	totalCount, err = feed.GetAllFeedChannelCount(ctx)
+	if err != nil {
+		g.Log().Line().Error(ctx, "Get feed channel total count failed : ", err)
+		return
+	}
+
+	cache.SetCache(ctx, gconv.String(consts.FEED_CHANNEL_TOTAL_COUNT), gconv.String(totalCount), 0)
+	return
+}

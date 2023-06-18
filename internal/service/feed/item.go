@@ -2,12 +2,15 @@ package feed
 
 import (
 	"context"
+	"guoshao-fm-web/internal/consts"
 	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/model/entity"
+	"guoshao-fm-web/internal/service/cache"
 	"guoshao-fm-web/internal/service/elasticsearch"
 	"guoshao-fm-web/internal/service/internal/dao"
 
 	"github.com/anaskhan96/soup"
+	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -104,5 +107,24 @@ func SearchFeedItemsByKeyword(ctx context.Context, params SearchParams) (items [
 
 	g.Log().Line().Debug(ctx, "search result :\n", gjson.MustEncodeString(feedItemESDatalList))
 
+	return
+}
+
+func GetAllFeedItemCount(ctx context.Context) (count int, err error) {
+
+	count, err = dao.GetFeedItemTotalCount(ctx)
+
+	return
+}
+
+func GetAllFeedItemCountFromCache(ctx context.Context) (count int, err error) {
+	var (
+		countVar *gvar.Var
+	)
+
+	countVar, err = cache.GetCache(ctx, gconv.String(consts.FEED_ITEM_TOTAL_COUNT))
+	if countVar != nil {
+		count = countVar.Int()
+	}
 	return
 }

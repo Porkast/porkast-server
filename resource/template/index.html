@@ -48,11 +48,6 @@
                             <img class="w-6" src="/resource/image/list.png" alt="">{{.listen_later_header_tag}}
                         </a>
                     </li>
-                    <!-- <li class="border-t border-gray-200"> -->
-                    <!--     <a class="w-full flex justify-start"> -->
-                    <!--         <img class="w-6" src="/resource/image/setting.png" alt="">设置 -->
-                    <!--     </a> -->
-                    <!-- </li> -->
                     <li class="border-t border-gray-200" onclick="logout()">
                         <a class="w-full flex justify-start">
                             <img class="w-6" src="/resource/image/log-out.png" alt="">{{.logout_tag}}
@@ -74,7 +69,8 @@
             </div>
             <div class="flex justify-center mt-20">
                 <div class="form-control w-full max-w-2xl">
-                    <input id="searchInput" type="text" placeholder="输入关键词" class="input input-bordered" />
+                    <input id="searchInput" type="text" placeholder="{{.search_cn_feed_item_channel_total_with_count}}"
+                        class="input input-bordered" />
                 </div>
                 <button id="homeSearchBtn" class="btn btn-primary">搜索</button>
             </div>

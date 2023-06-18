@@ -2,6 +2,7 @@ package feed
 
 import (
 	"context"
+	"guoshao-fm-web/internal/service/cache"
 	"guoshao-fm-web/internal/service/elasticsearch"
 	"testing"
 
@@ -132,4 +133,35 @@ func Test_formatItemShownotes(t *testing.T) {
 		})
 	}
 
+}
+
+func TestGetAllFeedChannelCount(t *testing.T) {
+	type args struct {
+		ctx context.Context
+	}
+	tests := []struct {
+		name      string
+		args      args
+		wantErr   bool
+	}{
+		{
+			name: "Get all channel total count",
+			args: args{
+				ctx: gctx.New(),
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			cache.InitCache(tt.args.ctx)
+			gotCount, err := GetAllFeedChannelCount(tt.args.ctx)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetAllFeedChannelCount() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+
+			t.Log("The gotCount is : ", gotCount)
+		})
+	}
 }

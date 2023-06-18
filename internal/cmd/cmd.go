@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"guoshao-fm-web/internal/routers"
+	"guoshao-fm-web/internal/service/cache"
 	"guoshao-fm-web/internal/service/elasticsearch"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -41,5 +42,6 @@ func initConfig() {
 }
 
 func initComponent(ctx context.Context) {
+	cache.InitCache(ctx)
 	elasticsearch.InitES(ctx)
 }

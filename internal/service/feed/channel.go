@@ -2,12 +2,15 @@ package feed
 
 import (
 	"context"
+	"guoshao-fm-web/internal/consts"
 	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/model/entity"
+	"guoshao-fm-web/internal/service/cache"
 	"guoshao-fm-web/internal/service/elasticsearch"
 	"guoshao-fm-web/internal/service/internal/dao"
 
 	"github.com/anaskhan96/soup"
+	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -112,6 +115,35 @@ func QueryFeedChannelByKeyword(ctx context.Context, params SearchParams) (esChan
 		}
 		esChannelDto.Author = formatFeedAuthor(esChannelDto.Author)
 		esChannelList = append(esChannelList, esChannelDto)
+	}
+
+	return
+}
+
+func GetAllFeedChannelCount(ctx context.Context) (count int, err error) {
+	var (
+		countVar *gvar.Var
+	)
+
+	countVar, err = cache.GetCache(ctx, gconv.String(consts.FEED_CHANNEL_TOTAL_COUNT))
+	if err == nil && countVar != nil && countVar.Int() != 0 {
+		count = countVar.Int()
+		return
+	} else {
+		count, err = dao.GetFeedChannelTotalCount(ctx)
+	}
+
+	return
+}
+
+func GetAllFeedChannelCountFromCache(ctx context.Context) (count int, err error) {
+	var (
+		countVar *gvar.Var
+	)
+
+	countVar, err = cache.GetCache(ctx, gconv.String(consts.FEED_CHANNEL_TOTAL_COUNT))
+	if countVar != nil {
+		count = countVar.Int()
 	}
 
 	return
