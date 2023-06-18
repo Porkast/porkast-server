@@ -15,7 +15,7 @@ import (
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
-func SetItemTotalCountJob(ctx context.Context) {
+func UpdateItemTotalCountJob(ctx context.Context) {
 	var (
 		err error
 	)

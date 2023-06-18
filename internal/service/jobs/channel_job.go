@@ -11,7 +11,7 @@ import (
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
-func SetChannelTotalCountJob(ctx context.Context) {
+func UpdateChannelTotalCountJob(ctx context.Context) {
 	var (
 		err error
 	)
