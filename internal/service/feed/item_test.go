@@ -1,6 +1,7 @@
 package feed
 
 import (
+	"context"
 	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/service/elasticsearch"
 	"testing"
@@ -22,12 +23,12 @@ func TestSearchFeedItemsByKeyword(t *testing.T) {
 
 	genv.Set("GF_GCFG_FILE", "config.dev.yaml")
 	elasticsearch.InitES(ctx)
-    searchParams = SearchParams{
-        Keyword: keyword,
-        Page: from,
-        Size: size,
-        SortByDate: 1,
-    }
+	searchParams = SearchParams{
+		Keyword:    keyword,
+		Page:       from,
+		Size:       size,
+		SortByDate: 1,
+	}
 
 	itemDtoList, err = SearchFeedItemsByKeyword(ctx, searchParams)
 	if err != nil {
@@ -38,4 +39,38 @@ func TestSearchFeedItemsByKeyword(t *testing.T) {
 		t.Fatal("The search result is empty")
 	}
 
+}
+
+func TestGetPubFeedItemsByDate(t *testing.T) {
+	type args struct {
+		ctx  context.Context
+		date string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Get feed item by date",
+			args: args{
+				ctx:  gctx.New(),
+				date: "2023-05-08",
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotItemList, err := GetPubFeedItemsByDate(tt.args.ctx, tt.args.date)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetPubFeedItemsByDate() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+
+			if len(gotItemList) == 0 {
+				t.Fatal("the feed item list is empty")
+			}
+		})
+	}
 }

@@ -13,6 +13,7 @@ import (
 	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -126,5 +127,43 @@ func GetAllFeedItemCountFromCache(ctx context.Context) (count int, err error) {
 	if countVar != nil {
 		count = countVar.Int()
 	}
+	return
+}
+
+func GetLatestPubFeedItems(ctx context.Context, offset, limit int) (itemList []dto.FeedItem, err error) {
+
+	itemList = dao.GetLatestPubFeedItems(ctx, offset, limit)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < len(itemList); i++ {
+		itemDto := itemList[i]
+		itemDto.Author = formatFeedAuthor(itemDto.Author)
+		itemDto.PubDate = formatPubDate(itemDto.PubDate)
+		itemDto.Duration = formatDuration(itemDto.Duration)
+		itemDto.Link = formatSourceLink(itemDto.Link)
+		itemList[i] = itemDto
+	}
+
+	return
+}
+
+func GetPubFeedItemsByDate(ctx context.Context, date string) (itemList []dto.FeedItem, err error) {
+	var (
+		startDate    *gtime.Time
+		startDateStr string
+		endDate      *gtime.Time
+		endDateStr   string
+	)
+
+	startDate = gtime.NewFromStr(date)
+	endDate = gtime.NewFromStr(date).EndOfDay()
+
+	startDateStr = startDate.ISO8601()
+	endDateStr = endDate.ISO8601()
+
+	itemList = dao.GetFeedItemListByPubDate(ctx, startDateStr, endDateStr)
+
 	return
 }

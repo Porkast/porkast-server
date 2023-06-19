@@ -36,6 +36,9 @@ func setChannelTotalCountToCache(ctx context.Context) (err error) {
 		return
 	}
 
+	if totalCount == 0 {
+		return
+	}
 	cache.SetCache(ctx, gconv.String(consts.FEED_CHANNEL_TOTAL_COUNT), gconv.String(totalCount), 0)
 	return
 }

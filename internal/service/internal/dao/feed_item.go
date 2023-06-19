@@ -7,8 +7,11 @@ package dao
 import (
 	"context"
 	"errors"
+	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/model/entity"
 	"guoshao-fm-web/internal/service/internal/dao/internal"
+
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 // feedItemDao is the data access object for table feed_item.
@@ -55,6 +58,34 @@ func GetFeedItemById(ctx context.Context, channelId, itemId string) (item entity
 func GetFeedItemCountByChannelId(ctx context.Context, channelId string) (count int, err error) {
 
 	count, err = FeedItem.Ctx(ctx).Where("channel_id=?", channelId).Count()
+
+	return
+}
+
+func GetLatestPubFeedItems(ctx context.Context, offset, limit int) (entities []dto.FeedItem) {
+	if limit == 0 {
+		limit = 10
+	}
+
+	g.Model("feed_item fi").
+		InnerJoin("feed_channel fc", "fc.id=fi.channel_id").
+		Fields("fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
+		Offset(offset).
+		Limit(limit).
+		OrderDesc("fi.pub_date").
+		Scan(&entities)
+
+	return
+}
+
+func GetFeedItemListByPubDate(ctx context.Context, startDate, endDate string) (entities []dto.FeedItem) {
+
+	g.Model("feed_item fi").
+		InnerJoin("feed_channel fc", "fc.id=fi.channel_id").
+		Fields("fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
+		Where("fi.pub_date>=?", startDate).
+		Where("fi.pub_date<?", endDate).
+		Scan(&entities)
 
 	return
 }
