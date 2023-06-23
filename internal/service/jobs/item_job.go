@@ -48,6 +48,7 @@ func setItemTotalCountToCache(ctx context.Context) (err error) {
 			defer wg.Done()
 			count, err := dao.GetFeedItemCountByChannelId(ctx, feedChannelTemp.Id)
 			if err == nil {
+				g.Log().Line().Infof(ctx, "The channel %s item total count is %d", feedChannelTemp.Title, count)
 				atomic.AddInt64(&totalCount, gconv.Int64(count))
 			}
 		})
@@ -58,6 +59,7 @@ func setItemTotalCountToCache(ctx context.Context) (err error) {
 	if totalCount == 0 {
 		return
 	}
+	g.Log().Line().Infof(ctx, "The all ZH items total count is %d", totalCount)
 	cache.SetCache(ctx, gconv.String(consts.FEED_ITEM_TOTAL_COUNT), gconv.String(totalCount), 0)
 	return
 }
