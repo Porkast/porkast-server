@@ -25,6 +25,7 @@ const SEARCH_ORDER_BY_DATE = "search_order_by_date"
 const TOTAL_CHANNEL_COUNT = "total_channe_count"
 const TOTAL_ITEM_COUNT = "total_item_count"
 const SEARCH_CN_FEED_ITEM_CHANNEL_TOTAL_WITH_COUNT = "search_cn_feed_item_channel_total_with_count"
+const SEARCH_PODCAST_BY_KEYWORD = "search_podcast_by_keyword"
 
 const LISTEN_LATER_HEADER_TAG_TEXT = "稍后再听"
 const LISTEN_LATER_HEADER_TAG = "listen_later_header_tag"

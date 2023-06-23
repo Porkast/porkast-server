@@ -28,7 +28,11 @@ func (ctl *controller) IndexTpl(req *ghttp.Request) {
 
 	tplMap[consts.TOTAL_CHANNEL_COUNT] = channelTotalCount
 	tplMap[consts.TOTAL_ITEM_COUNT] = itemTotalCount
-	tplMap[consts.SEARCH_CN_FEED_ITEM_CHANNEL_TOTAL_WITH_COUNT] = g.I18n().Tf(req.GetCtx(), consts.SEARCH_CN_FEED_ITEM_CHANNEL_TOTAL_WITH_COUNT, itemTotalCount, channelTotalCount)
+	if itemTotalCount != 0 && channelTotalCount != 0 {
+		tplMap[consts.SEARCH_CN_FEED_ITEM_CHANNEL_TOTAL_WITH_COUNT] = g.I18n().Tf(req.GetCtx(), consts.SEARCH_CN_FEED_ITEM_CHANNEL_TOTAL_WITH_COUNT, itemTotalCount, channelTotalCount)
+	} else {
+		tplMap[consts.SEARCH_CN_FEED_ITEM_CHANNEL_TOTAL_WITH_COUNT] = g.I18n().Tf(req.GetCtx(), consts.SEARCH_PODCAST_BY_KEYWORD)
+	}
 	req.Response.WriteTpl("index.html", tplMap)
 	return
 }
