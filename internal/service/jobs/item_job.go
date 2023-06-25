@@ -9,6 +9,7 @@ import (
 	"guoshao-fm-web/internal/service/internal/dao"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
@@ -60,7 +61,7 @@ func setItemTotalCountToCache(ctx context.Context) (err error) {
 		return
 	}
 	g.Log().Line().Infof(ctx, "The all ZH items total count is %d", totalCount)
-	cache.SetCache(ctx, gconv.String(consts.FEED_ITEM_TOTAL_COUNT), gconv.String(totalCount), 0)
+	cache.SetCache(ctx, gconv.String(consts.FEED_ITEM_TOTAL_COUNT), gconv.String(totalCount), int(time.Second*60*60))
 	return
 }
 

@@ -5,6 +5,7 @@ import (
 	"guoshao-fm-web/internal/consts"
 	"guoshao-fm-web/internal/service/cache"
 	"guoshao-fm-web/internal/service/feed"
+	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcron"
@@ -40,6 +41,6 @@ func setChannelTotalCountToCache(ctx context.Context) (err error) {
 		return
 	}
 	g.Log().Line().Info(ctx, "The all ZH channel total count is ", totalCount)
-	cache.SetCache(ctx, gconv.String(consts.FEED_CHANNEL_TOTAL_COUNT), gconv.String(totalCount), 0)
+	cache.SetCache(ctx, gconv.String(consts.FEED_CHANNEL_TOTAL_COUNT), gconv.String(totalCount), int(time.Second*60*60))
 	return
 }
