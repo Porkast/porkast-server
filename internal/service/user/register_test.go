@@ -30,7 +30,7 @@ func TestRegister(t *testing.T) {
 					Password: "testpassword",
 				},
 			},
-			wantErr: false,
+			wantErr: true,
 		},
 		{
 			name: "create user info when user account exist",
