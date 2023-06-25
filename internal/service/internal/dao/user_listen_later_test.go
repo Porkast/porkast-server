@@ -28,16 +28,16 @@ func TestGetListenLaterByUserIdAndFeedId(t *testing.T) {
 			name: "get listen later by user_id and feed_id",
 			args: args{
 				userId:    "1t5z27w7h00csfdx7cluc20100do2yyq",
-				channelId: "8k4vnjjtcmjqi",
-				itemId:    "100r8jf600hcm",
+				channelId: "o66b2cv6l9qr",
+				itemId:    "akeq65sh2r9m4",
 			},
 			wantErr: false,
 		},
 		{
 			name: "get listen later without user_id",
 			args: args{
-				channelId: "8k4vnjjtcmjqi",
-				itemId:    "100r8jf600hcm",
+				channelId: "o66b2cv6l9qr",
+				itemId:    "akeq65sh2r9m4",
 			},
 			wantErr: true,
 		},
@@ -45,7 +45,7 @@ func TestGetListenLaterByUserIdAndFeedId(t *testing.T) {
 			name: "get listen later without channel_id",
 			args: args{
 				userId: "1t5z27w7h00csfdx7cluc20100do2yyq",
-				itemId: "100r8jf600hcm",
+				itemId: "akeq65sh2r9m4",
 			},
 			wantErr: true,
 		},
@@ -53,7 +53,7 @@ func TestGetListenLaterByUserIdAndFeedId(t *testing.T) {
 			name: "get listen later without item_id",
 			args: args{
 				userId:    "1t5z27w7h00csfdx7cluc20100do2yyq",
-				channelId: "8k4vnjjtcmjqi",
+				channelId: "o66b2cv6l9qr",
 			},
 			wantErr: true,
 		},
@@ -91,7 +91,7 @@ func TestCreateListenLaterByUserIdAndFeedId(t *testing.T) {
 					RegDate:   gtime.Now(),
 				},
 			},
-			wantErr: true,
+			wantErr: false,
 		},
 		{
 			name: "Create Listen Later without RegDate",

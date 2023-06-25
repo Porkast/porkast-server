@@ -1,3 +1,10 @@
+go test ./...
+
+if [[ $? -ne 0 ]]; then
+    echo "The go test failed"
+    exit 1
+fi
+
 ./build.sh
 
 echo "remove guoshaofm-web image"

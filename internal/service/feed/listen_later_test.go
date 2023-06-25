@@ -25,8 +25,8 @@ func TestGetListenLaterByUserIdAndFeedId(t *testing.T) {
 			name: "get listen later info by user id and feed id",
 			args: args{
 				userId:    "1t5z27w7h00csfdx7cluc20100do2yyq",
-				channelId: "8k4vnjjtcmjqi",
-				itemId:    "100r8jf600hcm",
+				channelId: "o66b2cv6l9qr",
+				itemId:    "akeq65sh2r9m4",
 			},
 			wantErr: false,
 		},
