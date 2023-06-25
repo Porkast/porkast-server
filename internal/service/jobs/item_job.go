@@ -110,7 +110,7 @@ func setLatestFeedItems(ctx context.Context) (err error) {
 		g.Log().Line().Error(ctx, "Decode feed item list to json failed", err)
 		return
 	}
-	cache.SetCache(ctx, gconv.String(consts.TODAY_FEED_ITEM_LIST), itemListJson.MustToJsonString(), 0)
+	cache.SetCache(ctx, gconv.String(consts.TODAY_FEED_ITEM_LIST), itemListJson.MustToJsonString(), int(time.Second*60*60))
 
 	return
 }
