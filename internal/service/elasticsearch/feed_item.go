@@ -16,6 +16,7 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, sortB
 	simpleStringQuery.FieldWithBoost("textDescription", 2)
 	simpleStringQuery.FieldWithBoost("author", 1)
 	simpleStringQuery.FieldWithBoost("channelTitle", 1)
+    simpleStringQuery.MinimumShouldMatch("75%")
 	highlight := elastic.NewHighlight()
 	highlight = highlight.PreTags("<span style='color: red;'>").PostTags("</span>")
 	highlight = highlight.Fields(elastic.NewHighlighterField("title"), elastic.NewHighlighterField("channelTitle"), elastic.NewHighlighterField("textDescription"), elastic.NewHighlighterField("author"))
