@@ -1,6 +1,10 @@
 package consts
 
-import "github.com/gogf/gf/v2/frame/g"
+import (
+	"context"
+
+	"github.com/gogf/gf/v2/frame/g"
+)
 
 // template consts
 const APP_NAME_KEY = "appname"
@@ -42,7 +46,7 @@ const ADD_ON_TEXT = "添加于"
 
 const PAST_FEED_ITEMS = "past_feed_items"
 
-func GetCommonTplMap() (tplMap g.Map) {
+func GetCommonTplMap(ctx context.Context) (tplMap g.Map) {
 
 	tplMap = g.Map{
 		APP_NAME_KEY:            APP_NAME,
@@ -51,6 +55,7 @@ func GetCommonTplMap() (tplMap g.Map) {
 		LOGOUT_TAG:              LOGOUT_TAG_VALUE,
 		LOGIN_TAG:               LOGIN_TAG_VALUE,
 	}
+	tplMap[SEARCH_ONLY_MATCH_TITLE] = g.I18n().T(ctx, SEARCH_ONLY_MATCH_TITLE)
 
 	return
 }

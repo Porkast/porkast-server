@@ -18,7 +18,7 @@ func (ctl *controller) ListenLaterTpl(req *ghttp.Request) {
 	var (
 		ctx                        = gctx.New()
 		err                        error
-		tplMap                     = consts.GetCommonTplMap()
+		tplMap                     = consts.GetCommonTplMap(req.GetCtx())
 		userId                     string
 		userInfo                   dto.UserInfo
 		totalCount                 int

@@ -83,7 +83,7 @@ func searchFeedItems(ctx context.Context, searchParam feedService.SearchParams) 
 
 	totalCountText = g.I18n().Tf(ctx, consts.SEARCH_RESULT_COUNT_TEXT_VALUE, totalCount)
 	tookTimeText = g.I18n().Tf(ctx, consts.SEARCH_TOOK_TIME_TEXT_VALUE, tookTimeStr)
-	var tplMap = consts.GetCommonTplMap()
+	var tplMap = consts.GetCommonTplMap(ctx)
 	tplMap[consts.SEARCH_KEYWORD] = searchParam.Keyword
 	tplMap[consts.CURRENT_PAGE] = searchParam.Page
 	tplMap[consts.TOTAL_PAGE] = totalPage
@@ -91,7 +91,6 @@ func searchFeedItems(ctx context.Context, searchParam feedService.SearchParams) 
 	tplMap[consts.SEARCH_TOOK_TIME_TEXT] = tookTimeText
 	tplMap[consts.FEED_ITEMS] = items
 	tplMap[consts.FEED_CHANNELS] = channels
-	tplMap[consts.SEARCH_ONLY_MATCH_TITLE] = g.I18n().T(ctx, consts.SEARCH_ONLY_MATCH_TITLE)
 	if searchParam.SortByDate == 1 {
 		tplMap[consts.SEARCH_ORDER_BY_DATE] = true
 	}
@@ -109,7 +108,7 @@ func searchFeedChannels(ctx context.Context, searchParam feedService.SearchParam
 		tookTimeStr    string
 		tookTimeText   string
 		channels       []dto.FeedChannel
-		tplMap         = consts.GetCommonTplMap()
+		tplMap         = consts.GetCommonTplMap(ctx)
 	)
 
 	channels, err = feedService.QueryFeedChannelByKeyword(ctx, searchParam)

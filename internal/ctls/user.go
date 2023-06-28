@@ -15,7 +15,7 @@ import (
 
 func (ctl *controller) LoginTpl(req *ghttp.Request) {
 
-	var tplMap = consts.GetCommonTplMap()
+	var tplMap = consts.GetCommonTplMap(req.GetCtx())
 	tplMap[consts.LOGIN_EMAIL_INPUT_HINT] = consts.LOGIN_EMAIL_INPUT_HINT_VALUE
 	tplMap[consts.LOGIN_EMAIL_INPUT_PLACEHOLDER_HINT] = consts.LOGIN_EMAIL_INPUT_HINT_PLACEHOLDER_VALUE
 	tplMap[consts.LOGIN_PASSWORD_PLACEHOLDER_HINT] = consts.LOGIN_PASSWORD_HINT_PLACEHOLDER_VALUE
@@ -49,7 +49,7 @@ func (ctl *controller) DoLogin(req *ghttp.Request) {
 
 func (ctl *controller) RegisterTpl(req *ghttp.Request) {
 
-	var tplMap = consts.GetCommonTplMap()
+	var tplMap = consts.GetCommonTplMap(req.GetCtx())
 	tplMap[consts.REGISTER_EMAIL_INPUT_HINT] = consts.REGISTER_EMAIL_INPUT_HINT_VALUE
 	tplMap[consts.REGISTER_EMAIL_INPUT_PLACEHOLDER_HINT] = consts.REGISTER_EMAIL_INPUT_HINT_PLACEHOLDER_VALUE
 	tplMap[consts.REGISTER_PASSWORD_PLACEHOLDER_HINT] = consts.REGISTER_PASSWORD_HINT_PLACEHOLDER_VALUE
@@ -89,7 +89,7 @@ func (ctl *controller) DoRegister(req *ghttp.Request) {
 
 func (ctl *controller) UserInfoTpl(req *ghttp.Request) {
 
-	var tplMap = consts.GetCommonTplMap()
+	var tplMap = consts.GetCommonTplMap(req.GetCtx())
 	tplMap[consts.NICKANME_TEXT] = g.I18n().T(req.GetCtx(), `{#nickname}`)
 	tplMap[consts.ACCOUNT_TEXT] = g.I18n().T(req.GetCtx(), `{#account}`)
 	tplMap[consts.REG_DATE_TEXT] = g.I18n().T(req.GetCtx(), `{#reg_date}`)

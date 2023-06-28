@@ -24,7 +24,7 @@ func (ctl *controller) FeedItemDetail(req *ghttp.Request) {
 	if err != nil {
 		// TODO: redirect to error page
 	}
-	var tplMap = consts.GetCommonTplMap()
+	var tplMap = consts.GetCommonTplMap(req.GetCtx())
 	tplMap[consts.ITEM_INFO] = itemInfo
 	tplMap[consts.CHANNEL_INFO] = channelInfo
 	req.Response.WriteTpl("feed_item.html", tplMap)
@@ -50,7 +50,7 @@ func (ctl *controller) ShareFeedItemTpl(req *ghttp.Request) {
 		// TODO: redirect to error page
 	}
 
-	var tplMap = consts.GetCommonTplMap()
+	var tplMap = consts.GetCommonTplMap(req.GetCtx())
 	tplMap[consts.ITEM_INFO] = itemInfo
 	tplMap[consts.CHANNEL_INFO] = channelInfo
 	tplMap[consts.FEED_ITEMS] = channelInfo.Items

@@ -11,7 +11,7 @@ import (
 func (ctl *controller) IndexTpl(req *ghttp.Request) {
 	var (
 		err               error
-		tplMap            = consts.GetCommonTplMap()
+		tplMap            = consts.GetCommonTplMap(req.GetCtx())
 		channelTotalCount int
 		itemTotalCount    int
 	)
