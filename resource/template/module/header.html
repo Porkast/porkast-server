@@ -18,11 +18,10 @@
 
                     <!-- advance search -->
                     <div class="w-full flex justify-start pt-2 md:text-sm text-xs">
-                        <div class="md:w-1/6 hidden h-2"></div>
-                        <div class="md:w-4/6 block justify-center">
+                        <div class="w-full justify-center">
                             <div class="form-control w-full max-w-2xl justify-center">
-                                <div class="flex shadow-none">
-                                    <div class="flex items-center md:text-sm text-xs hover:cursor-pointer hover:text-gray-500"
+                                <div class="carousel flex shadow-none">
+                                    <div class="carousel-item flex items-center md:text-sm text-xs hover:cursor-pointer hover:text-gray-500"
                                         onclick="SearchFeedItem()">
                                         <img class="w-4 mr-2" src="/resource/image/audio.png" alt="">
                                         {{if .search_channel}}
@@ -31,7 +30,7 @@
                                         <span class="md:text-sm text-xs font-bold">单集</span>
                                         {{end}}
                                     </div>
-                                    <div class="flex items-center ml-4 hover:cursor-pointer hover:text-gray-500"
+                                    <div class="carousel-item flex items-center ml-4 hover:cursor-pointer hover:text-gray-500"
                                         onclick="SearchFeedChannel()">
                                         <img class="w-4 mr-2" src="/resource/image/podcasts.png" alt="">
                                         {{if .search_channel}}
@@ -42,7 +41,7 @@
                                     </div>
                                     {{if .search_channel}}
                                     {{else}}
-                                    <select id="searchOptions" class="select select-bordered select-xs ml-4">
+                                    <select id="searchOptions" class="carousel-item select select-bordered select-xs ml-4">
                                         {{if .search_order_by_date}}
                                         <option value="sortByDate">时间</option>
                                         <option value="relevant">相关性</option>
@@ -52,7 +51,7 @@
                                         {{end}}
                                     </select>
                                     {{end}}
-                                    <div class="flex justify-start items-center ml-4">
+                                    <div class="carousel-item flex justify-start items-center ml-4">
                                         <span>{{.search_only_match_title}}</span>
                                         <input id="searchOnlyMatchTitleCheckbox" type="checkbox"
                                             class="toggle toggle-sm ml-2" />
@@ -60,7 +59,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="md:w-1/6 hidden h-2"></div>
                     </div>
                 </div>
                 <button id="homeSearchBtn" class="btn btn-primary ml" scope-channel="{{.search_channel}}">
