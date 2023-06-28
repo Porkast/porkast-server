@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
     // let searchClearBtn = $("#searchClearBtn");
     let searchBtn = $("#homeSearchBtn");
     let searchInput = $("#searchInput");
@@ -7,17 +7,17 @@ $(function () {
     let searchOptionElem = $("#searchOptions")
     let searchOptionBottomElem = $("#searchOptionsBottom")
     let isScopeChannel = searchBtn.attr("scope-channel")
-    searchOptionElem.change(function () {
+    searchOptionElem.change(function() {
         let value = $(this).val()
         searchOptionBottomElem.val(value)
     })
 
-    searchOptionBottomElem.change(function () {
+    searchOptionBottomElem.change(function() {
         let value = $(this).val()
         searchOptionElem.val(value)
     })
 
-    searchInput.keypress(function (event) {
+    searchInput.keypress(function(event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             let keyword = $(this).val()
@@ -26,12 +26,12 @@ $(function () {
         }
         event.stopPropagation();
     });
-    searchBtn.click(function () {
+    searchBtn.click(function() {
         let keyword = searchInput.val()
         let optionValue = searchOptionElem.val()
         doSearch(optionValue, isScopeChannel, keyword)
     });
-    searchInputBottom.keypress(function (event) {
+    searchInputBottom.keypress(function(event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             let keyword = $(this).val()
@@ -40,11 +40,31 @@ $(function () {
         }
         event.stopPropagation();
     });
-    searchBtnBottom.click(function () {
+    searchBtnBottom.click(function() {
         let keyword = searchInputBottom.val()
         let optionValue = searchOptionElem.val()
         doSearch(optionValue, isScopeChannel, keyword)
     });
+
+    SetIsKeywordMatchTitleOnly()
+    let searchOnlyMatchTitleCheckbox = $('#searchOnlyMatchTitleCheckbox')
+    searchOnlyMatchTitleCheckbox.change(function() {
+        if ($(this).is(':checked')) {
+            SetSearchOnlyMatchTitle(true)
+        } else {
+            SetSearchOnlyMatchTitle(false)
+        }
+    })
+
+    let searchOnlyMatchTitleCheckboxBottom = $('#searchOnlyMatchTitleCheckboxBottom')
+    searchOnlyMatchTitleCheckboxBottom.change(function() {
+        if ($(this).is(':checked')) {
+            SetSearchOnlyMatchTitleBottom(true)
+        } else {
+            SetSearchOnlyMatchTitleBottom(false)
+        }
+    })
+
 });
 
 function doSearch(optionValue, isScopeChannel, keyword) {
@@ -76,3 +96,60 @@ function SearchFeedItem() {
     let keyword = searchInput.val()
     window.location.href = "/search?q=" + keyword + "&page=1";
 }
+
+function SetIsKeywordMatchTitleOnly() {
+    let searchInput = $("#searchInput");
+    let keyword = searchInput.val()
+    let titleMatchOnlyCheckbox = $('#searchOnlyMatchTitleCheckbox')
+    if (keyword !== undefined && keyword !== null && keyword !== "") {
+        if (keyword.startsWith('"') && keyword.endsWith('"')) {
+            titleMatchOnlyCheckbox.prop('checked', true);
+        }
+    }
+
+    let searchInputBottom = $("#searchInputBottom");
+    let keywordBottom = searchInputBottom.val()
+    let titleMatchOnlyCheckboxBottom = $('#searchOnlyMatchTitleCheckboxBottom')
+    if (keywordBottom !== undefined && keywordBottom !== null && keywordBottom !== "") {
+        if (keyword.startsWith('"') && keyword.endsWith('"')) {
+            titleMatchOnlyCheckboxBottom.prop('checked', true);
+        }
+    }
+}
+
+function SetSearchOnlyMatchTitle(isMatchOnly) {
+    let searchInput = $("#searchInput");
+    let keyword = searchInput.val()
+    if (keyword !== undefined && keyword !== null && keyword !== "") {
+        if (isMatchOnly) {
+            if (!keyword.startsWith('"') && !keyword.endsWith('"')) {
+                searchInput.val('"' + keyword + '"')
+            }
+        } else {
+            if (keyword.startsWith('"') && keyword.endsWith('"')) {
+                let unMatchKeyword = keyword.replaceAll('"', "");
+                searchInput.val(unMatchKeyword)
+
+            }
+        }
+    }
+}
+
+function SetSearchOnlyMatchTitleBottom(isMatchOnly) {
+    let searchInput = $("#searchInputBottom");
+    let keyword = searchInput.val()
+    if (keyword !== undefined && keyword !== null && keyword !== "") {
+        if (isMatchOnly) {
+            if (!keyword.startsWith('"') && !keyword.endsWith('"')) {
+                searchInput.val('"' + keyword + '"')
+            }
+        } else {
+            if (keyword.startsWith('"') && keyword.endsWith('"')) {
+                let unMatchKeyword = keyword.replaceAll('"', "");
+                searchInput.val(unMatchKeyword)
+
+            }
+        }
+    }
+}
+

@@ -91,6 +91,7 @@ func searchFeedItems(ctx context.Context, searchParam feedService.SearchParams) 
 	tplMap[consts.SEARCH_TOOK_TIME_TEXT] = tookTimeText
 	tplMap[consts.FEED_ITEMS] = items
 	tplMap[consts.FEED_CHANNELS] = channels
+	tplMap[consts.SEARCH_ONLY_MATCH_TITLE] = g.I18n().T(ctx, consts.SEARCH_ONLY_MATCH_TITLE)
 	if searchParam.SortByDate == 1 {
 		tplMap[consts.SEARCH_ORDER_BY_DATE] = true
 	}
@@ -135,6 +136,7 @@ func searchFeedChannels(ctx context.Context, searchParam feedService.SearchParam
 	tplMap[consts.SEARCH_TOOK_TIME_TEXT] = tookTimeText
 	tplMap[consts.FEED_CHANNELS] = channels
 	tplMap[consts.SEARCH_CHANNEL] = true
+	tplMap[consts.SEARCH_ONLY_MATCH_TITLE] = g.I18n().T(ctx, consts.SEARCH_ONLY_MATCH_TITLE)
 	if searchParam.SortByDate == 1 {
 		tplMap[consts.SEARCH_ORDER_BY_DATE] = true
 	}
