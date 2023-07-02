@@ -24,9 +24,10 @@
                             {{end}}
                         </div>
                     </div>
-                    <div class="">
-                        <a href="/feed/channel/{{.itemInfo.ChannelId}}" class="text-sm font-lg ml-3">频道:
-                            {{.itemInfo.ChannelTitle}}</a>
+                    <div class="mr-6">
+                        <div class="text-sm font-lg ml-3 pr-3">
+                            <a href="/feed/channel/{{.itemInfo.ChannelId}}">频道:{{.itemInfo.ChannelTitle}}</a>
+                        </div>
                         <div class="text-sm font-medium text-gray-500 ml-3">主播: {{.itemInfo.Author}}</div>
                         <div class="flex justify-start ml-3 mt-3">
                             <a href="{{.itemInfo.FeedLink}}" target="_blank">
