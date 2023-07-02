@@ -1,3 +1,8 @@
+$(function() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register("/resource/js/service-worker.js");
+    }
+})
 
 function setUserInfo(userInfo) {
     userInfo['auth'] = userInfo['token'] + "@@" + userInfo['id']

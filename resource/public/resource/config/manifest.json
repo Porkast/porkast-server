@@ -1,0 +1,22 @@
+{
+    "short_name": "锅烧FM",
+    "name": "锅烧播客搜索引擎",
+    "icons": [
+        {
+            "src": "/resource/image/logo192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/resource/image/logo512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "display": "fullscreen",
+    "scope": "/",
+    "theme_color": "#000000",
+    "background_color": "#ffffff",
+    "description": "播客搜索引擎"
+}
