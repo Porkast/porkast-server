@@ -16,7 +16,7 @@
     "start_url": "/",
     "display": "fullscreen",
     "scope": "/",
-    "theme_color": "#000000",
+    "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "description": "播客搜索引擎"
 }
