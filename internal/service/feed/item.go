@@ -36,6 +36,7 @@ func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedCha
 	feedItemInfoDto.ChannelTitle = feedChannelModel.Title
 	feedItemInfoDto.FeedLink = feedChannelModel.FeedLink
 	feedItemInfoDto.Link = formatSourceLink(feedItemInfoDto.Link)
+    feedItemInfoDto.Title = formatItemTitle(feedItemInfoDto.Title)
 	if feedItemInfoDto.ImageUrl == "" {
 		if feedItemInfoDto.ChannelImageUrl != "" {
 			feedItemInfoDto.ImageUrl = feedItemInfoDto.ChannelImageUrl
@@ -103,6 +104,7 @@ func SearchFeedItemsByKeyword(ctx context.Context, params SearchParams) (items [
 		itemDto.Duration = formatDuration(itemDto.Duration)
 		itemDto.HighlightChannelTitle = itemDto.ChannelTitle
 		itemDto.ChannelTitle = formatTitle(itemDto.HighlightChannelTitle)
+        itemDto.Title = formatItemTitle(itemDto.Title)
 		items = append(items, itemDto)
 	}
 

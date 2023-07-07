@@ -94,6 +94,15 @@ func formatTitle(title string) (formatTitle string) {
 			formatTitle = docs.FullText()
 		}
 	}
-	
+
+	return
+}
+
+func formatItemTitle(title string) (formatTitle string) {
+
+	if gstr.Contains(title, "\"") {
+        formatTitle = gstr.Replace(title, "\"", "`")
+	}
+
 	return
 }
