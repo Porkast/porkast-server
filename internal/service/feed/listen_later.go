@@ -102,6 +102,7 @@ func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limi
 		dtoItem.PubDate = formatPubDate(dtoItem.PubDate)
 		dtoItem.Duration = formatDuration(dtoItem.Duration)
         dtoItem.Author = formatFeedAuthor(dtoItem.Author)
+        dtoItem.Title = formatItemTitle(dtoItem.Title)
 		dtoItem.RegDate = consts.ADD_ON_TEXT + formatPubDate(dtoItem.RegDate)
 		dtoItem.Count = totalCount
 		userListenLaterDtoList[i] = dtoItem

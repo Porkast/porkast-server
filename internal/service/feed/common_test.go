@@ -27,3 +27,29 @@ func Test_formatTitle(t *testing.T) {
 		})
 	}
 }
+
+func Test_formatItemTitle(t *testing.T) {
+	type args struct {
+		title string
+	}
+	tests := []struct {
+		name            string
+		args            args
+		wantFormatTitle string
+	}{
+		{
+			name: "format item title",
+			args: args{
+				title: `#11 和设计师聊AIGC 2：UX设计师"喜迎"AI，是趁手工具，还是竞争对手?`,
+			},
+			wantFormatTitle: "#11 和设计师聊AIGC 2：UX设计师`喜迎`AI，是趁手工具，还是竞争对手?",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if gotFormatTitle := formatItemTitle(tt.args.title); gotFormatTitle != tt.wantFormatTitle {
+				t.Errorf("formatItemTitle() = %v, want %v", gotFormatTitle, tt.wantFormatTitle)
+			}
+		})
+	}
+}
