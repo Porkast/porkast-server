@@ -124,9 +124,18 @@ func (ctl *controller) GetListenLaterList(req *ghttp.Request) {
 }
 
 func (ctl *controller) GetListenLaterRSS(req *ghttp.Request) {
-	// var (
- //        userId string
- //    )
+	var (
+		err    error
+		userId string
+		rss    string
+	)
 
-	// userId = req.Get("userId").String()
+	userId = req.Get("userId").String()
+    
+    rss, err = feedService.GetListenLaterRSSByUserId(req.GetCtx(), userId)
+    if err != nil {
+		// TODO: redirect to error page
+    }
+
+    req.Response.WriteXml(rss)
 }

@@ -143,8 +143,10 @@ func GetListenLaterRSSByUserId(ctx context.Context, userId string) (rss string, 
 	feed.Copyright = fmt.Sprintf("Copyright %s GuoshaoFM", userInfo.Nickname)
 	feed.AddAuthor(userInfo.Nickname, userInfo.Email)
 	feed.AddSummary(feedChannelDesc)
-	feed.AddAtomLink("https://www.guoshaofm.com")
+	feed.AddAtomLink("https://www.guoshaofm.com/listenlater/playlist/" + userInfo.Id)
 	feed.AddSubTitle(g.I18n().Tf(ctx, "listen_later_rss_channel_description", userInfo.Nickname))
+    feed.Generator = "GuoshaoFM (https://www.guoshaofm.com)"
+    feed.Language = "zh-CN"
 	// TODO: add channle image url
 	// feed.AddImage()
 
