@@ -9,8 +9,8 @@ import (
 	"guoshao-fm-web/internal/service/internal/dao"
 	"guoshao-fm-web/internal/service/user"
 
-	"github.com/GuoShaoOrg/feeds"
 	"github.com/anaskhan96/soup"
+	"github.com/eduncan911/podcast"
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
@@ -117,8 +117,8 @@ func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limi
 func GetListenLaterRSSByUserId(ctx context.Context, userId string) (rss string, err error) {
 	var (
 		listenLaterDtoList []dto.UserListenLater
-		feed               feeds.Rss
 		userInfo           dto.UserInfo
+		feed               podcast.Podcast
 	)
 
 	if userId == "" {
@@ -131,67 +131,44 @@ func GetListenLaterRSSByUserId(ctx context.Context, userId string) (rss string, 
 		return
 	}
 	listenLaterDtoList, err = GetListenLaterListByUserId(ctx, userId, 0, 100)
-
-	feed.Title = g.I18n().Tf(ctx, "listen_later_rss_channel_title", userInfo.Nickname)
-	feed.Author = &feeds.Author{
-		Name: g.I18n().Tf(ctx, "listen_later_rss_channel_auther", userInfo.Nickname),
-	}
-	if userInfo.Email != "" {
-		feed.Author.Email = userInfo.Email
-	}
-	feed.Description = g.I18n().Tf(ctx, "listen_later_rss_channel_description", userInfo.Nickname)
-	feed.Link = &feeds.Link{
-		Href: fmt.Sprintf("https://www.guoshaofm.com/listenlater/%s/rss", userInfo.Id),
-		Rel:  "self",
-		Type: "application/rss+xml",
+	if len(listenLaterDtoList) == 0 {
+		return
 	}
 
-    //TODO: add listen later images
-    feed.Image = &feeds.Image{
-    	Url:    "",
-    	Title:  "",
-    	Link:   "",
-    	Width:  0,
-    	Height: 0,
-    }
+	feedChannelTitle := g.I18n().Tf(ctx, "listen_later_rss_channel_title", userInfo.Nickname)
+	feedChannelLink := fmt.Sprintf("https://www.guoshaofm.com/listenlater/%s/rss", userInfo.Id)
+	feedChannelDesc := g.I18n().Tf(ctx, "listen_later_rss_channel_description", userInfo.Nickname)
+	lastBuildTime := &gtime.NewFromStr(listenLaterDtoList[0].PubDate).Time
+	feed = podcast.New(feedChannelTitle, feedChannelLink, feedChannelDesc, lastBuildTime, lastBuildTime)
+	feed.Copyright = fmt.Sprintf("Copyright %s GuoshaoFM", userInfo.Nickname)
+	feed.AddAuthor(userInfo.Nickname, userInfo.Email)
+	feed.AddSummary(feedChannelDesc)
+	feed.AddAtomLink("https://www.guoshaofm.com")
+	feed.AddSubTitle(g.I18n().Tf(ctx, "listen_later_rss_channel_description", userInfo.Nickname))
+	// TODO: add channle image url
+	// feed.AddImage()
 
-
-	feed.Items = make([]*feeds.Item, 0)
 	for _, listenLaterDtoItem := range listenLaterDtoList {
 		var (
-			feedItem *feeds.Item
+			feedItem podcast.Item
 		)
-		feedItem = &feeds.Item{
-			Title: listenLaterDtoItem.Title,
-			Link: &feeds.Link{
-				Href: listenLaterDtoItem.Link,
-				Rel:  "self",
-				Type: "application/rss+xml",
-			},
-			Source: &feeds.Link{
-				Href: listenLaterDtoItem.Link,
-				Rel:  "self",
-				Type: "application/rss+xml",
-			},
-			Author: &feeds.Author{
-				Name: listenLaterDtoItem.Author,
-			},
-			Description: listenLaterDtoItem.Description,
-			Id:          listenLaterDtoItem.ItemId,
-			Updated:     gtime.NewFromStr(listenLaterDtoItem.PubDate).Time,
-			Created:     gtime.NewFromStr(listenLaterDtoItem.PubDate).Time,
-			Enclosure: &feeds.Enclosure{
-				Url:    listenLaterDtoItem.EnclosureUrl,
-				Length: listenLaterDtoItem.EnclosureLength,
-				Type:   listenLaterDtoItem.EnclosureType,
-			},
-			Content: listenLaterDtoItem.Description,
+		feedItem.AddImage(listenLaterDtoItem.ImageUrl)
+		feedItem.AddDuration(gconv.Int64(listenLaterDtoItem.Duration))
+		feedItem.AddSummary(listenLaterDtoItem.Description)
+		if listenLaterDtoItem.PubDate != "" {
+			feedItem.AddPubDate(&gtime.NewFromStr(listenLaterDtoItem.PubDate).Time)
 		}
-
-        feed.Items = append(feed.Items, feedItem)
+		feedItem.AddEnclosure(listenLaterDtoItem.EnclosureUrl, podcast.MP3, gconv.Int64(listenLaterDtoItem.EnclosureLength))
+        feedItem.Title = listenLaterDtoItem.Title
+        feedItem.Author = &podcast.Author{
+        	Name:    listenLaterDtoItem.Author,
+        }
+        feedItem.Description = listenLaterDtoItem.Description
+        feedItem.Link = listenLaterDtoItem.Link
+        feed.AddItem(feedItem)
 	}
 
-    rss, err = feed.ToAtom()
+    rss = feed.String()
 
 	return
 }

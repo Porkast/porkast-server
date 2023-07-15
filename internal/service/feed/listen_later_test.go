@@ -3,6 +3,7 @@ package feed
 import (
 	"context"
 	"guoshao-fm-web/internal/dto"
+	"guoshao-fm-web/utility"
 	"testing"
 
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
@@ -72,8 +73,12 @@ func TestGetListenLaterRSSByUserId(t *testing.T) {
 			wantErr: false,
 		},
 	}
+    i18nPath := utility.GetProjectAbsRootPath()+"resource/i18n"
+    g.I18n().SetPath(i18nPath)
+	g.I18n().SetLanguage("zh-CN")
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+            t.Log("i18nPath : ", i18nPath)
 			gotRss, err := GetListenLaterRSSByUserId(tt.args.ctx, tt.args.userId)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetListenLaterRSSByUserId() error = %v, wantErr %v", err, tt.wantErr)
