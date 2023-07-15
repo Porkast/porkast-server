@@ -31,8 +31,12 @@ func V1ApiRouter(group *ghttp.RouterGroup) {
 	unAuthGroup.POST("/user/register", ctls.Ctl.DoRegister)
 
 	authGroup := group.Group("/")
+    // listen later 
 	authGroup.Middleware(middleware.AuthToken)
 	authGroup.POST("/listenlater/item", ctls.Ctl.AddListenLater)
 	authGroup.GET("/listenlater/item", ctls.Ctl.GetListenLater)
 	authGroup.GET("/listenlater/list", ctls.Ctl.GetListenLaterList)
+
+    // search keyword subscription
+	authGroup.POST("/subscription/keyword", ctls.Ctl.SubKeyword)
 }

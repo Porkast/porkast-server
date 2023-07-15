@@ -38,3 +38,9 @@ type GetListenLaterListReqData struct {
 	Offset int    `json:"offset" v:"required"`
 	Limit  int    `json:"limit" v:"required"`
 }
+
+type SubSearchKeywordReqData struct {
+	UserId     string `json:"userId" v:"required"`
+	Keyword    string `json:"keyword" v:"required"`
+	SortByDate int    `json:"sortByDate" v:"required"`
+}
