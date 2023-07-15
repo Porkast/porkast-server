@@ -7,6 +7,7 @@ import (
 
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gctx"
 )
 
 func TestGetListenLaterByUserIdAndFeedId(t *testing.T) {
@@ -49,4 +50,36 @@ func TestGetListenLaterByUserIdAndFeedId(t *testing.T) {
 		})
 	}
 
+}
+
+func TestGetListenLaterRSSByUserId(t *testing.T) {
+	type args struct {
+		ctx    context.Context
+		userId string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantRss string
+		wantErr bool
+	}{
+		{
+			name: "",
+			args: args{
+				ctx:    gctx.New(),
+				userId: "1yx7pq47d00csom5aepfi481002dsdjg",
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotRss, err := GetListenLaterRSSByUserId(tt.args.ctx, tt.args.userId)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetListenLaterRSSByUserId() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			t.Log(gotRss)
+		})
+	}
 }

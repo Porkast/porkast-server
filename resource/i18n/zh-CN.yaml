@@ -18,3 +18,8 @@ search_only_match_title: "精确匹配"
 
 sub_keyword_exist: "已经添加过了"
 sub_keyword_success: "订阅成功"
+
+# listen later
+listen_later_rss_channel_title: "%s的锅烧播放列表"
+listen_later_rss_channel_auther: "%s / 锅烧FM"
+listen_later_rss_channel_description: "%s的锅烧FM稍后听播放列表"

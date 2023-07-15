@@ -20,6 +20,7 @@ func WebRouter(group *ghttp.RouterGroup) {
 	group.GET("/register", ctls.Ctl.RegisterTpl)
 
 	group.GET("/listenlater/playlist/:userId", ctls.Ctl.ListenLaterTpl)
+	group.GET("/listenlater/:userId/rss", ctls.Ctl.GetListenLaterRSS)
 
 	group.GET("/user/info/:id", ctls.Ctl.UserInfoTpl)
 }

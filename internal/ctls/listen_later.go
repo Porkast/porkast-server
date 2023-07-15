@@ -122,3 +122,11 @@ func (ctl *controller) GetListenLaterList(req *ghttp.Request) {
 	middleware.JsonExit(req, 0, "get listen later success", resultList)
 
 }
+
+func (ctl *controller) GetListenLaterRSS(req *ghttp.Request) {
+	// var (
+ //        userId string
+ //    )
+
+	// userId = req.Get("userId").String()
+}
