@@ -147,8 +147,7 @@ func GetListenLaterRSSByUserId(ctx context.Context, userId string) (rss string, 
 	feed.AddSubTitle(g.I18n().Tf(ctx, "listen_later_rss_channel_description", userInfo.Nickname))
     feed.Generator = "GuoshaoFM (https://www.guoshaofm.com)"
     feed.Language = "zh-CN"
-	// TODO: add channle image url
-	// feed.AddImage()
+	feed.AddImage("https://www.guoshaofm.com/resource/image/logo192.png")
 
 	for _, listenLaterDtoItem := range listenLaterDtoList {
 		var (
