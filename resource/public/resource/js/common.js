@@ -58,6 +58,11 @@ function share(channelId, itemId) {
 
 }
 
+function copyListenLaterRSSLink(link) {
+    $('#clipboard-temp-holder-listen-later').text(link)
+    copyToClickBoard('clipboard-temp-holder-listen-later')
+}
+
 function shareChannel(channelId) {
     let domain = window.location.host
     let shareUrl = 'http://' + domain + '/share/feed/channel/' + channelId

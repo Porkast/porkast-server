@@ -1,6 +1,7 @@
 package ctls
 
 import (
+	"fmt"
 	"guoshao-fm-web/internal/consts"
 	"guoshao-fm-web/internal/dto"
 	"guoshao-fm-web/internal/service/middleware"
@@ -57,6 +58,15 @@ func (ctl *controller) ListenLaterTpl(req *ghttp.Request) {
 	tplMap[consts.TOTAL_PAGE] = totalPage
 	tplMap[consts.USER_LISTEN_LATER_TOTAL_COUNT] = gconv.String(totalCount) + g.I18n().T(ctx, `{#total_channe_items_count}`)
 	tplMap[consts.LISTEN_LATER_PLAYLIST_NAME] = g.I18n().T(ctx, `{#play_list}`)
+	tplMap[consts.LISTEN_LATER_PLAYLIST_TITLE] = g.I18n().Tf(ctx, "listen_later_rss_channel_title", userInfo.Nickname)
+	tplMap[consts.LISTEN_LATER_PLAYLIST_RSS_LINK] = fmt.Sprintf("https://www.guoshaofm.com/listenlater/%s/rss", userInfo.Id)
+	tplMap[consts.LISTEN_LATER_PLAYLIST_DESCRIPTION] = g.I18n().Tf(ctx, "listen_later_rss_channel_description", userInfo.Nickname)
+	tplMap[consts.SUBSCRIPTION] = g.I18n().T(ctx, `{#subscription}`)
+	tplMap[consts.COPY] = g.I18n().T(ctx, `{#copy}`)
+	tplMap[consts.LISTEN_LATER_PLAYLIST_COPYRIGHT] = fmt.Sprintf("@%s GuoshaoFM", userInfo.Nickname)
+	tplMap[consts.LISTEN_LATER_SUB_LIST] = g.I18n().T(ctx, `{#listen_later_sub_list}`)
+	tplMap[consts.LISTEN_LATER_COPY_RSS_LINK] = g.I18n().T(ctx, `{#listen_later_copy_rss_link}`)
+	tplMap[consts.LISTEN_LATER_COPY_TO_RSS_APP] = g.I18n().T(ctx, `{#listen_later_copy_to_rss_app}`)
 	req.Response.WriteTpl("listen_later_playlist.html", tplMap)
 }
 
@@ -131,11 +141,11 @@ func (ctl *controller) GetListenLaterRSS(req *ghttp.Request) {
 	)
 
 	userId = req.Get("userId").String()
-    
-    rss, err = feedService.GetListenLaterRSSByUserId(req.GetCtx(), userId)
-    if err != nil {
-		// TODO: redirect to error page
-    }
 
-    req.Response.WriteXml(rss)
+	rss, err = feedService.GetListenLaterRSSByUserId(req.GetCtx(), userId)
+	if err != nil {
+		// TODO: redirect to error page
+	}
+
+	req.Response.WriteXml(rss)
 }

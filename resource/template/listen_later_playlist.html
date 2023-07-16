@@ -12,6 +12,54 @@
     {{include "module/alert.html" .}}
     <div class="flex justify-center min-h-screen">
         <div class="w-full pl-6 pr-6 max-w-2xl">
+            <div class="w-full mt-2">
+                <div class="w-full flex justify-start pt-6">
+                    <div class="text-xl font-bold">{{.listen_later_playlist_title}}</div>
+                </div>
+                <div class="w-full mt-6 flex justify-start">
+                    <div class="avatar">
+                        <div class="w-24 rounded">
+                            <img src="/resource/image/logo192.png" />
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="text-sm font-medium text-gray-500 ml-3">主播: {{.user_info.Nickname}}</div>
+                        <div class="flex justify-start ml-3 mt-3">
+                            <!-- The button to open modal -->
+                            <label for="sub_modal"
+                                class="w-24 h-8 flex items-center bg-gray-200 hover:bg-gray-100 rounded-lg">
+                                <img class="w-3 h-3 ml-3 mr-3" src="/resource/image/rss.png" alt="">
+                                <span class="text-sm">{{.subscription}}</span>
+                            </label>
+
+                            <!-- Put this part before </body> tag -->
+                            <input type="checkbox" id="sub_modal" class="modal-toggle" />
+                            <label for="sub_modal" class="modal cursor-pointer">
+                                <label class="modal-box relative" for="">
+                                    <div class="w-full text-xl font-bold">
+                                        {{.listen_later_sub_list}}
+                                    </div>
+                                    <div class="w-full text-gray-500 text-sm mt-3">
+                                        {{.listen_later_copy_rss_link}}
+                                    </div>
+                                    <div class="flex justify-start items-center mt-3">
+                                        <input type="text" value="{{.listen_later_playlist_rss_link}}"
+                                            class="input input-bordered rounded-lg w-full max-w-xs" />
+                                        <button class="btn rounded-lg ml-3"
+                                            onclick="copyListenLaterRSSLink('{{.listen_later_playlist_rss_link}}')">{{.copy}}</button>
+                                    </div>
+                                    <div class="w-full text-gray-500 text-xs mt-3">
+                                        {{.listen_later_copy_to_rss_app}}
+                                    </div>
+                                </label>
+                                <textarea style="display: none;" id="clipboard-temp-holder-listen-later"></textarea>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-3 text-sm">{{.listen_later_playlist_description}}</p>
+                <p class="mt-3 text-xs">{{.listen_later_playlist_copyright}}</p>
+            </div>
             <div class="w-full mt-6 text-gray-500 text-sm">{{.user_listen_later_total_count}}</div>
             <div class="w-full flex justify-center">
                 {{include "module/listen_later_item_list.html" .}}

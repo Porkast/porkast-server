@@ -46,6 +46,9 @@ const ADD_ON_TEXT = "添加于"
 
 const PAST_FEED_ITEMS = "past_feed_items"
 
+const SUBSCRIPTION = "subscription"
+const COPY = "copy"
+
 func GetCommonTplMap(ctx context.Context) (tplMap g.Map) {
 
 	tplMap = g.Map{

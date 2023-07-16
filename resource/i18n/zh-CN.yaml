@@ -19,7 +19,13 @@ search_only_match_title: "精确匹配"
 sub_keyword_exist: "已经添加过了"
 sub_keyword_success: "订阅成功"
 
+subscription: "订阅"
+copy: "复制"
+
 # listen later
 listen_later_rss_channel_title: "%s的锅烧播放列表"
 listen_later_rss_channel_auther: "%s / 锅烧FM"
 listen_later_rss_channel_description: "%s的锅烧FM稍后听播放列表"
+listen_later_sub_list: "订阅播放列表"
+listen_later_copy_rss_link: "复制RSS Feed链接"
+listen_later_copy_to_rss_app: "复制到通用RSS订阅App或服务"
