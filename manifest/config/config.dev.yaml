@@ -5,7 +5,6 @@ server:
   errorLogEnabled:  true
 
 logger:
-  path: "./logs/"
   file: "{Y-m-d}.log"
   stdout: true
   level: "all"
