@@ -61,7 +61,7 @@ func setItemTotalCountToCache(ctx context.Context) (err error) {
 		return
 	}
 	g.Log().Line().Infof(ctx, "The all ZH items total count is %d", totalCount)
-	cache.SetCache(ctx, gconv.String(consts.FEED_ITEM_TOTAL_COUNT), gconv.String(totalCount), int(24*60*60))
+	cache.SetCache(ctx, gconv.String(consts.FEED_ITEM_TOTAL_COUNT), gconv.String(totalCount), 24*60*60)
 	return
 }
 

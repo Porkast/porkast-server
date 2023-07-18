@@ -25,7 +25,7 @@ func TestSetCache(t *testing.T) {
 				ctx:          gctx.New(),
 				key:          "test_key",
 				value:        "test_value",
-				expireSecond: 60 * 60,
+				expireSecond: 24 * 60 * 60,
 			},
 			wantErr: false,
 		},
