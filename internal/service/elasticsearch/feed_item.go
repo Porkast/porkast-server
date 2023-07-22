@@ -17,12 +17,17 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, sortB
 	simpleStringQuery.FieldWithBoost("author", 1)
 	// simpleStringQuery.FieldWithBoost("channelTitle", 1)
     simpleStringQuery.MinimumShouldMatch("75%")
+
+    termQuery := elastic.NewTermQuery("language", "zh-CN")
+    termQuery.CaseInsensitive(true)
+
 	highlight := elastic.NewHighlight()
 	highlight = highlight.PreTags("<span style='color: red;'>").PostTags("</span>")
 	highlight = highlight.Fields(elastic.NewHighlighterField("title"), elastic.NewHighlighterField("textDescription"), elastic.NewHighlighterField("author"))
 	searchService := c.Client.Search().
 		Index("feed_item").
 		Query(simpleStringQuery).
+        PostFilter(termQuery).
 		Highlight(highlight).
 		From(from).Size(size).
 		Pretty(true)
