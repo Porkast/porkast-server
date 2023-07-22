@@ -17,7 +17,7 @@ func UpdateChannelTotalCountJob(ctx context.Context) {
 		err error
 	)
 
-	_, err = gcron.Add(ctx, "0 0 2 * * *", func(ctx context.Context) {
+	_, err = gcron.Add(ctx, "0 0 */3 * * *", func(ctx context.Context) {
 		_ = setChannelTotalCountToCache(ctx)
 	}, consts.FEED_CHANNEL_TOTAL_COUNT)
 

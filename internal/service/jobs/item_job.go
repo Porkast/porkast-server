@@ -24,7 +24,7 @@ func UpdateItemTotalCountJob(ctx context.Context) {
 		err error
 	)
 
-	_, err = gcron.Add(ctx, "0 0 2 * * *", func(ctx context.Context) {
+	_, err = gcron.Add(ctx, "0 0 */3 * * *", func(ctx context.Context) {
 		_ = setItemTotalCountToCache(ctx)
 	}, consts.FEED_ITEM_TOTAL_COUNT)
 
