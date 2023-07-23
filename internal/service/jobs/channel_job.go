@@ -41,6 +41,6 @@ func setChannelTotalCountToCache(ctx context.Context) (err error) {
 		return
 	}
 	g.Log().Line().Info(ctx, "The all ZH channel total count is ", totalCount)
-	cache.SetCache(ctx, gconv.String(consts.FEED_CHANNEL_TOTAL_COUNT), gconv.String(totalCount), int(time.Second*60*60))
+	cache.SetCache(ctx, gconv.String(consts.FEED_CHANNEL_TOTAL_COUNT), gconv.String(totalCount), 24*60*60)
 	return
 }
