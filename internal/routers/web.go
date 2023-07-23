@@ -18,11 +18,12 @@ func WebRouter(group *ghttp.RouterGroup) {
 
 	group.GET("/login", ctls.Ctl.LoginTpl)
 	group.GET("/register", ctls.Ctl.RegisterTpl)
+	group.GET("/user/info/:id", ctls.Ctl.UserInfoTpl)
 
 	group.GET("/listenlater/playlist/:userId", ctls.Ctl.ListenLaterTpl)
 	group.GET("/listenlater/:userId/rss", ctls.Ctl.GetListenLaterRSS)
 
-	group.GET("/user/info/:id", ctls.Ctl.UserInfoTpl)
+	group.GET("/subscription/:userId/:keyword/rss", ctls.Ctl.GetSubKeywordFeedRSS)
 }
 
 func V1ApiRouter(group *ghttp.RouterGroup) {

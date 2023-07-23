@@ -83,20 +83,18 @@ func (ctl *controller) GetSubKeywordFeedRSS(req *ghttp.Request) {
 	var (
 		err     error
 		ctx     context.Context
-		reqData *GetSubKeywordListReqData
+		userId  string
+		keyword string
 		rssStr  string
 	)
 
-	ctx = req.Context()
-	err = req.Parse(&reqData)
-	if err = req.Parse(&reqData); err != nil {
-		middleware.JsonExit(req, 1, err.Error())
-	}
+	userId = req.Get("userId").String()
+	keyword = req.Get("keyword").String()
 
-	rssStr, err = feed.GetSubKeywordRSS(ctx, reqData.UserId, reqData.Keyword)
+	rssStr, err = feed.GetSubKeywordRSS(ctx, userId, keyword)
 	if err != nil {
+		// TODO: Add error page
 		g.Log().Line().Error(ctx, err)
-		middleware.JsonExit(req, 1, err.Error(), nil)
 	}
 
 	req.Response.WriteXml(rssStr)
