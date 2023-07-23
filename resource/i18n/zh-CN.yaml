@@ -29,3 +29,8 @@ listen_later_rss_channel_description: "%s的锅烧FM稍后听播放列表"
 listen_later_sub_list: "订阅播放列表"
 listen_later_copy_rss_link: "复制RSS Feed链接"
 listen_later_copy_to_rss_app: "复制到通用RSS订阅App或服务"
+
+# Keyword Subscription
+keyword_sub_rss_channel_title: "%s的锅烧FM订阅列表"
+keyword_sub_rss_channel_auther: "%s / 锅烧FM"
+keyword_sub_rss_channel_description: "锅烧FM播客搜索引擎,关键词%s订阅列表"

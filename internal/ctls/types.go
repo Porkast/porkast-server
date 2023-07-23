@@ -45,3 +45,8 @@ type SubSearchKeywordReqData struct {
 	Lang       string `json:"lang" v:"required"`
 	SortByDate int    `json:"sortByDate" v:"required"`
 }
+
+type GetSubKeywordListReqData struct {
+	UserId     string `json:"userId" v:"required"`
+	Keyword    string `json:"keyword" v:"required"`
+}
