@@ -42,5 +42,6 @@ type GetListenLaterListReqData struct {
 type SubSearchKeywordReqData struct {
 	UserId     string `json:"userId" v:"required"`
 	Keyword    string `json:"keyword" v:"required"`
+	Lang       string `json:"lang" v:"required"`
 	SortByDate int    `json:"sortByDate" v:"required"`
 }

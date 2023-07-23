@@ -23,7 +23,7 @@ func (ctl *controller) SubKeyword(req *ghttp.Request) {
 		middleware.JsonExit(req, 1, err.Error())
 	}
 
-	err = feed.SubFeedByKeyword(ctx, reqData.UserId, reqData.Keyword, reqData.SortByDate)
+	err = feed.SubFeedByKeyword(ctx, reqData.UserId, reqData.Keyword, reqData.Lang, reqData.SortByDate)
 	if err != nil {
 		if err.Error() == consts.DB_DATA_ALREADY_EXIST {
 			middleware.JsonExit(req, 1, g.I18n().T(ctx, `{#sub_keyword_exist}`), nil)

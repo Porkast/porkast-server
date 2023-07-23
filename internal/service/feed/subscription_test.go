@@ -14,6 +14,7 @@ func TestSubFeedByKeyword(t *testing.T) {
 		ctx        context.Context
 		userId     string
 		keyword    string
+		Lang       string
 		sortByDate int
 	}
 	tests := []struct {
@@ -27,6 +28,7 @@ func TestSubFeedByKeyword(t *testing.T) {
 				ctx:        gctx.New(),
 				userId:     "1t5z27w7h00csfdx7cluc20100do2yyq",
 				keyword:    `游戏`,
+				Lang:       "zh",
 				sortByDate: 1,
 			},
 			wantErr: false,
@@ -35,7 +37,7 @@ func TestSubFeedByKeyword(t *testing.T) {
 	g.DB().SetDryRun(true)
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := SubFeedByKeyword(tt.args.ctx, tt.args.userId, tt.args.keyword, tt.args.sortByDate); (err != nil) != tt.wantErr {
+			if err := SubFeedByKeyword(tt.args.ctx, tt.args.userId, tt.args.keyword, tt.args.Lang, tt.args.sortByDate); (err != nil) != tt.wantErr {
 				if err.Error() != consts.DB_DATA_ALREADY_EXIST {
 					t.Errorf("SubFeedByKeyword() error = %v, wantErr %v", err, tt.wantErr)
 				}

@@ -9,7 +9,7 @@ import (
 	"github.com/gogf/gf/v2/util/guid"
 )
 
-func SubFeedByKeyword(ctx context.Context, userId, keyword string, sortByDate int) (err error) {
+func SubFeedByKeyword(ctx context.Context, userId, keyword, lang string, sortByDate int) (err error) {
 
 	var (
 		userSubKeyword entity.UserSubKeyword
@@ -19,6 +19,7 @@ func SubFeedByKeyword(ctx context.Context, userId, keyword string, sortByDate in
 		Id:          guid.S(),
 		UserId:      userId,
 		Keyword:     keyword,
+		Lang:        lang,
 		OrderByDate: sortByDate,
 		CreateTime:  gtime.Now(),
 	}
