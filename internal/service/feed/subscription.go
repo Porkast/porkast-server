@@ -62,9 +62,9 @@ func GetSubKeywordRSS(ctx context.Context, userId, keyword string) (rssStr strin
 		return
 	}
 
-	feedChannelTitle := g.I18n().Tf(ctx, "keyword_sub_rss_channel_title", userInfo.Nickname)
-	feedChannelLink := fmt.Sprintf("https://www.guoshaofm.com/subsription/%s/%s/rss", userInfo.Id, keyword)
-	feedChannelDesc := g.I18n().Tf(ctx, "keyword_sub_rss_channel_description", userInfo.Nickname)
+	feedChannelTitle := g.I18n().Tf(ctx, "keyword_sub_rss_channel_title", keyword)
+	feedChannelLink := fmt.Sprintf("https://www.guoshaofm.com/subscription/%s/%s/rss", userInfo.Id, keyword)
+	feedChannelDesc := g.I18n().Tf(ctx, "keyword_sub_rss_channel_description", keyword)
 	lastBuildTime := &gtime.NewFromStr(userSubKeywordDtoList[0].PubDate).Time
 	feed = podcast.New(feedChannelTitle, feedChannelLink, feedChannelDesc, lastBuildTime, lastBuildTime)
 	feed.Copyright = fmt.Sprintf("Copyright %s GuoshaoFM", userInfo.Nickname)
