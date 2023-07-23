@@ -5,7 +5,6 @@ import (
 	"guoshao-fm-web/internal/consts"
 	"guoshao-fm-web/internal/service/cache"
 	"guoshao-fm-web/internal/service/feed"
-	"time"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcron"
