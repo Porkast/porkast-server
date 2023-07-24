@@ -69,6 +69,8 @@ func genKeywordSubEntity(ctx context.Context, userId, keyword, lang string, sort
 			Keyword:       keyword,
 			FeedChannelId: feedItem.ChannelId,
 			FeedItemId:    feedItem.Id,
+			Lang:          lang,
+			OrderByDate:   sortByDate,
 			CreateTime:    gtime.Now(),
 		}
 
