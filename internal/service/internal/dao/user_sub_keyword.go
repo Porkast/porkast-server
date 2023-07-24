@@ -131,3 +131,21 @@ func GetUserSubKeywordListByUserIdAndKeyword(ctx context.Context, userId, keywor
 
 	return
 }
+
+func GetAllKindSubKeywordList(ctx context.Context, offset, limit int) (entities []entity.UserSubKeyword, err error) {
+
+	var (
+		dbModel *gdb.Model
+	)
+
+	dbModel = UserSubKeyword.Ctx(ctx).
+		Group("keyword", "lang", "order_by_date")
+
+	if limit == 0 {
+		err = dbModel.Scan(&entities)
+	} else {
+		err = dbModel.Offset(limit).Limit(limit).Scan(&entities)
+	}
+
+	return
+}

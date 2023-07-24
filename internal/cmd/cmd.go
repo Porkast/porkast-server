@@ -8,6 +8,7 @@ import (
 	"guoshao-fm-web/internal/service/cache"
 	"guoshao-fm-web/internal/service/elasticsearch"
 	"guoshao-fm-web/internal/service/jobs"
+	"guoshao-fm-web/internal/service/celery"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcmd"
@@ -46,4 +47,5 @@ func initComponent(ctx context.Context) {
 	cache.InitCache(ctx)
 	elasticsearch.InitES(ctx)
 	jobs.InitJobs(ctx)
+    celery.InitCeleryClient(ctx)
 }

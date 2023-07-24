@@ -35,6 +35,10 @@ redis:
     db: 1
     pass: 123456
 
+celery:
+  worker:
+    count: 6
+
 elastic:
   host: "http://47.242.232.137"
   port: "9200"
