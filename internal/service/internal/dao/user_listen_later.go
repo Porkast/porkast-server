@@ -57,7 +57,7 @@ func GetListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, ite
 		err = gerror.New(gcode.CodeMissingParameter.Message())
 		return
 	}
-	err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Where("channel_id=?", channelId).Where("item_id=?", itemId).Scan(&entity)
+	err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Where("channel_id=?", channelId).Where("item_id=?", itemId).Where("status=1").Scan(&entity)
 
 	return
 }
@@ -73,6 +73,7 @@ func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limi
 		InnerJoin("feed_item fi", "ull.item_id = fi.id").
 		InnerJoin("feed_channel fc", "fi.channel_id = fc.id").
 		Fields("ull.*, fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
+		Where("status=1").
 		Offset(offset).
 		Limit(limit).
 		Order("ull.reg_date desc").
@@ -88,7 +89,7 @@ func GetTotalListenLaterCountByUserId(ctx context.Context, userId string) (total
 		return
 	}
 
-	totalCount, err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Count()
+	totalCount, err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Where("status=1").Count()
 
 	return
 }
