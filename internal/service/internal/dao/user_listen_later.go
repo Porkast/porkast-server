@@ -57,7 +57,7 @@ func GetListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, ite
 		err = gerror.New(gcode.CodeMissingParameter.Message())
 		return
 	}
-	err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Where("channel_id=?", channelId).Where("item_id=?", itemId).Where("status=1").Scan(&entity)
+	err = UserListenLater.Ctx(ctx).Where("user_id=? and channel_id=? and item_id=? and status=1", userId, channelId, itemId).Scan(&entity)
 
 	return
 }
@@ -89,7 +89,7 @@ func GetTotalListenLaterCountByUserId(ctx context.Context, userId string) (total
 		return
 	}
 
-	totalCount, err = UserListenLater.Ctx(ctx).Where("user_id=?", userId).Where("status=1").Count()
+	totalCount, err = UserListenLater.Ctx(ctx).Where("user_id=? and status=1", userId).Count()
 
 	return
 }
