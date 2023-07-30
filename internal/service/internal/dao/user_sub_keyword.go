@@ -33,7 +33,7 @@ var (
 // Fill with you ideas below.
 func GetUserSubKeywordByUserIdAndKeyword(ctx context.Context, userId, keyword string) (resultEntity entity.UserSubKeyword, err error) {
 
-	err = UserSubKeyword.Ctx(ctx).Where("user_id=?", userId).Where("keyword=?", keyword).Scan(&resultEntity)
+	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and status=1", userId, keyword).Scan(&resultEntity)
 
 	return
 }
@@ -102,7 +102,7 @@ func GetUserSubKeywordListByUserId(ctx context.Context, userId string) (dtos []d
 		return
 	}
 
-	UserSubKeyword.Ctx(ctx).Where("user_id=?", userId).Scan(&dtos)
+	UserSubKeyword.Ctx(ctx).Where("user_id=? and status=1", userId).Scan(&dtos)
 
 	return
 }
@@ -119,8 +119,7 @@ func GetUserSubKeywordListByUserIdAndKeyword(ctx context.Context, userId, keywor
 		InnerJoin("feed_channel fc", "ks.feed_channel_id = fc.id").
 		InnerJoin("feed_item fi", "ks.feed_channel_id = fi.channel_id and ks.feed_item_id = fi.id").
 		Fields("usk.*, fi.id as item_id, fi.channel_id ,fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
-		Where("usk.user_id=?", userId).
-		Where("usk.keyword=?", keyword).
+		Where("usk.user_id=? and usk.keyword=? and status=1", userId, keyword).
 		Scan(&dtos)
 
 	return

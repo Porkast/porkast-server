@@ -40,6 +40,7 @@ func TestGetUserSubKeywordByUserIdAndKeyword(t *testing.T) {
 				OrderByDate: 0,
 				Lang:        "zh",
 				CreateTime:  gtime.NewFromStr("2023-07-23 09:59:45"),
+				Status:      1,
 			},
 		},
 	}
