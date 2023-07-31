@@ -153,6 +153,7 @@ func TestDoSubKeywordByUserIdAndKeyword(t *testing.T) {
 					OrderByDate: 0,
 					CreateTime:  gtime.Now(),
 					Lang:        "zh",
+					Status:      1,
 				},
 				newKSEntityList: []entity.KeywordSubscription{
 					{
