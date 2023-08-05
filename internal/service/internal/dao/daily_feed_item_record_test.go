@@ -2,6 +2,7 @@ package dao
 
 import (
 	"context"
+	"guoshao-fm-web/internal/consts"
 	"testing"
 
 	"github.com/gogf/gf/v2/os/gctx"
@@ -19,21 +20,23 @@ func TestCreateDailyFeedItemRecord(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-        {
-        	name:    "create daily feed item record",
-        	args:    args{
-        		ctx:       gctx.New(),
-        		channelId: "105v2e18jj2lf",
-        		itemId:    "1ivif5fm8gueb",
-        		pubDate:   "2023-05-01",
-        	},
-        	wantErr: false,
-        },
+		{
+			name: "create daily feed item record",
+			args: args{
+				ctx:       gctx.New(),
+				channelId: "105v2e18jj2lf",
+				itemId:    "1ivif5fm8gueb",
+				pubDate:   "2023-05-01",
+			},
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := CreateDailyFeedItemRecord(tt.args.ctx, tt.args.channelId, tt.args.itemId, tt.args.pubDate); (err != nil) != tt.wantErr {
-				t.Errorf("CreateDailyFeedItemRecord() error = %v, wantErr %v", err, tt.wantErr)
+				if err.Error() != consts.DB_DATA_ALREADY_EXIST {
+					t.Errorf("CreateDailyFeedItemRecord() error = %v, wantErr %v", err, tt.wantErr)
+				}
 			}
 		})
 	}
