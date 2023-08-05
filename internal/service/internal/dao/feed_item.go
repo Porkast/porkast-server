@@ -69,7 +69,7 @@ func GetLatestPubFeedItems(ctx context.Context, offset, limit int) (entities []d
 
 	g.Model("feed_item fi").
 		InnerJoin("feed_channel fc", "fc.id=fi.channel_id").
-		Fields("fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
+		Fields("fi.*, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
 		Offset(offset).
 		Limit(limit).
 		OrderDesc("fi.pub_date").
@@ -82,9 +82,20 @@ func GetFeedItemListByPubDate(ctx context.Context, startDate, endDate string) (e
 
 	g.Model("feed_item fi").
 		InnerJoin("feed_channel fc", "fc.id=fi.channel_id").
-		Fields("fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
+		Fields("fi.*, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
 		Where("fi.pub_date>=?", startDate).
 		Where("fi.pub_date<?", endDate).
+		Scan(&entities)
+
+	return
+}
+
+func GetFeedChannelItemListByPubDate(ctx context.Context, channelId, pubDate string) (entities []dto.FeedItem) {
+
+	g.Model("feed_item fi").
+		InnerJoin("feed_channel fc", "fc.id=fi.channel_id").
+		Fields("fi.*, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
+		Where("fi.pub_date=? and fc.id=?", pubDate, channelId).
 		Scan(&entities)
 
 	return

@@ -62,3 +62,29 @@ func Test_setLatestFeedItems(t *testing.T) {
 		})
 	}
 }
+
+func Test_updateDailyFeedItemRecord(t *testing.T) {
+	type args struct {
+		ctx context.Context
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+        {
+        	name:    "update daily feed item record",
+        	args:    args{
+        		ctx: gctx.New(),
+        	},
+        	wantErr: false,
+        },
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := updateDailyFeedItemRecord(tt.args.ctx); (err != nil) != tt.wantErr {
+				t.Errorf("updateDailyFeedItemRecord() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}

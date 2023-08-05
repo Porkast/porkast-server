@@ -51,7 +51,7 @@ func setItemTotalCountToCache(ctx context.Context) (err error) {
 			if err == nil {
 				atomic.AddInt64(&totalCount, gconv.Int64(count))
 			} else {
-                g.Log().Line().Errorf(ctx, "Get channel %s item total count failed :\n%d", feedChannelTemp.Title, err)
+				g.Log().Line().Errorf(ctx, "Get channel %s item total count failed :\n%d", feedChannelTemp.Title, err)
 			}
 		})
 	}
@@ -113,5 +113,52 @@ func setLatestFeedItems(ctx context.Context) (err error) {
 	}
 	cache.SetCache(ctx, gconv.String(consts.TODAY_FEED_ITEM_LIST), itemListJson.MustToJsonString(), int(time.Second*60*60))
 
+	return
+}
+
+func DailyFeedItemUpdateRecordJob(ctx context.Context) {
+	var (
+		err error
+	)
+
+	_, err = gcron.Add(ctx, "0 0 */4 * * *", func(ctx context.Context) {
+		_ = updateDailyFeedItemRecord(ctx)
+	}, consts.DAILY_FEED_ITEM_UPDATE_RECORD)
+
+	if err != nil {
+		g.Log().Line().Error(ctx, "The DAILY_FEED_ITEM_UPDATE_RECORD job start failed : ", err)
+	}
+}
+
+func updateDailyFeedItemRecord(ctx context.Context) (err error) {
+	var (
+		date            string
+		feedChannelList []entity.FeedChannel
+	)
+
+	wg := sync.WaitGroup{}
+	pool := grpool.New(100)
+	date = gtime.Now().Format("Y-m-d")
+	feedChannelList, err = dao.GetZHFeedChannelList(ctx)
+	for _, feedChannel := range feedChannelList {
+		feedChannelTemp := feedChannel
+		wg.Add(1)
+		pool.Add(ctx, func(ctx context.Context) {
+			defer wg.Done()
+			itemList := dao.GetFeedChannelItemListByPubDate(ctx, feedChannelTemp.Id, date)
+			for _, item := range itemList {
+				err = dao.CreateDailyFeedItemRecord(ctx, item.ChannelId, item.Id, item.PubDate)
+				if err != nil {
+					if err.Error() != consts.DB_DATA_ALREADY_EXIST {
+						g.Log().Line().Errorf(ctx, "insert daily feed item record with channel_id %s, item_id %s and pubDate %s failed:\n%s", item.ChannelId, item.Id, item.PubDate, err)
+					}
+					continue
+				}
+			}
+		})
+	}
+
+	wg.Wait()
+	g.Log().Line().Infof(ctx, "Update daily feed item record for date %s", date)
 	return
 }
