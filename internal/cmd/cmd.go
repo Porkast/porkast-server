@@ -4,11 +4,13 @@ import (
 	"context"
 	"os"
 
+	"guoshao-fm-web/internal/consts"
 	"guoshao-fm-web/internal/routers"
 	"guoshao-fm-web/internal/service/cache"
+	"guoshao-fm-web/internal/service/celery"
 	"guoshao-fm-web/internal/service/elasticsearch"
 	"guoshao-fm-web/internal/service/jobs"
-	"guoshao-fm-web/internal/service/celery"
+	"guoshao-fm-web/internal/service/jobs/workers"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcmd"
@@ -47,5 +49,13 @@ func initComponent(ctx context.Context) {
 	cache.InitCache(ctx)
 	elasticsearch.InitES(ctx)
 	jobs.InitJobs(ctx)
-    celery.InitCeleryClient(ctx)
+	celery.InitCeleryClient(ctx)
+	registerCeleryJobs(ctx)
+	celery.GetClient().StartWorker()
+
+	jobs.UpdateUserSubKeywordJobs(ctx)
+}
+
+func registerCeleryJobs(ctx context.Context) {
+	celery.GetClient().Register(consts.USER_SUB_KEYWORD_UPDATE, workers.UpdateUserSubkeyword)
 }

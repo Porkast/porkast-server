@@ -46,6 +46,7 @@ func CreateUserSubKeyword(ctx context.Context, newEntity entity.UserSubKeyword) 
 	queryEntity, err = GetUserSubKeywordByUserIdAndKeyword(ctx, newEntity.UserId, newEntity.Keyword)
 	if queryEntity.Id != "" {
 		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
+        return
 	}
 
 	if newEntity.UserId == "" || newEntity.Keyword == "" || newEntity.CreateTime == nil || newEntity.CreateTime.IsDST() {
@@ -132,6 +133,7 @@ func GetAllKindSubKeywordList(ctx context.Context, offset, limit int) (entities 
 	)
 
 	dbModel = UserSubKeyword.Ctx(ctx).
+        Fields("keyword","lang","order_by_date").
 		Group("keyword", "lang", "order_by_date")
 
 	if limit == 0 {

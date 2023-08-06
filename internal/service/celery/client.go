@@ -29,7 +29,7 @@ func InitCeleryClient(ctx context.Context) {
 
 	redisPool = &redis.Pool{
 		Dial: func() (redis.Conn, error) {
-			c, err := redis.DialURL("redis://" + redisAddr.String())
+			c, err := redis.DialURL("redis://" + redisAddr.String() +"/2")
 			if err != nil {
 				return nil, err
 			}

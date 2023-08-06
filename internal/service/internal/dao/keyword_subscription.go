@@ -5,7 +5,12 @@
 package dao
 
 import (
+	"context"
+	"guoshao-fm-web/internal/consts"
+	"guoshao-fm-web/internal/model/entity"
 	"guoshao-fm-web/internal/service/internal/dao/internal"
+
+	"github.com/gogf/gf/v2/errors/gerror"
 )
 
 // keywordSubscriptionDao is the data access object for table keyword_subscription.
@@ -22,3 +27,19 @@ var (
 )
 
 // Fill with you ideas below.
+func CreateKeywordSubScriptionEntity(ctx context.Context, newEntity entity.KeywordSubscription) (err error) {
+	var (
+		queryEntity entity.UserSubKeyword
+	)
+
+	err = KeywordSubscription.Ctx(ctx).Where("keyword=? and lang=? and order_by_date=? and feed_item_id=?", newEntity.Keyword, newEntity.Lang, newEntity.OrderByDate, newEntity.FeedItemId).Scan(&queryEntity)
+
+	if queryEntity.Id != "" {
+		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
+		return
+	}
+
+	_, err = KeywordSubscription.Ctx(ctx).Insert(newEntity)
+
+	return
+}
