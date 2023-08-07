@@ -29,6 +29,7 @@ func CreateListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, 
 		UserId:    userId,
 		ChannelId: channelId,
 		ItemId:    itemId,
+		Status:    1,
 		RegDate:   gtime.Now(),
 	}
 
@@ -145,8 +146,8 @@ func GetListenLaterRSSByUserId(ctx context.Context, userId string) (rss string, 
 	feed.AddSummary(feedChannelDesc)
 	feed.AddAtomLink("https://www.guoshaofm.com/listenlater/playlist/" + userInfo.Id)
 	feed.AddSubTitle(g.I18n().Tf(ctx, "listen_later_rss_channel_description", userInfo.Nickname))
-    feed.Generator = "GuoshaoFM (https://www.guoshaofm.com)"
-    feed.Language = "zh-CN"
+	feed.Generator = "GuoshaoFM (https://www.guoshaofm.com)"
+	feed.Language = "zh-CN"
 	feed.AddImage("https://www.guoshaofm.com/resource/image/logo192.png")
 
 	for _, listenLaterDtoItem := range listenLaterDtoList {
@@ -160,16 +161,16 @@ func GetListenLaterRSSByUserId(ctx context.Context, userId string) (rss string, 
 			feedItem.AddPubDate(&gtime.NewFromStr(listenLaterDtoItem.PubDate).Time)
 		}
 		feedItem.AddEnclosure(listenLaterDtoItem.EnclosureUrl, podcast.MP3, gconv.Int64(listenLaterDtoItem.EnclosureLength))
-        feedItem.Title = listenLaterDtoItem.Title
-        feedItem.Author = &podcast.Author{
-        	Name:    listenLaterDtoItem.Author,
-        }
-        feedItem.Description = listenLaterDtoItem.Description
-        feedItem.Link = listenLaterDtoItem.Link
-        feed.AddItem(feedItem)
+		feedItem.Title = listenLaterDtoItem.Title
+		feedItem.Author = &podcast.Author{
+			Name: listenLaterDtoItem.Author,
+		}
+		feedItem.Description = listenLaterDtoItem.Description
+		feedItem.Link = listenLaterDtoItem.Link
+		feed.AddItem(feedItem)
 	}
 
-    rss = feed.String()
+	rss = feed.String()
 
 	return
 }
