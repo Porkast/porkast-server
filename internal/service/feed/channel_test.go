@@ -28,7 +28,7 @@ func TestGetChannelInfoByChannelId(t *testing.T) {
 			name: "get channel info by channel id",
 			args: args{
 				ctx:       gctx.New(),
-				channelId: "o66b2cv6l9qr",
+				channelId: "10b7ojjgp2geo",
 				offset:    0,
 				limit:     10,
 			},
@@ -38,7 +38,7 @@ func TestGetChannelInfoByChannelId(t *testing.T) {
 			name: "get channel info by channel id without limit and offset",
 			args: args{
 				ctx:       gctx.New(),
-				channelId: "o66b2cv6l9qr",
+				channelId: "10b7ojjgp2geo",
 			},
 			wantErr: false,
 		},

@@ -11,8 +11,6 @@ import (
 
 	"github.com/anaskhan96/soup"
 	"github.com/gogf/gf/v2/container/gvar"
-	"github.com/gogf/gf/v2/encoding/gjson"
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
 )
@@ -36,7 +34,7 @@ func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedCha
 	feedItemInfoDto.ChannelTitle = feedChannelModel.Title
 	feedItemInfoDto.FeedLink = feedChannelModel.FeedLink
 	feedItemInfoDto.Link = formatSourceLink(feedItemInfoDto.Link)
-    feedItemInfoDto.Title = formatItemTitle(feedItemInfoDto.Title)
+	feedItemInfoDto.Title = formatItemTitle(feedItemInfoDto.Title)
 	if feedItemInfoDto.ImageUrl == "" {
 		if feedItemInfoDto.ChannelImageUrl != "" {
 			feedItemInfoDto.ImageUrl = feedItemInfoDto.ChannelImageUrl
@@ -104,11 +102,11 @@ func SearchFeedItemsByKeyword(ctx context.Context, params SearchParams) (items [
 		itemDto.Duration = formatDuration(itemDto.Duration)
 		itemDto.HighlightChannelTitle = itemDto.ChannelTitle
 		itemDto.ChannelTitle = formatTitle(itemDto.HighlightChannelTitle)
-        itemDto.Title = formatItemTitle(itemDto.Title)
+		itemDto.Title = formatItemTitle(itemDto.Title)
 		items = append(items, itemDto)
 	}
 
-	g.Log().Line().Debug(ctx, "search result :\n", gjson.MustEncodeString(feedItemESDatalList))
+	// g.Log().Line().Debug(ctx, "search result :\n", gjson.MustEncodeString(feedItemESDatalList))
 
 	return
 }

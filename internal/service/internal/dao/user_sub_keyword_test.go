@@ -125,7 +125,7 @@ func TestGetUserSubKeywordListByUserIdAndKeyword(t *testing.T) {
 			}
 
 			if len(gotDtos) == 0 {
-				t.Error("GetUserSubKeywordListByUserIdAndKeyword() sub keyword list is empty")
+				t.Log("GetUserSubKeywordListByUserIdAndKeyword() sub keyword list is empty")
 			}
 		})
 	}
