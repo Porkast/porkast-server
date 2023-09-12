@@ -16,19 +16,20 @@
 <body style="margin: 0; display:inherit;" class="bg-gray-100">
     <!-- nav header -->
     <div class="w-full h-16 flex justify-center items-center shadow-lg drop-shadow-lg bg-white">
-        <div class="w-1/6 flex justify-start">
+        <div class="w-2/6 flex justify-start">
             <a class="normal-case font-bold md:text-2xl sm:text-base ml-4" href="/">
                 {{.appname}}
             </a>
         </div>
 
-        <div class="w-4/6 flex justify-center ">
+        <div class="w-2/6 flex justify-center ">
         </div>
 
-        <div class="w-1/6">
+        <div class="w-2/6">
 
         </div>
     </div>
+    {{include "module/alert.html" .}}
     <div class="flex justify-center mt-4 min-h-screen">
         <div class="w-full pl-6 pr-6 max-w-2xl bg-white min-h-screen">
             <div class="mt-4">

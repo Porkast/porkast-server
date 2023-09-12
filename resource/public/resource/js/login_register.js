@@ -41,7 +41,9 @@ function doLogin(account, password) {
         data: JSON.stringify(postData),
         success: function (data) {
             let jsonData = data
+            console.log(jsonData)
             if (jsonData.code !== 0) {
+                console.log("do login failed")
                 ShowErrorAlert(jsonData.message)
             } else {
                 ShowSuccessAlert(jsonData.message)
@@ -50,7 +52,7 @@ function doLogin(account, password) {
             }
         },
         error: function (data) {
-            ShowErrorAlert(jsonData.message)
+            ShowErrorAlert(data.message)
         }
     })
 }
@@ -82,7 +84,9 @@ function doRegister(nickname, account, password, vPassword) {
             if (jsonData.code !== 0) {
                 console.log("do register failed")
                 console.log(data)
+                ShowErrorAlert(jsonData.message)
             } else {
+                ShowSuccessAlert(jsonData.message)
                 setUserInfo(jsonData.data)
                 window.location.href = '/'
             }

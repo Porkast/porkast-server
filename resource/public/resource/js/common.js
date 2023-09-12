@@ -93,8 +93,9 @@ function ShowSuccessAlert(alertMsg) {
 }
 
 function ShowErrorAlert(alertMsg) {
+    console.log(alertMsg)
     let alertElem = $("#error-alert-elem")
-    let alertMsgElem = $("#erro-alert-msg")
+    let alertMsgElem = $("#error-alert-msg")
     alertMsgElem.text(alertMsg)
     alertElem.removeClass("hidden")
     setTimeout(function() {
