@@ -8,6 +8,7 @@ import (
 	"guoshao-fm-web/internal/service/middleware"
 
 	"github.com/gogf/gf/v2/encoding/gjson"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/gconv"
 )
@@ -23,6 +24,11 @@ func Login(ctx context.Context, email, phone, password string) (userInfoDto dto.
 		userInfoEntity, err = dao.GetUserInfoByPhoneAndPassword(ctx, phone, password)
 	} else if phone == "" {
 		userInfoEntity, err = dao.GetUserInfoByEmailAndPassword(ctx, email, password)
+	}
+
+	if userInfoEntity.Id == "" {
+		err = gerror.New("user not exist")
+		return userInfoDto, err
 	}
 
 	g.Log().Line().Debug(ctx, "query user info : \n", gjson.MustEncodeString(userInfoEntity))
