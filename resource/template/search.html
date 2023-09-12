@@ -32,6 +32,11 @@
                 {{include "module/search_list_item.html" .}}
                 {{end}}
             </div>
+            {{if ne "" .sub_keyword_btn_text}}
+            <div class="w-full mt-9">
+                <button class="btn">{{.sub_keyword_btn_text}}</button>
+            </div>
+            {{end}}
             <div class="flex justify-center mt-6">
                 <div class="btn-group">
                     <button class="btn" id="prePageBtn">«</button>

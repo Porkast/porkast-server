@@ -49,15 +49,16 @@ func (ctl *controller) SearchResult(req *ghttp.Request) {
 
 func searchFeedItems(ctx context.Context, searchParam feedService.SearchParams) (map[string]interface{}, error) {
 	var (
-		err            error
-		totalPage      int
-		totalCount     int
-		totalCountText string
-		tookTime       float64
-		tookTimeStr    string
-		tookTimeText   string
-		items          []dto.FeedItem
-		channels       []dto.FeedChannel
+		err                 error
+		totalPage           int
+		totalCount          int
+		totalCountText      string
+		tookTime            float64
+		tookTimeStr         string
+		tookTimeText        string
+		items               []dto.FeedItem
+		channels            []dto.FeedChannel
+		subscriptionBtnText string
 	)
 
 	if searchParam.Page == 0 || searchParam.Page == 1 {
@@ -83,12 +84,14 @@ func searchFeedItems(ctx context.Context, searchParam feedService.SearchParams) 
 
 	totalCountText = g.I18n().Tf(ctx, consts.SEARCH_RESULT_COUNT_TEXT_VALUE, totalCount)
 	tookTimeText = g.I18n().Tf(ctx, consts.SEARCH_TOOK_TIME_TEXT_VALUE, tookTimeStr)
+	subscriptionBtnText = g.I18n().Tf(ctx, "keyword_sub_btn_text", searchParam.Keyword)
 	var tplMap = consts.GetCommonTplMap(ctx)
 	tplMap[consts.SEARCH_KEYWORD] = searchParam.Keyword
 	tplMap[consts.CURRENT_PAGE] = searchParam.Page
 	tplMap[consts.TOTAL_PAGE] = totalPage
 	tplMap[consts.SEARCH_RESULT_COUNT_TEXT] = totalCountText
 	tplMap[consts.SEARCH_TOOK_TIME_TEXT] = tookTimeText
+	tplMap[consts.SUB_KEYWORD_BTN_TEXT] = subscriptionBtnText
 	tplMap[consts.FEED_ITEMS] = items
 	tplMap[consts.FEED_CHANNELS] = channels
 	if searchParam.SortByDate == 1 {
