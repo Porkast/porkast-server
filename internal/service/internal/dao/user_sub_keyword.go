@@ -96,14 +96,14 @@ func DoSubKeywordByUserIdAndKeyword(ctx context.Context, newUSKEntity entity.Use
 
 }
 
-func GetUserSubKeywordListByUserId(ctx context.Context, userId string) (dtos []dto.UserSubKeyword, err error) {
+func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (dtos []entity.UserSubKeyword, err error) {
 
 	if userId == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
 		return
 	}
 
-	UserSubKeyword.Ctx(ctx).Where("user_id=? and status=1", userId).Scan(&dtos)
+	UserSubKeyword.Ctx(ctx).Where("user_id=? and status=1", userId).Offset(offset).Limit(limit).Scan(&dtos)
 
 	return
 }
@@ -153,6 +153,20 @@ func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, er
 	}
 
 	count, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and status=1", userId).Count()
+
+	return
+}
+
+func GetUserSubKeywordItem(ctx context.Context, userId, keyword, lang string, sortByDate int) (result entity.UserSubKeyword, err error) {
+	
+	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and lang=? and order_by_date=? and status=1", userId, keyword, lang, sortByDate).Scan(&result)
+
+	return
+}
+
+func ActiveUserSubKeywordStatus(ctx context.Context, userId, keyword, lang string, sortByDate int) (err error) {
+
+	_, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and lang=? and order_by_date=?", userId, keyword, lang, sortByDate).Update(g.Map{"status": 1})
 
 	return
 }

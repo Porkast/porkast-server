@@ -49,16 +49,18 @@ func (ctl *controller) SearchResult(req *ghttp.Request) {
 
 func searchFeedItems(ctx context.Context, searchParam feedService.SearchParams) (map[string]interface{}, error) {
 	var (
-		err                 error
-		totalPage           int
-		totalCount          int
-		totalCountText      string
-		tookTime            float64
-		tookTimeStr         string
-		tookTimeText        string
-		items               []dto.FeedItem
-		channels            []dto.FeedChannel
-		subscriptionBtnText string
+		err                  error
+		totalPage            int
+		totalCount           int
+		totalCountText       string
+		tookTime             float64
+		tookTimeStr          string
+		tookTimeText         string
+		items                []dto.FeedItem
+		channels             []dto.FeedChannel
+		subscriptionBtnText  string
+		subConfirmModalTitle string
+		subConfirmModalDesc  string
 	)
 
 	if searchParam.Page == 0 || searchParam.Page == 1 {
@@ -85,6 +87,12 @@ func searchFeedItems(ctx context.Context, searchParam feedService.SearchParams) 
 	totalCountText = g.I18n().Tf(ctx, consts.SEARCH_RESULT_COUNT_TEXT_VALUE, totalCount)
 	tookTimeText = g.I18n().Tf(ctx, consts.SEARCH_TOOK_TIME_TEXT_VALUE, tookTimeStr)
 	subscriptionBtnText = g.I18n().Tf(ctx, "keyword_sub_btn_text", searchParam.Keyword)
+	subConfirmModalTitle = g.I18n().Tf(ctx, "sub_confirm_modal_title")
+	if searchParam.SortByDate == 1 {
+		subConfirmModalDesc = g.I18n().Tf(ctx, "sub_confirm_modal_desc_order_by_date", searchParam.Keyword)
+	} else {
+		subConfirmModalDesc = g.I18n().Tf(ctx, "sub_confirm_modal_desc_relative", searchParam.Keyword)
+	}
 	var tplMap = consts.GetCommonTplMap(ctx)
 	tplMap[consts.SEARCH_KEYWORD] = searchParam.Keyword
 	tplMap[consts.CURRENT_PAGE] = searchParam.Page
@@ -92,6 +100,8 @@ func searchFeedItems(ctx context.Context, searchParam feedService.SearchParams) 
 	tplMap[consts.SEARCH_RESULT_COUNT_TEXT] = totalCountText
 	tplMap[consts.SEARCH_TOOK_TIME_TEXT] = tookTimeText
 	tplMap[consts.SUB_KEYWORD_BTN_TEXT] = subscriptionBtnText
+	tplMap[consts.SUB_CONFIRM_MODAL_TITLE] = subConfirmModalTitle
+	tplMap[consts.SUB_CONFIRM_MODAL_DESC] = subConfirmModalDesc
 	tplMap[consts.FEED_ITEMS] = items
 	tplMap[consts.FEED_CHANNELS] = channels
 	if searchParam.SortByDate == 1 {

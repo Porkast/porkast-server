@@ -10,6 +10,7 @@
     <!-- nav header -->
     {{include "module/header.html" .}}
     {{include "module/alert.html" .}}
+    {{include "module/sub_confirm_modal.html" .}}
     <div class="flex justify-center min-h-screen">
         <div class="w-full pl-6 pr-6 max-w-2xl">
             <div class="flex justify-start mt-6">
@@ -34,7 +35,7 @@
             </div>
             {{if ne "" .sub_keyword_btn_text}}
             <div class="w-full mt-9">
-                <button class="btn" onclick="SubscriptSearchKeyword()">{{.sub_keyword_btn_text}}</button>
+                <label for="sub-confirm-modal" class="btn">{{.sub_keyword_btn_text}}</label>
             </div>
             {{end}}
             <div class="flex justify-center mt-6">

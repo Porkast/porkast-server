@@ -111,3 +111,44 @@ func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, er
 
 	return
 }
+
+func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (entities []entity.UserSubKeyword, err error) {
+
+	if userId == "" {
+		err = gerror.New(gcode.CodeMissingParameter.Message())
+		return
+	}
+
+	if limit == 0 {
+		limit = 10
+	}
+
+	entities, err = dao.GetUserSubKeywordListByUserId(ctx, userId, offset, limit)
+	if err != nil {
+		return
+	}
+
+
+
+	return
+}
+
+func GetUserSubKeywordRecord(ctx context.Context, userId, keyword, lang string, sortBydate int) (result entity.UserSubKeyword, err error) {
+
+	if userId == "" || keyword == "" {
+		err = gerror.New(gcode.CodeMissingParameter.Message())
+		return
+	}
+
+	result, err = dao.GetUserSubKeywordItem(ctx, userId, keyword, lang, sortBydate)
+
+	return
+}
+
+
+func ReactiveUserSubKeyword(ctx context.Context, userId, keyword, lang string, sortByDate int) (err error) {
+
+	err = dao.ActiveUserSubKeywordStatus(ctx, userId, keyword, lang, sortByDate)
+
+	return
+}
