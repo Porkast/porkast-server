@@ -34,7 +34,7 @@ func (ctl *controller) SubKeyword(req *ghttp.Request) {
 	}
 
 	if totalSubCount >= 10 {
-		middleware.JsonExit(req, 1, g.I18n().Tf(ctx, `{#keyword_sub_total_count_limit}`), totalSubCount)
+		middleware.JsonExit(req, 1, g.I18n().Tf(ctx, `{#keyword_sub_total_count_limit}`, totalSubCount), nil)
 	}
 
 	ksEntityList, err = genKeywordSubEntity(ctx, reqData.UserId, reqData.Keyword, reqData.Lang, reqData.SortByDate)
