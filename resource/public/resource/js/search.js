@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     // let searchClearBtn = $("#searchClearBtn");
     let searchBtn = $("#homeSearchBtn");
     let searchInput = $("#searchInput");
@@ -7,17 +7,17 @@ $(function() {
     let searchOptionElem = $("#searchOptions")
     let searchOptionBottomElem = $("#searchOptionsBottom")
     let isScopeChannel = searchBtn.attr("scope-channel")
-    searchOptionElem.change(function() {
+    searchOptionElem.change(function () {
         let value = $(this).val()
         searchOptionBottomElem.val(value)
     })
 
-    searchOptionBottomElem.change(function() {
+    searchOptionBottomElem.change(function () {
         let value = $(this).val()
         searchOptionElem.val(value)
     })
 
-    searchInput.keypress(function(event) {
+    searchInput.keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             let keyword = $(this).val()
@@ -26,12 +26,12 @@ $(function() {
         }
         event.stopPropagation();
     });
-    searchBtn.click(function() {
+    searchBtn.click(function () {
         let keyword = searchInput.val()
         let optionValue = searchOptionElem.val()
         doSearch(optionValue, isScopeChannel, keyword)
     });
-    searchInputBottom.keypress(function(event) {
+    searchInputBottom.keypress(function (event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             let keyword = $(this).val()
@@ -40,7 +40,7 @@ $(function() {
         }
         event.stopPropagation();
     });
-    searchBtnBottom.click(function() {
+    searchBtnBottom.click(function () {
         let keyword = searchInputBottom.val()
         let optionValue = searchOptionElem.val()
         doSearch(optionValue, isScopeChannel, keyword)
@@ -48,7 +48,7 @@ $(function() {
 
     SetIsKeywordMatchTitleOnly()
     let searchOnlyMatchTitleCheckbox = $('#searchOnlyMatchTitleCheckbox')
-    searchOnlyMatchTitleCheckbox.change(function() {
+    searchOnlyMatchTitleCheckbox.change(function () {
         if ($(this).is(':checked')) {
             SetSearchOnlyMatchTitle(true)
         } else {
@@ -57,7 +57,7 @@ $(function() {
     })
 
     let searchOnlyMatchTitleCheckboxBottom = $('#searchOnlyMatchTitleCheckboxBottom')
-    searchOnlyMatchTitleCheckboxBottom.change(function() {
+    searchOnlyMatchTitleCheckboxBottom.change(function () {
         if ($(this).is(':checked')) {
             SetSearchOnlyMatchTitleBottom(true)
         } else {
@@ -151,5 +151,56 @@ function SetSearchOnlyMatchTitleBottom(isMatchOnly) {
             }
         }
     }
+}
+
+function SubscriptSearchKeyword() {
+    let searchInput = $("#searchInputBottom");
+    let keyword = searchInput.val()
+    let searchOptionElem = $("#searchOptions")
+    let optionValue = searchOptionElem.val()
+    let sortByDate
+    if (optionValue === "sortByDate") {
+        sortByDate = 1
+    } else {
+        sortByDate = 0
+    }
+
+    let userInfo = getUserInfo()
+    if (userInfo === undefined || userInfo === null) {
+        ShowToLoginAlert("")
+        return
+    }
+    let userId = userInfo['id']
+
+    if (userId === "") {
+        console.log("cannot get user id")
+        return
+    }
+
+    let postData = {
+        userId: userId,
+        keyword: keyword,
+        sortByDate: sortByDate,
+        lang: "zh-cn"
+    }
+
+    $.ajax({
+        method: 'POST',
+        url: '/v1/api/subscription/keyword',
+        headers: {
+            Authorization: getAuthToken()
+        },
+        data: JSON.stringify(postData),
+        success: function (data) {
+            let jsonData = data
+            if (jsonData.code !== 0) {
+                ShowErrorAlert(jsonData.message)
+            } else {
+                ShowSuccessAlert(jsonData.message)
+            }
+        },
+        error: function (data) {
+        }
+    })
 }
 
