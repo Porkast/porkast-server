@@ -28,6 +28,15 @@ func (ctl *controller) SubKeyword(req *ghttp.Request) {
 		middleware.JsonExit(req, 1, err.Error())
 	}
 
+	totalSubCount, err := feed.GetUserSubscriptionCount(ctx, reqData.UserId)
+	if err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	}
+
+	if totalSubCount >= 10 {
+		middleware.JsonExit(req, 1, g.I18n().Tf(ctx, `{#keyword_sub_total_count_limit}`), totalSubCount)
+	}
+
 	ksEntityList, err = genKeywordSubEntity(ctx, reqData.UserId, reqData.Keyword, reqData.Lang, reqData.SortByDate)
 	if err != nil {
 		middleware.JsonExit(req, 1, err.Error())

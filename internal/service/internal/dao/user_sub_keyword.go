@@ -144,3 +144,15 @@ func GetAllKindSubKeywordList(ctx context.Context, offset, limit int) (entities 
 
 	return
 }
+
+func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, err error) {
+
+	if userId == "" {
+		err = gerror.New(gcode.CodeMissingParameter.Message())
+		return
+	}
+
+	count, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and status=1", userId).Count()
+
+	return
+}

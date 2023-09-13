@@ -29,6 +29,7 @@ func SubFeedByKeyword(ctx context.Context, userId, keyword, lang string, sortByD
 		Keyword:     keyword,
 		Lang:        lang,
 		OrderByDate: sortByDate,
+		Status:      1,
 		CreateTime:  gtime.Now(),
 	}
 
@@ -97,6 +98,16 @@ func GetSubKeywordRSS(ctx context.Context, userId, keyword string) (rssStr strin
 	}
 
 	rssStr = feed.String()
+
+	return
+}
+
+func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, err error) {
+
+	count, err = dao.GetUserSubscriptionCount(ctx, userId)
+	if err != nil {
+		return
+	}
 
 	return
 }
