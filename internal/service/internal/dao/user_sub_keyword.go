@@ -46,7 +46,7 @@ func CreateUserSubKeyword(ctx context.Context, newEntity entity.UserSubKeyword) 
 	queryEntity, err = GetUserSubKeywordByUserIdAndKeyword(ctx, newEntity.UserId, newEntity.Keyword)
 	if queryEntity.Id != "" {
 		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
-        return
+		return
 	}
 
 	if newEntity.UserId == "" || newEntity.Keyword == "" || newEntity.CreateTime == nil || newEntity.CreateTime.IsDST() {
@@ -96,19 +96,25 @@ func DoSubKeywordByUserIdAndKeyword(ctx context.Context, newUSKEntity entity.Use
 
 }
 
-func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (dtos []entity.UserSubKeyword, err error) {
+func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (dtos []dto.UserSubKeywordDto, err error) {
 
 	if userId == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
 		return
 	}
 
-	UserSubKeyword.Ctx(ctx).Where("user_id=? and status=1", userId).Offset(offset).Limit(limit).Scan(&dtos)
+	g.Model("user_sub_keyword usk").
+		InnerJoin("user_info ui", "usk.user_id = ui.id").
+		Fields("usk.*, ui.nickname as creater_name").
+		Where("usk.user_id=? and status=1", userId).
+		Offset(offset).
+		Limit(limit).
+		Scan(&dtos)
 
 	return
 }
 
-func GetUserSubKeywordListByUserIdAndKeyword(ctx context.Context, userId, keyword string) (dtos []dto.UserSubKeyword, err error) {
+func GetUserSubKeywordListByUserIdAndKeyword(ctx context.Context, userId, keyword string) (dtos []dto.UserSubKeywordFeedDetailDto, err error) {
 
 	if userId == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
@@ -133,7 +139,7 @@ func GetAllKindSubKeywordList(ctx context.Context, offset, limit int) (entities 
 	)
 
 	dbModel = UserSubKeyword.Ctx(ctx).
-        Fields("keyword","lang","order_by_date").
+		Fields("keyword", "lang", "order_by_date").
 		Group("keyword", "lang", "order_by_date")
 
 	if limit == 0 {
@@ -158,7 +164,7 @@ func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, er
 }
 
 func GetUserSubKeywordItem(ctx context.Context, userId, keyword, lang string, sortByDate int) (result entity.UserSubKeyword, err error) {
-	
+
 	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and lang=? and order_by_date=? and status=1", userId, keyword, lang, sortByDate).Scan(&result)
 
 	return

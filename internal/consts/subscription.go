@@ -13,3 +13,6 @@ const SUB_KEYWORD_BTN_TEXT = "sub_keyword_btn_text"
 const USER_SUB_KEYWORD_DATA_LIST = "user_sub_keyword_data_list"
 const SUB_CONFIRM_MODAL_TITLE = "sub_confirm_modal_title"
 const SUB_CONFIRM_MODAL_DESC = "sub_confirm_modal_desc"
+
+const USER_SUB_KEYWORD_PAGE_NAME = "user_sub_keyword_page_name"
+const PODCAST_LIST_CREATER = "podcast_list_creater"

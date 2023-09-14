@@ -20,7 +20,7 @@ func (c *GSElastic) QueryFeedChannelFull(ctx context.Context, keyword string, of
 	zhPrefixQuery.CaseInsensitive(true)
 
 	highlight := elastic.NewHighlight()
-	highlight = highlight.PreTags("<span style='color: red;'>").PostTags("</span>")
+	highlight = highlight.PreTags("<span style='color: #ff8000;'>").PostTags("</span>")
 	highlight = highlight.Fields(
 		elastic.NewHighlighterField("title"),
 		elastic.NewHighlighterField("author"),

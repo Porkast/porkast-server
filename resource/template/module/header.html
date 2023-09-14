@@ -41,7 +41,8 @@
                                     </div>
                                     {{if .search_channel}}
                                     {{else}}
-                                    <select id="searchOptions" class="carousel-item select select-bordered select-xs ml-4">
+                                    <select id="searchOptions"
+                                        class="carousel-item select select-bordered select-xs ml-4">
                                         {{if .search_order_by_date}}
                                         <option value="sortByDate">时间</option>
                                         <option value="relevant">相关性</option>
@@ -97,11 +98,11 @@
                             <img class="w-6" src="/resource/image/list.png" alt="">{{.listen_later_header_tag}}
                         </a>
                     </li>
-                    <!-- <li class="border-t border-gray-200"> -->
-                    <!--     <a class="w-full flex justify-start"> -->
-                    <!--         <img class="w-6" src="/resource/image/setting.png" alt="">设置 -->
-                    <!--     </a> -->
-                    <!-- </li> -->
+                    <li class="h-12 border-t border-gray-200">
+                        <a id="header_user_sub_list_tag" class="w-full flex justify-start">
+                            <img class="w-6" src="/resource/image/subscriptions.png" alt="">{{.user_sub_list}}
+                        </a>
+                    </li>
                     <li class="border-t border-gray-200" onclick="logout()">
                         <a class="w-full flex justify-start">
                             <img class="w-6" src="/resource/image/log-out.png" alt="">{{.logout_tag}}
@@ -145,7 +146,8 @@
                             </div>
                             {{if .search_channel}}
                             {{else}}
-                            <select id="searchOptionsBottom" class="carousel-item select select-bordered select-xs ml-4">
+                            <select id="searchOptionsBottom"
+                                class="carousel-item select select-bordered select-xs ml-4">
                                 {{if .search_order_by_date}}
                                 <option value="sortByDate">时间</option>
                                 <option value="relevant">相关性</option>

@@ -24,6 +24,7 @@ func WebRouter(group *ghttp.RouterGroup) {
 	group.GET("/listenlater/:userId/rss", ctls.Ctl.GetListenLaterRSS)
 
 	group.GET("/subscription/:userId/:keyword/rss", ctls.Ctl.GetSubKeywordFeedRSS)
+	group.GET("/user/sub/list/:userId/:page", ctls.Ctl.UserSubListTplt)
 }
 
 func V1ApiRouter(group *ghttp.RouterGroup) {

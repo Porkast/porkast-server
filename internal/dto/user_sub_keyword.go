@@ -1,6 +1,8 @@
 package dto
 
-type UserSubKeyword struct {
+import "github.com/gogf/gf/v2/os/gtime"
+
+type UserSubKeywordFeedDetailDto struct {
 	Id              string
 	UserId          string
 	Keyword         string
@@ -30,4 +32,15 @@ type UserSubKeyword struct {
 	FeedLink        string
 	Count           int
 	HasThumbnail    bool
+}
+
+type UserSubKeywordDto struct {
+	Id          string
+	UserId      string
+	CreaterName string
+	Keyword     string
+	OrderByDate int
+	CreateTime  *gtime.Time
+	Lang        string
+	Status      int
 }

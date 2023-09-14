@@ -44,7 +44,7 @@ func SubFeedByKeyword(ctx context.Context, userId, keyword, lang string, sortByD
 func GetSubKeywordRSS(ctx context.Context, userId, keyword string) (rssStr string, err error) {
 
 	var (
-		userSubKeywordDtoList []dto.UserSubKeyword
+		userSubKeywordDtoList []dto.UserSubKeywordFeedDetailDto
 		userInfo              dto.UserInfo
 		feed                  podcast.Podcast
 	)
@@ -112,7 +112,7 @@ func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, er
 	return
 }
 
-func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (entities []entity.UserSubKeyword, err error) {
+func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (dtoList []dto.UserSubKeywordDto, err error) {
 
 	if userId == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
@@ -123,12 +123,10 @@ func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, l
 		limit = 10
 	}
 
-	entities, err = dao.GetUserSubKeywordListByUserId(ctx, userId, offset, limit)
+	dtoList, err = dao.GetUserSubKeywordListByUserId(ctx, userId, offset, limit)
 	if err != nil {
 		return
 	}
-
-
 
 	return
 }

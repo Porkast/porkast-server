@@ -48,6 +48,11 @@
                             <img class="w-6" src="/resource/image/list.png" alt="">{{.listen_later_header_tag}}
                         </a>
                     </li>
+                    <li class="h-12 border-t border-gray-200">
+                        <a id="header_user_sub_list_tag" class="w-full flex justify-start">
+                            <img class="w-6" src="/resource/image/subscriptions.png" alt="">{{.user_sub_list}}
+                        </a>
+                    </li>
                     <li class="border-t border-gray-200" onclick="logout()">
                         <a class="w-full flex justify-start">
                             <img class="w-6" src="/resource/image/log-out.png" alt="">{{.logout_tag}}
@@ -111,10 +116,12 @@
         let accountElem = $("#header_account_text")
         let accountATagElem = $("#header_account_info_a_tag")
         let listenLaterTag = $("#header_listen_later_playlist_tag")
+        let userSubList = $("#header_user_sub_list_tag")
         nicknameElem.text(nickname)
         accountElem.text("@" + account)
         listenLaterTag.attr("href", "/listenlater/playlist/" + userId)
         accountATagElem.attr("href", "/user/info/" + userId)
+        userSubList.attr("href", "/user/sub/list/" + userId + "/1")
     }
 </script>
 
