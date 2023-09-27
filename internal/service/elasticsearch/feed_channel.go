@@ -16,8 +16,8 @@ func (c *GSElastic) QueryFeedChannelFull(ctx context.Context, keyword string, of
 	simpleStringQuery.FieldWithBoost("author", 1)
 	simpleStringQuery.MinimumShouldMatch("75%")
 
-	zhPrefixQuery := elastic.NewPrefixQuery("language", "zh")
-	zhPrefixQuery.CaseInsensitive(true)
+	// zhPrefixQuery := elastic.NewPrefixQuery("language", "zh")
+	// zhPrefixQuery.CaseInsensitive(true)
 
 	highlight := elastic.NewHighlight()
 	highlight = highlight.PreTags("<span style='color: #ff8000;'>").PostTags("</span>")
@@ -29,7 +29,7 @@ func (c *GSElastic) QueryFeedChannelFull(ctx context.Context, keyword string, of
 		Index("feed_channel").
 		Query(simpleStringQuery).
 		Highlight(highlight).
-		PostFilter(zhPrefixQuery).
+		// PostFilter(zhPrefixQuery).
 		From(offset).Size(limit).
 		Pretty(true).
 		Do(ctx)
