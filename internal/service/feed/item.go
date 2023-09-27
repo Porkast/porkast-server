@@ -2,12 +2,12 @@ package feed
 
 import (
 	"context"
-	"guoshao-fm-web/internal/consts"
-	"guoshao-fm-web/internal/dto"
-	"guoshao-fm-web/internal/model/entity"
-	"guoshao-fm-web/internal/service/cache"
-	"guoshao-fm-web/internal/service/elasticsearch"
-	"guoshao-fm-web/internal/service/internal/dao"
+	"porkast-server/internal/consts"
+	"porkast-server/internal/dto"
+	"porkast-server/internal/model/entity"
+	"porkast-server/internal/service/cache"
+	"porkast-server/internal/service/elasticsearch"
+	"porkast-server/internal/service/internal/dao"
 
 	"github.com/anaskhan96/soup"
 	"github.com/gogf/gf/v2/container/gvar"

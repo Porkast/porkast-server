@@ -1,11 +1,11 @@
 package main
 
 import (
-	_ "guoshao-fm-web/internal/packed"
+	_ "porkast-server/internal/packed"
 
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 
-	"guoshao-fm-web/internal/cmd"
+	"porkast-server/internal/cmd"
 
 	"github.com/gogf/gf/v2/os/gctx"
 )

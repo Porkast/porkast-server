@@ -2,7 +2,7 @@ package gslog
 
 import (
 	"context"
-	"guoshao-fm-web/internal/service/elasticsearch"
+	"porkast-server/internal/service/elasticsearch"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"

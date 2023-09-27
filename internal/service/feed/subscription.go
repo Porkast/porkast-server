@@ -3,10 +3,10 @@ package feed
 import (
 	"context"
 	"fmt"
-	"guoshao-fm-web/internal/dto"
-	"guoshao-fm-web/internal/model/entity"
-	"guoshao-fm-web/internal/service/internal/dao"
-	"guoshao-fm-web/internal/service/user"
+	"porkast-server/internal/dto"
+	"porkast-server/internal/model/entity"
+	"porkast-server/internal/service/internal/dao"
+	"porkast-server/internal/service/user"
 
 	"github.com/eduncan911/podcast"
 	"github.com/gogf/gf/v2/errors/gcode"

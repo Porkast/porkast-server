@@ -1,4 +1,4 @@
-module guoshao-fm-web
+module porkast-server
 
 go 1.15
 

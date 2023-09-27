@@ -6,8 +6,8 @@ package dao
 
 import (
 	"context"
-	"guoshao-fm-web/internal/model/entity"
-	"guoshao-fm-web/internal/service/internal/dao/internal"
+	"porkast-server/internal/model/entity"
+	"porkast-server/internal/service/internal/dao/internal"
 )
 
 // feedChannelDao is the data access object for table feed_channel.

@@ -1,10 +1,10 @@
 package workers
 
 import (
-	"guoshao-fm-web/internal/consts"
-	"guoshao-fm-web/internal/model/entity"
-	"guoshao-fm-web/internal/service/elasticsearch"
-	"guoshao-fm-web/internal/service/internal/dao"
+	"porkast-server/internal/consts"
+	"porkast-server/internal/model/entity"
+	"porkast-server/internal/service/elasticsearch"
+	"porkast-server/internal/service/internal/dao"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"

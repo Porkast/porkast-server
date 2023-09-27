@@ -2,12 +2,12 @@ package ctls
 
 import (
 	"fmt"
-	"guoshao-fm-web/internal/consts"
-	"guoshao-fm-web/internal/dto"
-	"guoshao-fm-web/internal/service/middleware"
+	"porkast-server/internal/consts"
+	"porkast-server/internal/dto"
+	"porkast-server/internal/service/middleware"
 
-	feedService "guoshao-fm-web/internal/service/feed"
-	userService "guoshao-fm-web/internal/service/user"
+	feedService "porkast-server/internal/service/feed"
+	userService "porkast-server/internal/service/user"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"

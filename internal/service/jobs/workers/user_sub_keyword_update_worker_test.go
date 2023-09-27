@@ -1,7 +1,7 @@
 package workers
 
 import (
-	"guoshao-fm-web/internal/service/elasticsearch"
+	"porkast-server/internal/service/elasticsearch"
 	"testing"
 
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"

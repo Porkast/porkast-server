@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"guoshao-fm-web/internal/ctls"
-	"guoshao-fm-web/internal/service/middleware"
+	"porkast-server/internal/ctls"
+	"porkast-server/internal/service/middleware"
 
 	"github.com/gogf/gf/v2/net/ghttp"
 )

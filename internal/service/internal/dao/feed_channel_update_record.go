@@ -5,7 +5,7 @@
 package dao
 
 import (
-	"guoshao-fm-web/internal/service/internal/dao/internal"
+	"porkast-server/internal/service/internal/dao/internal"
 )
 
 // feedChannelUpdateRecordDao is the data access object for table feed_channel_update_record.

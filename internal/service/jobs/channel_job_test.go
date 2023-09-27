@@ -2,7 +2,7 @@ package jobs
 
 import (
 	"context"
-	"guoshao-fm-web/internal/service/cache"
+	"porkast-server/internal/service/cache"
 	"testing"
 
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"

@@ -2,13 +2,13 @@ package ctls
 
 import (
 	"context"
-	"guoshao-fm-web/internal/consts"
-	"guoshao-fm-web/internal/dto"
-	"guoshao-fm-web/internal/model/entity"
-	"guoshao-fm-web/internal/service/feed"
-	feedService "guoshao-fm-web/internal/service/feed"
-	"guoshao-fm-web/internal/service/middleware"
-	userService "guoshao-fm-web/internal/service/user"
+	"porkast-server/internal/consts"
+	"porkast-server/internal/dto"
+	"porkast-server/internal/model/entity"
+	"porkast-server/internal/service/feed"
+	feedService "porkast-server/internal/service/feed"
+	"porkast-server/internal/service/middleware"
+	userService "porkast-server/internal/service/user"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"

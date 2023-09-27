@@ -12,8 +12,8 @@ func GetProjectAbsRootPath() (rootPath string) {
     )
 
     selfPath = gfile.Pwd()
-    pathArr = gstr.Split(selfPath, "guoshao-fm-web")
-    rootPath = pathArr[0] + "guoshao-fm-web/"
+    pathArr = gstr.Split(selfPath, "porkast-server")
+    rootPath = pathArr[0] + "porkast-server/"
 
     return
 }

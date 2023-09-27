@@ -2,7 +2,7 @@ package celery
 
 import (
 	"context"
-	"guoshao-fm-web/internal/service/cache"
+	"porkast-server/internal/service/cache"
 	"time"
 
 	"github.com/gogf/gf/v2/util/grand"

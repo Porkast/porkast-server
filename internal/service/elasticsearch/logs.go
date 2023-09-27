@@ -2,7 +2,7 @@ package elasticsearch
 
 import (
 	"context"
-	"guoshao-fm-web/internal/model/entity"
+	"porkast-server/internal/model/entity"
 
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/olivere/elastic/v7"

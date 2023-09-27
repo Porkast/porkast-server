@@ -1,11 +1,11 @@
 package ctls
 
 import (
-	"guoshao-fm-web/internal/consts"
-	"guoshao-fm-web/internal/dto"
-	"guoshao-fm-web/internal/service/middleware"
+	"porkast-server/internal/consts"
+	"porkast-server/internal/dto"
+	"porkast-server/internal/service/middleware"
 
-	userService "guoshao-fm-web/internal/service/user"
+	userService "porkast-server/internal/service/user"
 
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/encoding/gjson"
