@@ -29,17 +29,23 @@ func WebRouter(group *ghttp.RouterGroup) {
 
 func V1ApiRouter(group *ghttp.RouterGroup) {
 	group.Middleware(middleware.SetI18nLang)
+	group.Middleware(middleware.MiddlewareCORS)
 	unAuthGroup := group.Group("/")
 	unAuthGroup.POST("/user/login", ctls.Ctl.DoLogin)
 	unAuthGroup.POST("/user/register", ctls.Ctl.DoRegister)
+	unAuthGroup.GET("/search/feed/item", ctls.Ctl.SearchFeedItemAPI)
+	unAuthGroup.GET("/search/feed/channel", ctls.Ctl.SearchFeedChannelAPI)
+
+	unAuthGroup.GET("/feed/channel/:id", ctls.Ctl.GetFeedChannelDetailAPI)
+	unAuthGroup.GET("/feed/channel/:channelId/item/:itemId", ctls.Ctl.GetFeedItemDetailAPI)
 
 	authGroup := group.Group("/")
-    // listen later 
+	// listen later
 	authGroup.Middleware(middleware.AuthToken)
 	authGroup.POST("/listenlater/item", ctls.Ctl.AddListenLater)
 	authGroup.GET("/listenlater/item", ctls.Ctl.GetListenLater)
 	authGroup.GET("/listenlater/list", ctls.Ctl.GetListenLaterList)
 
-    // search keyword subscription
+	// search keyword subscription
 	authGroup.POST("/subscription/keyword", ctls.Ctl.SubKeyword)
 }

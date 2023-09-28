@@ -5,6 +5,7 @@ import (
 	"porkast-server/internal/consts"
 	"porkast-server/internal/dto"
 	feedService "porkast-server/internal/service/feed"
+	"porkast-server/internal/service/middleware"
 	"strconv"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -45,6 +46,60 @@ func (ctl *controller) SearchResult(req *ghttp.Request) {
 	}
 
 	req.Response.WriteTpl("search.html", tplMap)
+}
+
+func (ctl *controller) SearchFeedItemAPI(req *ghttp.Request) {
+	var (
+		ctx          = req.GetCtx()
+		err          error
+		items        []dto.FeedItem
+		searchParams feedService.SearchParams
+	)
+
+	searchKeyword := req.GetQuery("keyword").String()
+	scope := req.GetQuery("scope").String()
+	page := req.GetQuery("page").Int()
+	sortByDate := req.GetQuery("sortByDate").Int()
+	searchParams = feedService.SearchParams{
+		Keyword:    searchKeyword,
+		Page:       page,
+		Scope:      scope,
+		SortByDate: sortByDate,
+	}
+
+	items, err = feedService.SearchFeedItemsByKeyword(ctx, searchParams)
+	if err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	}
+
+	middleware.JsonExit(req, 0, "", items)
+
+}
+
+func (ctl *controller) SearchFeedChannelAPI(req *ghttp.Request) {
+	var (
+		ctx          = req.GetCtx()
+		err          error
+		channels     []dto.FeedChannel
+		searchParams feedService.SearchParams
+	)
+
+	searchKeyword := req.GetQuery("keyword").String()
+	scope := req.GetQuery("scope").String()
+	page := req.GetQuery("page").Int()
+	sortByDate := req.GetQuery("sortByDate").Int()
+	searchParams = feedService.SearchParams{
+		Keyword:    searchKeyword,
+		Page:       page,
+		Scope:      scope,
+		SortByDate: sortByDate,
+	}
+	channels, err = feedService.QueryFeedChannelByKeyword(ctx, searchParams)
+	if err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	}
+
+	middleware.JsonExit(req, 0, "", channels)
 }
 
 func searchFeedItems(ctx context.Context, searchParam feedService.SearchParams) (map[string]interface{}, error) {

@@ -49,6 +49,12 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, li
 	if err != nil {
 		return
 	}
+
+	if feedInfo.TextChannelDesc == "" && feedInfo.ChannelDesc != "" {
+		rootDocs := soup.HTMLParse(feedInfo.ChannelDesc)
+		feedInfo.TextChannelDesc = rootDocs.FullText()
+	}
+
 	feedInfo.Count = totalCount
 
 	for _, item := range feedItemList {
