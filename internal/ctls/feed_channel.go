@@ -76,7 +76,10 @@ func (ctl *controller) GetFeedChannelDetailAPI(req *ghttp.Request)  {
 		middleware.JsonExit(req, 1, err.Error())
 	}
 
-	middleware.JsonExit(req, 0, "", channelInfo)
+	middleware.JsonExit(req, 0, "", g.Map{
+		"channelInfo": channelInfo,
+		"page": page,
+	})
 	
 }
 

@@ -52,6 +52,10 @@ func (ctl *controller) SearchFeedItemAPI(req *ghttp.Request) {
 	var (
 		ctx          = req.GetCtx()
 		err          error
+		totalPage    int
+		totalCount   int
+		tookTime     float64
+		tookTimeStr  string
 		items        []dto.FeedItem
 		searchParams feedService.SearchParams
 	)
@@ -71,8 +75,22 @@ func (ctl *controller) SearchFeedItemAPI(req *ghttp.Request) {
 	if err != nil {
 		middleware.JsonExit(req, 1, err.Error())
 	}
+	if len(items) > 0 {
+		tookTime = items[0].TookTime
+		tookTimeStr = strconv.FormatFloat(tookTime, 'f', -3, 64)
+		totalCount = items[0].Count
+		totalPage = totalCount / 10
+		if totalCount%10 > 0 {
+			totalPage = totalPage + 1
+		}
+	}
 
-	middleware.JsonExit(req, 0, "", items)
+	middleware.JsonExit(req, 0, "", g.Map{
+		"items":      items,
+		"totalPage":  totalPage,
+		"totalCount": totalCount,
+		"tookTime":   tookTimeStr,
+	})
 
 }
 
