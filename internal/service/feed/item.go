@@ -56,6 +56,11 @@ func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedCha
 		feedItemInfoDto.Description = formatItemShownotes(feedItemInfoDto.Description)
 	}
 
+	if feedItemInfoDto.TextDescription == "" && feedItemInfoDto.Description != "" {
+		rootDocs := soup.HTMLParse(feedItemInfoDto.Description)
+		feedItemInfoDto.TextDescription = rootDocs.FullText()
+	}
+
 	return
 }
 
