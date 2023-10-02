@@ -66,6 +66,9 @@ func GetChannelInfoByChannelId(ctx context.Context, channelId string, offset, li
 		feedItemDto.ChannelTitle = feedInfo.Title
 		feedItemDto.Duration = formatDuration(feedItemDto.Duration)
 		feedItemDto.PubDate = formatPubDate(feedItemDto.PubDate)
+		if feedItemDto.Author == "" {
+			feedItemDto.Author = feedInfo.Author
+		}
 		feedItemDto.Author = formatFeedAuthor(feedItemDto.Author)
         feedItemDto.Title = formatItemTitle(feedItemDto.Title)
 		if feedItemDto.ImageUrl != "" {
