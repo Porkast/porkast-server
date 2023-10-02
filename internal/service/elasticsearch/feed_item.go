@@ -16,10 +16,10 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, sortB
 	simpleStringQuery.FieldWithBoost("textDescription", 2)
 	simpleStringQuery.FieldWithBoost("author", 1)
 	// simpleStringQuery.FieldWithBoost("channelTitle", 1)
-    simpleStringQuery.MinimumShouldMatch("75%")
+	simpleStringQuery.MinimumShouldMatch("75%")
 
-    // zhPrefixQuery := elastic.NewPrefixQuery("language", "zh")
-    // zhPrefixQuery.CaseInsensitive(true)
+	// zhPrefixQuery := elastic.NewPrefixQuery("language", "zh")
+	// zhPrefixQuery.CaseInsensitive(true)
 
 	highlight := elastic.NewHighlight()
 	highlight = highlight.PreTags("<span highlightPlaceholder>").PostTags("</span>")
@@ -27,7 +27,7 @@ func (c *GSElastic) QueryFeedItemFull(ctx context.Context, keyword string, sortB
 	searchService := c.Client.Search().
 		Index("feed_item").
 		Query(simpleStringQuery).
-        // PostFilter(zhPrefixQuery).
+		// PostFilter(zhPrefixQuery).
 		Highlight(highlight).
 		From(from).Size(size).
 		Pretty(true)
