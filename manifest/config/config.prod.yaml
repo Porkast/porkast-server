@@ -15,11 +15,11 @@ logger:
 
 database:
   default:
-    host: "47.243.182.236"
+    host: "aws.connect.psdb.cloud"
     port: "3306"
-    user: "guoshaofm"
-    name: "guoshaofmdb"
-    pass: "1qaz!QAZ"
+    user: "wromgs0xhe0qk1hkc4vt"
+    name: "porkastdb"
+    pass: "pscale_pw_W7KVoXfCATiw4PnPRhA06q9pIQXT58XmySKN5HVq9kd"
     type: "mysql"
     weight: "100"
     createdAt: "true"
