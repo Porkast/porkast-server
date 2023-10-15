@@ -163,9 +163,9 @@ func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, er
 	return
 }
 
-func GetUserSubKeywordItem(ctx context.Context, userId, keyword, lang string, sortByDate int) (result entity.UserSubKeyword, err error) {
+func GetUserSubKeywordItem(ctx context.Context, userId, keyword, country, excludeFeedId, source string) (result entity.UserSubKeyword, err error) {
 
-	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and lang=? and order_by_date=? and status=1", userId, keyword, lang, sortByDate).Scan(&result)
+	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and country=? and exclude_feed_id=? and source=? and status=1", userId, keyword, country, excludeFeedId, source).Scan(&result)
 
 	return
 }

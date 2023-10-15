@@ -32,7 +32,7 @@ func CreateKeywordSubScriptionEntity(ctx context.Context, newEntity entity.Keywo
 		queryEntity entity.UserSubKeyword
 	)
 
-	err = KeywordSubscription.Ctx(ctx).Where("keyword=? and lang=? and order_by_date=? and feed_item_id=?", newEntity.Keyword, newEntity.Lang, newEntity.OrderByDate, newEntity.FeedItemId).Scan(&queryEntity)
+	err = KeywordSubscription.Ctx(ctx).Where("keyword=? and country=? and exclude_feed_id=? and feed_item_id=?", newEntity.Keyword, newEntity.Country, newEntity.ExcludeFeedId, newEntity.FeedItemId).Scan(&queryEntity)
 
 	if queryEntity.Id != "" {
 		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
