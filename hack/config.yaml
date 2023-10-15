@@ -3,4 +3,4 @@
 gfcli:
   gen:
     dao:
-      - link: "mysql:guoshaofm:qazxsw@tcp(127.0.0.1:3306)/guoshaofmdb?loc=Local&parseTime=true"
+      - link: "mysql:porkast:qazxsw@tcp(127.0.0.1:3306)/porkastdb?loc=Local&parseTime=true"
