@@ -3,7 +3,6 @@ package workers
 import (
 	"porkast-server/internal/consts"
 	"porkast-server/internal/model/entity"
-	"porkast-server/internal/service/elasticsearch"
 	"porkast-server/internal/service/internal/dao"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -12,16 +11,17 @@ import (
 	"github.com/gogf/gf/v2/util/guid"
 )
 
-func UpdateUserSubkeyword(keyword, lang string, orderByDate int) {
+func UpdateUserSubkeyword(keyword, lang, excludeFeedId, source string) {
 	var (
 		err                error
 		ctx                = gctx.New()
 		esFeedItemDataList []entity.FeedItemESData
 	)
 
-	esFeedItemDataList, err = elasticsearch.GetClient().QueryFeedItemFull(ctx, keyword, orderByDate, 0, 20)
+	// TODO: get search result base on source
+	// esFeedItemDataList, err = elasticsearch.GetClient().QueryFeedItemFull(ctx, keyword, orderByDate, 0, 20)
 	if err != nil {
-		g.Log().Line().Errorf(ctx, "search by keyword %s , orderByDate %d failed:\n%s", keyword, orderByDate, err)
+		g.Log().Line().Errorf(ctx, "search by keyword %s , excludeFeedId %s failed:\n%s", keyword, excludeFeedId, err)
 		return
 	}
 
@@ -36,8 +36,8 @@ func UpdateUserSubkeyword(keyword, lang string, orderByDate int) {
 			FeedChannelId: esFeedItem.ChannelId,
 			FeedItemId:    esFeedItem.Id,
 			CreateTime:    gtime.Now(),
-			OrderByDate:   orderByDate,
-			Lang:          lang,
+			ExcludeFeedId: excludeFeedId,
+			Source:        lang,
 		}
 
 		err = dao.CreateKeywordSubScriptionEntity(ctx, keywordSubEntity)

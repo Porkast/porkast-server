@@ -11,6 +11,7 @@ import (
 	"porkast-server/internal/model/entity"
 	"porkast-server/internal/service/internal/dao/internal"
 
+	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -28,6 +29,27 @@ var (
 )
 
 // Fill with you ideas below.
+func InsertFeedItemIfNotExist(ctx context.Context, model entity.FeedItem) (err error) {
+
+	var (
+		result gdb.Record
+	)
+
+	result, err = FeedItem.Ctx(ctx).Where("channel_id=?", model.ChannelId).Where("title=?", model.Title).One()
+	if err != nil {
+		return
+	}
+
+	if !result.IsEmpty() {
+		return errors.New("The feed item is exist.")
+	}
+
+	g.Log().Line().Debugf(ctx, "Insert feed item %s to DB", model.Title)
+	_, err = FeedItem.Ctx(ctx).Insert(model)
+
+	return
+}
+
 func GetFeedItemsByChannelId(ctx context.Context, channelId string, offset, limit int) (itemList []entity.FeedItem, err error) {
 
 	if limit == 0 {

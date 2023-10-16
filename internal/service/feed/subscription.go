@@ -131,18 +131,17 @@ func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, l
 	return
 }
 
-func GetUserSubKeywordRecord(ctx context.Context, userId, keyword, lang string, sortBydate int) (result entity.UserSubKeyword, err error) {
+func GetUserSubKeywordRecord(ctx context.Context, userId, keyword, country, excludeFeedId, source string) (result entity.UserSubKeyword, err error) {
 
-	if userId == "" || keyword == "" {
+	if userId == "" || keyword == "" || source == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
 		return
 	}
 
-	result, err = dao.GetUserSubKeywordItem(ctx, userId, keyword, lang, sortBydate)
+	result, err = dao.GetUserSubKeywordItem(ctx, userId, keyword, country, excludeFeedId, source)
 
 	return
 }
-
 
 func ReactiveUserSubKeyword(ctx context.Context, userId, keyword, lang string, sortByDate int) (err error) {
 

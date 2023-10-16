@@ -29,7 +29,7 @@ func (ctl *controller) SubKeyword(req *ghttp.Request) {
 		middleware.JsonExit(req, 1, err.Error())
 	}
 
-	subRecord, err := feed.GetUserSubKeywordRecord(ctx, reqData.UserId, reqData.Keyword, reqData.Lang, reqData.SortByDate)
+	subRecord, err := feed.GetUserSubKeywordRecord(ctx, reqData.UserId, reqData.Keyword, reqData.Country, reqData.ExcludeFeedId, reqData.Source)
 	if subRecord.Id != "" && subRecord.Status == 1 {
 		middleware.JsonExit(req, 1, g.I18n().T(ctx, `{#sub_keyword_exist}`), nil)
 	} else if subRecord.Id != "" && subRecord.Status == 0 {
@@ -42,16 +42,16 @@ func (ctl *controller) SubKeyword(req *ghttp.Request) {
 		middleware.JsonExit(req, 1, err.Error())
 	}
 
-	if totalSubCount >= 10 {
+	if totalSubCount >= 3 {
 		middleware.JsonExit(req, 1, g.I18n().Tf(ctx, `{#keyword_sub_total_count_limit}`, 10), nil)
 	}
 
-	ksEntityList, err = genKeywordSubEntity(ctx, reqData.UserId, reqData.Keyword, reqData.Lang, reqData.SortByDate)
+	ksEntityList, err = genKeywordSubEntity(ctx, reqData.UserId, reqData.Keyword, reqData.Country, reqData.ExcludeFeedId, reqData.Source)
 	if err != nil {
 		middleware.JsonExit(req, 1, err.Error())
 	}
 
-	err = feed.SubFeedByKeyword(ctx, reqData.UserId, reqData.Keyword, reqData.Lang, reqData.SortByDate, ksEntityList)
+	err = feed.SubFeedByKeyword(ctx, reqData.UserId, reqData.Keyword, reqData.Country, reqData.SortByDate, ksEntityList)
 	if err != nil {
 		if err.Error() == consts.DB_DATA_ALREADY_EXIST {
 			middleware.JsonExit(req, 1, g.I18n().T(ctx, `{#sub_keyword_exist}`), nil)
@@ -63,7 +63,7 @@ func (ctl *controller) SubKeyword(req *ghttp.Request) {
 	middleware.JsonExit(req, 0, g.I18n().T(ctx, `{#sub_keyword_success}`), nil)
 }
 
-func genKeywordSubEntity(ctx context.Context, userId, keyword, lang string, sortByDate int) (ksEntityList []entity.KeywordSubscription, err error) {
+func genKeywordSubEntity(ctx context.Context, userId, keyword, country, excludeFeedId, source string) (ksEntityList []entity.KeywordSubscription, err error) {
 
 	var (
 		items       []dto.FeedItem
@@ -71,25 +71,37 @@ func genKeywordSubEntity(ctx context.Context, userId, keyword, lang string, sort
 	)
 
 	searchParam = feedService.SearchParams{
-		Keyword:    keyword,
-		Page:       0,
-		Size:       20,
-		SortByDate: sortByDate,
+		Keyword:       keyword,
+		Page:          0,
+		Size:          20,
+		ExcludeFeedId: excludeFeedId,
+		Country:       country,
 	}
-	items, err = feedService.SearchFeedItemsByKeyword(ctx, searchParam)
+	if source == "" || source == "itunes" {
+		items, err = feedService.SearchPodcastEpisodesFromItunes(ctx, keyword, country, excludeFeedId)
+	} else {
+		items, err = feedService.SearchFeedItemsByKeyword(ctx, searchParam)
+	}
 	if err != nil {
 		return nil, err
 	}
 
+	err = feedService.BatchStoreFeedItems(ctx, items)
+	if err != nil {
+		return
+	}
+
 	for _, feedItem := range items {
+
 		ksEntity := entity.KeywordSubscription{
 			Id:            userId,
 			Keyword:       keyword,
 			FeedChannelId: feedItem.ChannelId,
 			FeedItemId:    feedItem.Id,
-			Lang:          lang,
-			OrderByDate:   sortByDate,
+			Country:       country,
+			ExcludeFeedId: excludeFeedId,
 			CreateTime:    gtime.Now(),
+			Source:        source,
 		}
 
 		ksEntityList = append(ksEntityList, ksEntity)

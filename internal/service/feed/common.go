@@ -2,8 +2,10 @@ package feed
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/anaskhan96/soup"
+	"github.com/gogf/gf/v2/encoding/ghash"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/os/gtime"
@@ -101,10 +103,20 @@ func formatTitle(title string) (formatTitle string) {
 func formatItemTitle(title string) (formatTitle string) {
 
 	if gstr.Contains(title, "\"") {
-        formatTitle = gstr.Replace(title, "\"", "`")
+		formatTitle = gstr.Replace(title, "\"", "`")
 	} else {
 		formatTitle = title
 	}
 
+	return
+}
+
+func GenerateFeedItemId(feedUrl, trackName string) (itemID string) {
+	itemID = strconv.FormatUint(ghash.RS64([]byte(feedUrl+trackName)), 32)
+	return
+}
+
+func GenerateFeedChannelId(feedUrl, collectionName string) (channelId string) {
+	channelId = strconv.FormatUint(ghash.RS64([]byte(feedUrl+collectionName)), 32)
 	return
 }

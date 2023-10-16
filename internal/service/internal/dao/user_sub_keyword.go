@@ -31,9 +31,9 @@ var (
 )
 
 // Fill with you ideas below.
-func GetUserSubKeywordByUserIdAndKeyword(ctx context.Context, userId, keyword string) (resultEntity entity.UserSubKeyword, err error) {
+func GetUserSubKeywordByUserIdAndKeyword(ctx context.Context, userId, keyword, country, source, excludeFeedId string) (resultEntity entity.UserSubKeyword, err error) {
 
-	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and status=1", userId, keyword).Scan(&resultEntity)
+	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and country=? and source=? and exclude_feed_id=? and status=1", userId, keyword, country, source, excludeFeedId).Scan(&resultEntity)
 
 	return
 }
@@ -43,7 +43,7 @@ func CreateUserSubKeyword(ctx context.Context, newEntity entity.UserSubKeyword) 
 		queryEntity entity.UserSubKeyword
 	)
 
-	queryEntity, err = GetUserSubKeywordByUserIdAndKeyword(ctx, newEntity.UserId, newEntity.Keyword)
+	queryEntity, err = GetUserSubKeywordByUserIdAndKeyword(ctx, newEntity.UserId, newEntity.Keyword, newEntity.Country, newEntity.Source, newEntity.ExcludeFeedId)
 	if queryEntity.Id != "" {
 		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
 		return
@@ -65,7 +65,7 @@ func DoSubKeywordByUserIdAndKeyword(ctx context.Context, newUSKEntity entity.Use
 		queryEntity entity.UserSubKeyword
 	)
 
-	queryEntity, err = GetUserSubKeywordByUserIdAndKeyword(ctx, newUSKEntity.UserId, newUSKEntity.Keyword)
+	queryEntity, err = GetUserSubKeywordByUserIdAndKeyword(ctx, newUSKEntity.UserId, newUSKEntity.Keyword, newUSKEntity.Country, newUSKEntity.Source, newUSKEntity.ExcludeFeedId)
 
 	if queryEntity.Id != "" {
 		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)

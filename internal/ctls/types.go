@@ -40,13 +40,15 @@ type GetListenLaterListReqData struct {
 }
 
 type SubSearchKeywordReqData struct {
-	UserId     string `json:"userId" v:"required"`
-	Keyword    string `json:"keyword" v:"required"`
-	Lang       string `json:"lang" v:"required"`
-	SortByDate int    `json:"sortByDate" v:"required"`
+	UserId        string `json:"userId" v:"required"`
+	Keyword       string `json:"keyword" v:"required"`
+	Country       string `json:"country" v:"required"`
+	SortByDate    int    `json:"sortByDate" v:"required"`
+	Source        string `json:"source" v:"required"`
+	ExcludeFeedId string `json:"excludeFeedId"`
 }
 
 type GetSubKeywordListReqData struct {
-	UserId     string `json:"userId" v:"required"`
-	Keyword    string `json:"keyword" v:"required"`
+	UserId  string `json:"userId" v:"required"`
+	Keyword string `json:"keyword" v:"required"`
 }
