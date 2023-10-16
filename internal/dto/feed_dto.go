@@ -4,7 +4,9 @@ import "github.com/gogf/gf/v2/os/gtime"
 
 type FeedItem struct {
 	Id                    string
+	GUID                  string
 	ChannelId             string
+	Feed_Id               string
 	Title                 string
 	HighlightTitle        string
 	Link                  string
@@ -29,10 +31,12 @@ type FeedItem struct {
 	Count                 int
 	TookTime              float64
 	HasThumbnail          bool
+	Source                string
 }
 
 type FeedChannel struct {
 	Id              string
+	Feed_Id         string
 	Title           string
 	ChannelDesc     string
 	TextChannelDesc string
