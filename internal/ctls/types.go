@@ -43,9 +43,9 @@ type SubSearchKeywordReqData struct {
 	UserId        string `json:"userId" v:"required"`
 	Keyword       string `json:"keyword" v:"required"`
 	Country       string `json:"country" v:"required"`
-	SortByDate    int    `json:"sortByDate" v:"required"`
 	Source        string `json:"source" v:"required"`
 	ExcludeFeedId string `json:"excludeFeedId"`
+	SortByDate    int    `json:"sortByDate"`
 }
 
 type GetSubKeywordListReqData struct {

@@ -6,7 +6,7 @@ type FeedItem struct {
 	Id                    string
 	GUID                  string
 	ChannelId             string
-	FeedId               string
+	FeedId                string
 	Title                 string
 	HighlightTitle        string
 	Link                  string
@@ -36,7 +36,7 @@ type FeedItem struct {
 
 type FeedChannel struct {
 	Id              string
-	FeedId         string
+	FeedId          string
 	Title           string
 	ChannelDesc     string
 	TextChannelDesc string
