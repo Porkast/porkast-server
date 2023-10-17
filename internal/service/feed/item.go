@@ -11,13 +11,16 @@ import (
 	"porkast-server/internal/service/elasticsearch"
 	"porkast-server/internal/service/internal/dao"
 	"porkast-server/internal/service/network"
+	"porkast-server/utility"
 
 	"github.com/anaskhan96/soup"
 	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/encoding/gurl"
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
+	"github.com/mmcdole/gofeed"
 )
 
 func GetFeedItemByItemId(ctx context.Context, channelId, itemId string) (feedChannelDto dto.FeedChannel, feedItemInfoDto dto.FeedItem, err error) {
@@ -261,6 +264,25 @@ func BatchStoreFeedItems(ctx context.Context, feedItemList []dto.FeedItem) (err 
 			FeedId:          item.FeedId,
 		}
 		err = dao.InsertFeedItemIfNotExist(ctx, model)
+	}
+
+	return
+}
+
+func GetFeedItemsByFeedLink(ctx context.Context, feedLink string) (feed *gofeed.Feed, err error) {
+	respStr := network.GetContent(ctx, feedLink)
+	if respStr == "" {
+		g.Log().Line().Error(ctx, "Get Feed Items By Feed Link Error")
+		err = errors.New("Get Feed Items By Feed Link Error")
+		return
+	}
+
+	if utility.IsStringRSSXml(respStr) {
+		feed = utility.ParseFeed(ctx, respStr)
+	} else {
+		g.Log().Line().Error(ctx, "The Feed Is Not RSS, feed link is %s", feedLink)
+		err = errors.New("The Feed Is Not RSS")
+		return
 	}
 
 	return
