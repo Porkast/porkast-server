@@ -128,10 +128,10 @@ func GetUserSubKeywordListByUserIdAndKeyword(ctx context.Context, userId, keywor
 
 	g.Model("user_sub_keyword usk").
 		InnerJoin("keyword_subscription ks", "usk.keyword = ks.keyword and ks.lang = usk.lang and ks.order_by_date = usk.order_by_date").
-		InnerJoin("feed_channel fc", "ks.feed_channel_id = fc.id").
 		InnerJoin("feed_item fi", "ks.feed_channel_id = fi.channel_id and ks.feed_item_id = fi.id").
-		Fields("usk.*, fi.id as item_id, fi.channel_id ,fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
+		Fields("usk.*, fi.id as item_id, fi.channel_id ,fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fi.image_url, fi.feed_link").
 		Where("usk.user_id=? and usk.keyword=? and status=1", userId, keyword).
+		OrderDesc("ks.id").
 		Scan(&dtos)
 
 	return
