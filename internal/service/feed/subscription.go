@@ -17,20 +17,23 @@ import (
 	"github.com/gogf/gf/v2/util/guid"
 )
 
-func SubFeedByKeyword(ctx context.Context, userId, keyword, lang string, sortByDate int, subKeywordList []entity.KeywordSubscription) (err error) {
+func SubFeedByKeyword(ctx context.Context, userId, keyword, lang, country, excludeFeedId, source string, sortByDate int, subKeywordList []entity.KeywordSubscription) (err error) {
 
 	var (
 		userSubKeyword entity.UserSubKeyword
 	)
 
 	userSubKeyword = entity.UserSubKeyword{
-		Id:          guid.S(),
-		UserId:      userId,
-		Keyword:     keyword,
-		Lang:        lang,
-		OrderByDate: sortByDate,
-		Status:      1,
-		CreateTime:  gtime.Now(),
+		Id:            guid.S(),
+		UserId:        userId,
+		Keyword:       keyword,
+		Lang:          lang,
+		Country:       country,
+		ExcludeFeedId: excludeFeedId,
+		OrderByDate:   sortByDate,
+		Source:        source,
+		Status:        1,
+		CreateTime:    gtime.Now(),
 	}
 
 	err = dao.DoSubKeywordByUserIdAndKeyword(ctx, userSubKeyword, subKeywordList)
@@ -143,9 +146,9 @@ func GetUserSubKeywordRecord(ctx context.Context, userId, keyword, country, excl
 	return
 }
 
-func ReactiveUserSubKeyword(ctx context.Context, userId, keyword, lang string, sortByDate int) (err error) {
+func ReactiveUserSubKeyword(ctx context.Context, userId, keyword, country, excludeFeedId string) (err error) {
 
-	err = dao.ActiveUserSubKeywordStatus(ctx, userId, keyword, lang, sortByDate)
+	err = dao.ActiveUserSubKeywordStatus(ctx, userId, keyword, country, excludeFeedId)
 
 	return
 }

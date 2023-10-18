@@ -6,6 +6,6 @@ import (
 )
 
 func SetI18nLang(req *ghttp.Request) {
-	g.I18n().SetLanguage("zh-CN")
+	g.I18n().SetLanguage("en")
 	req.Middleware.Next()
 }

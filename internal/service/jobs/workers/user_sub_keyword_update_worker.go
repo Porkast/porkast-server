@@ -8,7 +8,6 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/os/gtime"
-	"github.com/gogf/gf/v2/util/guid"
 )
 
 func UpdateUserSubkeyword(keyword, lang, excludeFeedId, source string) {
@@ -31,7 +30,6 @@ func UpdateUserSubkeyword(keyword, lang, excludeFeedId, source string) {
 		)
 
 		keywordSubEntity = entity.KeywordSubscription{
-			Id:            guid.S(),
 			Keyword:       keyword,
 			FeedChannelId: esFeedItem.ChannelId,
 			FeedItemId:    esFeedItem.Id,

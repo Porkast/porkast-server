@@ -33,7 +33,7 @@ func (ctl *controller) SubKeyword(req *ghttp.Request) {
 	if subRecord.Id != "" && subRecord.Status == 1 {
 		middleware.JsonExit(req, 1, g.I18n().T(ctx, `{#sub_keyword_exist}`), nil)
 	} else if subRecord.Id != "" && subRecord.Status == 0 {
-		feed.ReactiveUserSubKeyword(ctx, subRecord.Id, subRecord.Keyword, subRecord.Lang, subRecord.OrderByDate)
+		feed.ReactiveUserSubKeyword(ctx, subRecord.Id, subRecord.Keyword, subRecord.Country, subRecord.ExcludeFeedId)
 		middleware.JsonExit(req, 0, g.I18n().T(ctx, `{#sub_keyword_success}`), nil)
 	}
 
@@ -51,7 +51,7 @@ func (ctl *controller) SubKeyword(req *ghttp.Request) {
 		middleware.JsonExit(req, 1, err.Error())
 	}
 
-	err = feed.SubFeedByKeyword(ctx, reqData.UserId, reqData.Keyword, reqData.Country, reqData.SortByDate, ksEntityList)
+	err = feed.SubFeedByKeyword(ctx, reqData.UserId, reqData.Keyword, "", reqData.Country, reqData.ExcludeFeedId, reqData.Source, reqData.SortByDate, ksEntityList)
 	if err != nil {
 		if err.Error() == consts.DB_DATA_ALREADY_EXIST {
 			middleware.JsonExit(req, 1, g.I18n().T(ctx, `{#sub_keyword_exist}`), nil)
@@ -94,7 +94,6 @@ func genKeywordSubEntity(ctx context.Context, userId, keyword, country, excludeF
 	for _, feedItem := range items {
 
 		ksEntity := entity.KeywordSubscription{
-			Id:            userId,
 			Keyword:       keyword,
 			FeedChannelId: feedItem.ChannelId,
 			FeedItemId:    feedItem.Id,

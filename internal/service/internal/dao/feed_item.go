@@ -7,11 +7,13 @@ package dao
 import (
 	"context"
 	"errors"
+	"porkast-server/internal/consts"
 	"porkast-server/internal/dto"
 	"porkast-server/internal/model/entity"
 	"porkast-server/internal/service/internal/dao/internal"
 
 	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -41,7 +43,8 @@ func InsertFeedItemIfNotExist(ctx context.Context, model entity.FeedItem) (err e
 	}
 
 	if !result.IsEmpty() {
-		return errors.New("The feed item is exist.")
+		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
+		return
 	}
 
 	g.Log().Line().Debugf(ctx, "Insert feed item %s to DB", model.Title)
@@ -61,7 +64,7 @@ func GetFeedItemsByChannelId(ctx context.Context, channelId string, offset, limi
 	}
 
 	if len(itemList) == 0 {
-		return itemList, errors.New("The feed item is exist.")
+		return itemList, errors.New("The feed item is not exist.")
 	}
 
 	return

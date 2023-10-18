@@ -77,16 +77,21 @@ func DoSubKeywordByUserIdAndKeyword(ctx context.Context, newUSKEntity entity.Use
 		return
 	}
 
+	// reverse the order of newKSEntityList
+	for i, j := 0, len(newKSEntityList)-1; i < j; i, j = i+1, j-1 {
+		newKSEntityList[i], newKSEntityList[j] = newKSEntityList[j], newKSEntityList[i]
+	}
+
 	return g.DB().Transaction(ctx, func(ctx context.Context, tx *gdb.TX) error {
 		var (
 			err error
 		)
-		_, err = tx.Save("user_sub_keyword", newUSKEntity)
+		_, err = tx.Insert("user_sub_keyword", newUSKEntity)
 		if err != nil {
 			tx.Rollback()
 		}
 
-		_, err = tx.Save("keyword_subscription", newKSEntityList)
+		_, err = tx.Insert("keyword_subscription", newKSEntityList)
 		if err != nil {
 			tx.Rollback()
 		}
@@ -170,9 +175,9 @@ func GetUserSubKeywordItem(ctx context.Context, userId, keyword, country, exclud
 	return
 }
 
-func ActiveUserSubKeywordStatus(ctx context.Context, userId, keyword, lang string, sortByDate int) (err error) {
+func ActiveUserSubKeywordStatus(ctx context.Context, userId, keyword, country, excludeFeedId string) (err error) {
 
-	_, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and lang=? and order_by_date=?", userId, keyword, lang, sortByDate).Update(g.Map{"status": 1})
+	_, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and country=? and exclude_feed_id=?", userId, keyword, country, excludeFeedId).Update(g.Map{"status": 1})
 
 	return
 }
