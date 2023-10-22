@@ -86,12 +86,9 @@ func DoSubKeywordByUserIdAndKeyword(ctx context.Context, newUSKEntity entity.Use
 		var (
 			err error
 		)
-		_, err = tx.Insert("user_sub_keyword", newUSKEntity)
-		if err != nil {
-			tx.Rollback()
-		}
 
-		_, err = tx.Insert("keyword_subscription", newKSEntityList)
+		_, _ = tx.Insert("keyword_subscription", newKSEntityList)
+		_, err = tx.Insert("user_sub_keyword", newUSKEntity)
 		if err != nil {
 			tx.Rollback()
 		}
@@ -170,14 +167,14 @@ func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, er
 
 func GetUserSubKeywordItem(ctx context.Context, userId, keyword, country, excludeFeedId, source string) (result entity.UserSubKeyword, err error) {
 
-	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and country=? and exclude_feed_id=? and source=? and status=1", userId, keyword, country, excludeFeedId, source).Scan(&result)
+	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and source=? and status=1", userId, keyword, source).Scan(&result)
 
 	return
 }
 
 func ActiveUserSubKeywordStatus(ctx context.Context, userId, keyword, country, excludeFeedId string) (err error) {
 
-	_, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and country=? and exclude_feed_id=?", userId, keyword, country, excludeFeedId).Update(g.Map{"status": 1})
+	_, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and source=?", userId, keyword, country, excludeFeedId).Update(g.Map{"status": 1})
 
 	return
 }
