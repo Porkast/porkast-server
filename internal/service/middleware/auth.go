@@ -1,15 +1,13 @@
 package middleware
 
 import (
-	"context"
-	"encoding/json"
-	"errors"
-	"strings"
+	"fmt"
+	"os"
 
-	"github.com/gogf/gf/v2/crypto/gaes"
-	"github.com/gogf/gf/v2/encoding/gbase64"
-	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/encoding/gjson"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type TokenModel struct {
@@ -23,70 +21,40 @@ type TokenModel struct {
 	Token          string `json:"token"`
 }
 
-var privateKey = "guoshao-t01-12-1"
-
-func CreateToken(ctx context.Context, tokenData TokenModel) (token string, err error) {
-
-	if jsonToken, err := json.Marshal(tokenData); err != nil {
-		g.Log().Line().Error(ctx, "decode token to json error : ", err)
-		return "", err
-	} else {
-		if token, err := gaes.Encrypt(jsonToken, []byte(privateKey)); err != nil {
-			g.Log().Line().Error(ctx, "aes encrypt string error: ", err)
-			return "", err
-		} else {
-			encodeToken := gbase64.EncodeToString(token)
-			return encodeToken, nil
-		}
-	}
-}
-
-func ParseToken(tokenString string) (*TokenModel, error) {
-	decodeToken, _ := gbase64.Decode([]byte(tokenString))
-	decResult, err := gaes.Decrypt(decodeToken, []byte(privateKey))
-	ctx := context.Background()
-	if err != nil {
-		g.Log().Line().Error(ctx, "token decrypt error : ", tokenString)
-		return nil, err
-	}
-	tokenModel := new(TokenModel)
-	if err := json.Unmarshal(decResult, tokenModel); err != nil {
-		g.Log().Line().Error(ctx, "token string decode to json error , token: ", decResult, " ,error : ", err)
-		return nil, err
-	}
-	return tokenModel, nil
-}
-
-func validateToken(cxt context.Context, authString string) (token, uid string, err error) {
-	authorizationArray := strings.Split(authString, "@@")
-	if len(authorizationArray) < 2 {
-		g.Log().Line().Error(cxt, "Token or uid is null")
-		return "", "", errors.New("Token or uid is null")
-	}
-	token = authorizationArray[0]
-	uid = authorizationArray[1]
-	if len(token) < 0 || len(uid) < 0 {
-		g.Log().Line().Error(cxt, "AuthToken or uid is null")
-		return "", "", errors.New("AuthToken or uid is null")
-	}
-	return token, uid, nil
-}
+var supabaseJWTSecret = "hwfkEIMPtn0gREZUEcV2ZeksWcI/IClvR8TesHgRWkQbnTKTS+VnA0nvczDCjnZDIx5DCJYgxYrzrUy0OrWoSw=="
 
 func AuthToken(req *ghttp.Request) {
-	authorization := req.GetHeader("Authorization")
-	token, uid, err := validateToken(req.GetCtx(), authorization)
-	if err != nil {
-		JsonExit(req, 1, err.Error())
-	}
+	if os.Getenv("env") == "dev" {
+		req.Middleware.Next()
+	} else {
+		tokenString := req.GetHeader("Authorization")
+		err := VerifyJWTToken(tokenString)
 
-	tokenModel, err := ParseToken(token)
-	if err != nil {
-		JsonExit(req, 1, "AuthToken Invalid")
-	}
+		if err != nil {
+			JsonExit(req, 1, err.Error(), nil)
+		}
 
-	if tokenModel.UserId != uid {
-		g.Log().Line().Info(req.Request.Context(), "token invalid tokenModel : ", tokenModel, " ,uid : ", uid)
-		JsonExit(req, 1, "AuthToken Invalid")
+		req.Middleware.Next()
 	}
-	req.Middleware.Next()
+}
+
+func VerifyJWTToken(tokenString string) (err error) {
+
+	// verify JWT token
+	// Parse takes the token string and a function for looking up the key. The latter is especially
+	// useful if you use multiple keys for your application.  The standard is to use 'kid' in the
+	// head of the token to identify which key to use, but the parsed token (head and claims) is provided
+	// to the callback, providing flexibility.
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		var hmacSampleSecret = []byte(supabaseJWTSecret)
+		return hmacSampleSecret, nil
+	})
+
+	fmt.Println(gjson.MustEncodeString(token))
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		fmt.Println(claims["foo"], claims["nbf"])
+	} else {
+		err = gerror.New("invalid token")
+	}
+	return
 }
