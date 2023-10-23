@@ -22,7 +22,7 @@ database:
     name: "porkastdb"
     pass: "1qaz!QAZ"
     type: "mysql"
-    # debug: "true"
+    debug: "true"
     weight: "100"
     createdAt: "true"
     updatedAt: "true"

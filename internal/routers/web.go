@@ -38,6 +38,7 @@ func V1ApiRouter(group *ghttp.RouterGroup) {
 
 	// search keyword subscription
 	unAuthGroup.GET("/subscription/list/", ctls.Ctl.GetUserSubKeywordListAPI)
+	unAuthGroup.GET("/subscription/:userId/:keyword", ctls.Ctl.GetSubKeywordItemListAPI)
 
 	unAuthGroup.GET("/feed/channel/:id", ctls.Ctl.GetFeedChannelDetailAPI)
 	unAuthGroup.GET("/feed/channel/:channelId/item/:itemId", ctls.Ctl.GetFeedItemDetailAPI)

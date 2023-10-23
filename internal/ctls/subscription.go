@@ -199,3 +199,34 @@ func (ctl *controller) GetUserSubKeywordListAPI(req *ghttp.Request) {
 	}
 
 }
+
+func (ctl *controller) GetSubKeywordItemListAPI(req *ghttp.Request) {
+	var (
+		err      error
+		ctx      context.Context
+		userId   string
+		keyword  string
+		source   string
+		page     int
+		offset   int
+		limit    = 10
+		itemList []dto.FeedItem
+	)
+	ctx = req.Context()
+	userId = req.Get("userId").String()
+	page = req.Get("page").Int()
+	keyword = req.Get("keyword").String()
+	source = req.Get("source").String()
+	if page == 0 {
+		page = 1
+	}
+
+	offset = (page - 1) * limit
+
+	itemList, err = feed.GetItemListByKeywordAndUserId(ctx, userId, keyword, source, offset, limit)
+	if err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	} else {
+		middleware.JsonExit(req, 0, "success", itemList)
+	}
+}

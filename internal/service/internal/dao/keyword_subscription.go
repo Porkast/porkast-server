@@ -7,10 +7,12 @@ package dao
 import (
 	"context"
 	"porkast-server/internal/consts"
+	"porkast-server/internal/dto"
 	"porkast-server/internal/model/entity"
 	"porkast-server/internal/service/internal/dao/internal"
 
 	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 // keywordSubscriptionDao is the data access object for table keyword_subscription.
@@ -40,6 +42,28 @@ func CreateKeywordSubScriptionEntity(ctx context.Context, newEntity entity.Keywo
 	}
 
 	_, err = KeywordSubscription.Ctx(ctx).Insert(newEntity)
+
+	return
+}
+
+func GetKeywordSubscriptionCount(ctx context.Context, keyword, country, source, excludeFeedId string) (count int, err error) {
+	
+	count, err = KeywordSubscription.Ctx(ctx).Where("keyword=? and country=? and source=? and exclude_feed_id=?", keyword, country, source, excludeFeedId).Count()
+	return
+}
+
+// get user sub keyword by user id and keyword
+func GetSubKeywordItemsByUserIdAndKeyword(ctx context.Context, userId, keyword, source string, offset, limit int) (entities []dto.FeedItem, err error) {
+
+	g.Model("feed_item fi").
+		InnerJoin("keyword_subscription ks", "fi.id = ks.feed_item_id").
+		InnerJoin("user_sub_keyword usk", "usk.keyword = ks.keyword and usk.country = ks.country and usk.exclude_feed_id = ks.exclude_feed_id and usk.source = ks.source").
+		Fields("fi.*, ks.source, ks.exclude_feed_id, ks.country").
+		Where("usk.user_id = ? and usk.keyword = ? and usk.source = ? and usk.status = 1", userId, keyword, source).
+		Offset(offset).
+		Limit(limit).
+		OrderAsc("ks.id").
+		Scan(&entities)
 
 	return
 }

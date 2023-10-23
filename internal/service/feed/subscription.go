@@ -165,3 +165,26 @@ func ReactiveUserSubKeyword(ctx context.Context, userId, keyword, country, exclu
 
 	return
 }
+
+func GetItemListByKeywordAndUserId(ctx context.Context, userId, keyword, source string, offset, limit int) (dtoList []dto.FeedItem, err error) {
+
+	if source == "" {
+		source = "itunes"
+	}
+
+	dtoList, err = dao.GetSubKeywordItemsByUserIdAndKeyword(ctx, userId, keyword, source, offset, limit)
+	if err != nil {
+		return
+	}
+
+	var totalCount = 0
+	if len(dtoList) > 0 {
+		totalCount, err = dao.GetKeywordSubscriptionCount(ctx, keyword, dtoList[0].Country, source, dtoList[0].ExcludeFeedId)
+	}
+
+	for i := 0; i < len(dtoList); i++ {
+		dtoList[i].Count = totalCount
+	}
+
+	return
+}

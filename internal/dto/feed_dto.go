@@ -32,6 +32,8 @@ type FeedItem struct {
 	TookTime              float64
 	HasThumbnail          bool
 	Source                string
+	ExcludeFeedId         string
+	Country               string
 }
 
 type FeedChannel struct {
