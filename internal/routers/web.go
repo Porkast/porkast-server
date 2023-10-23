@@ -14,7 +14,7 @@ func WebRouter(group *ghttp.RouterGroup) {
 	group.GET("/feed/channel/:id", ctls.Ctl.FeedChannelDetail)
 	group.GET("/feed/:channelId/item/:itemId", ctls.Ctl.FeedItemDetail)
 	group.GET("/share/feed/:channelId/item/:itemId", ctls.Ctl.ShareFeedItemTpl)
-    group.GET("/share/feed/channel/:channelId", ctls.Ctl.ShareFeedChannelTpl)
+	group.GET("/share/feed/channel/:channelId", ctls.Ctl.ShareFeedChannelTpl)
 
 	group.GET("/login", ctls.Ctl.LoginTpl)
 	group.GET("/register", ctls.Ctl.RegisterTpl)
@@ -36,8 +36,13 @@ func V1ApiRouter(group *ghttp.RouterGroup) {
 	unAuthGroup.GET("/search/feed/item", ctls.Ctl.SearchFeedItemAPI)
 	unAuthGroup.GET("/search/feed/channel", ctls.Ctl.SearchFeedChannelAPI)
 
+	// search keyword subscription
+	unAuthGroup.GET("/subscription/list/", ctls.Ctl.GetUserSubKeywordListAPI)
+
 	unAuthGroup.GET("/feed/channel/:id", ctls.Ctl.GetFeedChannelDetailAPI)
 	unAuthGroup.GET("/feed/channel/:channelId/item/:itemId", ctls.Ctl.GetFeedItemDetailAPI)
+
+	// auth group
 
 	authGroup := group.Group("/")
 	// listen later
@@ -48,4 +53,5 @@ func V1ApiRouter(group *ghttp.RouterGroup) {
 
 	// search keyword subscription
 	authGroup.POST("/subscription/keyword", ctls.Ctl.SubKeyword)
+
 }

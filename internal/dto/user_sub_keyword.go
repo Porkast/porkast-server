@@ -43,4 +43,6 @@ type UserSubKeywordDto struct {
 	CreateTime  *gtime.Time
 	Lang        string
 	Status      int
+	Country     string
+	Source      string
 }

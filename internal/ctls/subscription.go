@@ -171,3 +171,31 @@ func (ctl *controller) UserSubListTplt(req *ghttp.Request) {
 	tplMap[consts.PODCAST_LIST_CREATER] = g.I18n().Tf(ctx, "podcast_playlist_creater")
 	req.Response.WriteTpl("user_sub_list_page.html", tplMap)
 }
+
+func (ctl *controller) GetUserSubKeywordListAPI(req *ghttp.Request) {
+	var (
+		err      error
+		ctx      context.Context
+		userId   string
+		page     int
+		offset   int
+		limit    = 10
+		itemList []dto.UserSubKeywordDto
+	)
+
+	ctx = req.Context()
+	userId = req.Get("userId").String()
+	page = req.Get("page").Int()
+	if page == 0 {
+		page = 1
+	}
+
+	offset = (page - 1) * limit
+	itemList, err = feed.GetUserSubKeywordListByUserId(ctx, userId, offset, limit)
+	if err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	} else {
+		middleware.JsonExit(req, 0, "success", itemList)
+	}
+
+}

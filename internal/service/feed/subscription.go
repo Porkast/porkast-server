@@ -126,9 +126,22 @@ func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, l
 		limit = 10
 	}
 
-	dtoList, err = dao.GetUserSubKeywordListByUserId(ctx, userId, offset, limit)
+	entities, err := dao.GetUserSubKeywordListByUserId(ctx, userId, offset, limit)
 	if err != nil {
 		return
+	}
+
+	for _, entity := range entities {
+		dtoList = append(dtoList, dto.UserSubKeywordDto{
+			Id:          entity.Id,
+			UserId:      entity.UserId,
+			Keyword:     entity.Keyword,
+			Country:     entity.Country,
+			OrderByDate: entity.OrderByDate,
+			Source:      entity.Source,
+			Status:      entity.Status,
+			CreateTime:  entity.CreateTime,
+		})
 	}
 
 	return

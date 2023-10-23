@@ -98,7 +98,7 @@ func DoSubKeywordByUserIdAndKeyword(ctx context.Context, newUSKEntity entity.Use
 
 }
 
-func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (dtos []dto.UserSubKeywordDto, err error) {
+func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (entities []entity.UserSubKeyword, err error) {
 
 	if userId == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
@@ -106,12 +106,12 @@ func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, l
 	}
 
 	g.Model("user_sub_keyword usk").
-		InnerJoin("user_info ui", "usk.user_id = ui.id").
-		Fields("usk.*, ui.nickname as creater_name").
+		// InnerJoin("user_info ui", "usk.user_id = ui.id").
+		Fields("usk.*").
 		Where("usk.user_id=? and status=1", userId).
 		Offset(offset).
 		Limit(limit).
-		Scan(&dtos)
+		Scan(&entities)
 
 	return
 }
