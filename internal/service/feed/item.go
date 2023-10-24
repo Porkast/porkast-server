@@ -219,6 +219,7 @@ func SearchPodcastEpisodesFromItunes(ctx context.Context, keyword, country, excl
 			GUID:            searchResult.EpisodeGuid,
 			FeedId:          searchResult.CollectionId,
 			ChannelId:       channelID,
+			ChannelTitle:    searchResult.CollectionName,
 			Source:          "itunes",
 			Title:           searchResult.TrackName,
 			HighlightTitle:  searchResult.TrackName,
@@ -241,10 +242,16 @@ func SearchPodcastEpisodesFromItunes(ctx context.Context, keyword, country, excl
 
 func BatchStoreFeedItems(ctx context.Context, feedItemList []dto.FeedItem) (err error) {
 
+	// reverse order feedItemList
+	for i, j := 0, len(feedItemList)-1; i < j; i, j = i+1, j-1 {
+		feedItemList[i], feedItemList[j] = feedItemList[j], feedItemList[i]
+	}
+
 	for _, item := range feedItemList {
 		model := entity.FeedItem{
 			Id:              item.Id,
 			ChannelId:       item.ChannelId,
+			ChannelTitle:    item.ChannelTitle,
 			Guid:            item.GUID,
 			Title:           item.Title,
 			Link:            item.Link,
