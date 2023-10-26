@@ -14,11 +14,13 @@ import (
 	"porkast-server/utility"
 
 	"github.com/anaskhan96/soup"
+	"github.com/gogf/gf/v2/container/garray"
 	"github.com/gogf/gf/v2/container/gvar"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/encoding/gurl"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
+	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/mmcdole/gofeed"
 )
@@ -208,8 +210,9 @@ func SearchPodcastEpisodesFromItunes(ctx context.Context, keyword, country, excl
 	searchResultList = make([]ItunesSearchEpisodeResult, 0)
 	resultsJson.Scan(&searchResultList)
 
+	excludeFeedIdList := garray.NewArray().Append(gstr.Split(excludeFeedId, ","))
 	for _, searchResult := range searchResultList {
-		if searchResult.CollectionId == excludeFeedId {
+		if excludeFeedIdList.Contains(searchResult.CollectionId) {
 			continue
 		}
 		itemID := GenerateFeedItemId(searchResult.FeedUrl, searchResult.TrackName)
