@@ -210,7 +210,7 @@ func SearchPodcastEpisodesFromItunes(ctx context.Context, keyword, country, excl
 	searchResultList = make([]ItunesSearchEpisodeResult, 0)
 	resultsJson.Scan(&searchResultList)
 
-	excludeFeedIdList := garray.NewArray().Append(gstr.Split(excludeFeedId, ","))
+	excludeFeedIdList := garray.NewStrArray().Append(gstr.Split(excludeFeedId, ",")...)
 	for _, searchResult := range searchResultList {
 		if excludeFeedIdList.Contains(searchResult.CollectionId) {
 			continue
