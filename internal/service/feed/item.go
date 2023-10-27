@@ -302,3 +302,68 @@ func GetFeedItemsByFeedLink(ctx context.Context, feedLink string) (feed *gofeed.
 
 	return
 }
+
+func LookupItunesFeedItem(ctx context.Context, collectionId, guid string) (item dto.FeedItem, err error) {
+
+	var (
+		itunesLookupAPI = "https://itunes.apple.com/lookup?entity=podcastEpisode&media=podcast&id=%s"
+		apiUrl          string
+		decodeGUID      string
+	)
+
+	apiUrl = fmt.Sprintf(itunesLookupAPI, gurl.Encode(collectionId))
+	respStr := network.GetContent(ctx, apiUrl)
+	respJson := gjson.New(respStr)
+	if respJson.IsNil() {
+		err = errors.New("lookup result is nil")
+		return
+	}
+
+	resultsJsonList := respJson.GetJsons("results")
+	if respJson.IsNil() {
+		err = errors.New("lookup result is nil")
+		return
+	}
+
+	decodeGUID, err = gurl.Decode(guid)
+	if err != nil {
+		return
+	}
+
+	for index, resultsJson := range resultsJsonList {
+		if index == 0 {
+			continue
+		}
+		var lookupResult ItunesSearchEpisodeResult
+		gconv.Struct(resultsJson, &lookupResult)
+		if decodeGUID == gconv.String(lookupResult.EpisodeGuid) {
+			itemID := GenerateFeedItemId(lookupResult.FeedUrl, lookupResult.TrackName)
+			channelID := GenerateFeedChannelId(lookupResult.FeedUrl, lookupResult.CollectionName)
+			item = dto.FeedItem{
+				Id:              itemID,
+				GUID:            lookupResult.EpisodeGuid,
+				FeedId:          lookupResult.CollectionId,
+				ChannelId:       channelID,
+				ChannelTitle:    lookupResult.CollectionName,
+				Source:          "itunes",
+				Title:           lookupResult.TrackName,
+				HighlightTitle:  lookupResult.TrackName,
+				Link:            lookupResult.TrackViewUrl,
+				PubDate:         lookupResult.ReleaseDate,
+				ImageUrl:        lookupResult.ArtworkUrl60,
+				EnclosureUrl:    lookupResult.EpisodeUrl,
+				EnclosureType:   lookupResult.EpisodeContentType,
+				EnclosureLength: "",
+				Duration:        gconv.String(lookupResult.TrackTimeMillis),
+				Description:     lookupResult.Description,
+				TextDescription: lookupResult.Description,
+				FeedLink:        lookupResult.FeedUrl,
+				HasThumbnail:    true,
+			}
+
+			break
+		}
+	}
+
+	return
+}

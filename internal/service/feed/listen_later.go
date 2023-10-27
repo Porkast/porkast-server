@@ -19,16 +19,52 @@ import (
 	"github.com/gogf/gf/v2/util/guid"
 )
 
-func CreateListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, itemId string) (err error) {
+func CreateListenLaterByUserIdAndFeedId(ctx context.Context, userId, channelId, itemId, source string) (err error) {
 	var (
 		newEntity entity.UserListenLater
+		feedItem dto.FeedItem
+		feedItemEntity entity.FeedItem
 	)
+
+	if source == "" || source == "itunes" {
+		feedItem, err = LookupItunesFeedItem(ctx, channelId, itemId)
+	}
+
+	feedItemEntity = entity.FeedItem{
+			Id:              feedItem.Id,
+			ChannelId:       feedItem.ChannelId,
+			ChannelTitle:    feedItem.ChannelTitle,
+			Guid:            feedItem.GUID,
+			Title:           feedItem.Title,
+			Link:            feedItem.Link,
+			PubDate:         gtime.New(feedItem.PubDate),
+			Author:          feedItem.Author,
+			InputDate:       gtime.New(feedItem.InputDate),
+			ImageUrl:        feedItem.ImageUrl,
+			EnclosureUrl:    feedItem.EnclosureUrl,
+			EnclosureType:   feedItem.EnclosureType,
+			EnclosureLength: feedItem.EnclosureLength,
+			Duration:        feedItem.Duration,
+			Episode:         feedItem.Episode,
+			Explicit:        feedItem.Explicit,
+			Season:          feedItem.Season,
+			EpisodeType:     feedItem.EpisodeType,
+			Description:     feedItem.Description,
+			FeedId:          feedItem.FeedId,
+			FeedLink:        feedItem.FeedLink,
+			Source:          feedItem.Source,
+	}
+
+	err = dao.InsertFeedItemIfNotExist(ctx, feedItemEntity)
+	if err != nil && err.Error() != consts.DB_DATA_ALREADY_EXIST {
+		return
+	}
 
 	newEntity = entity.UserListenLater{
 		Id:        guid.S(),
 		UserId:    userId,
-		ChannelId: channelId,
-		ItemId:    itemId,
+		ChannelId: feedItem.ChannelId,
+		ItemId:    feedItem.Id,
 		Status:    1,
 		RegDate:   gtime.Now(),
 	}
