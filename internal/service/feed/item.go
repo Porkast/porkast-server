@@ -273,6 +273,7 @@ func BatchStoreFeedItems(ctx context.Context, feedItemList []dto.FeedItem) (err 
 			Description:     item.Description,
 			FeedId:          item.FeedId,
 			FeedLink:        item.FeedLink,
+			Source:          item.Source,
 		}
 		err = dao.InsertFeedItemIfNotExist(ctx, model)
 		if err != nil && err.Error() == consts.DB_DATA_ALREADY_EXIST {
