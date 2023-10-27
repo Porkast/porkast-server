@@ -12,41 +12,6 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 
-func (ctl *controller) SearchResult(req *ghttp.Request) {
-	var (
-		err           error
-		searchKeyword string
-		scope         string
-		page          int
-		sortByDate    int
-		searchParam   feedService.SearchParams
-		tplMap        map[string]interface{}
-	)
-
-	searchKeyword = req.GetQuery("q").String()
-	scope = req.GetQuery("scope").String()
-	page = req.GetQuery("page").Int()
-	sortByDate = req.GetQuery("sortByDate").Int()
-
-	searchParam = feedService.SearchParams{
-		Keyword:    searchKeyword,
-		Page:       page,
-		Scope:      scope,
-		SortByDate: sortByDate,
-	}
-
-	if scope == consts.SEARCH_CHANNEL_SCOPE {
-		tplMap, err = searchFeedChannels(req.GetCtx(), searchParam)
-	} else {
-		tplMap, err = searchFeedItems(req.GetCtx(), searchParam)
-	}
-
-	if err != nil {
-		//TODO: Add error page
-	}
-
-	req.Response.WriteTpl("search.html", tplMap)
-}
 
 func (ctl *controller) SearchFeedItemAPI(req *ghttp.Request) {
 	var (

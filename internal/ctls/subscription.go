@@ -8,7 +8,6 @@ import (
 	"porkast-server/internal/service/feed"
 	feedService "porkast-server/internal/service/feed"
 	"porkast-server/internal/service/middleware"
-	userService "porkast-server/internal/service/user"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -131,46 +130,6 @@ func (ctl *controller) GetSubKeywordFeedRSS(req *ghttp.Request) {
 	req.Response.WriteXml(rssStr)
 }
 
-func (ctl *controller) UserSubListTplt(req *ghttp.Request) {
-	var (
-		err                   error
-		ctx                   context.Context
-		userId                string
-		page                  int
-		offset                int
-		userSubKeywordDtoList []dto.UserSubKeywordDto
-		userInfo              dto.UserInfo
-		tplMap                map[string]interface{}
-	)
-
-	ctx = req.Context()
-	userId = req.Get("userId").String()
-	page = req.Get("page").Int()
-	if page == 0 {
-		page = 1
-		offset = 0
-	} else {
-		offset = (page - 1) * 10
-	}
-
-	userInfo, err = userService.GetUserInfoByUserId(ctx, userId)
-	if err != nil {
-		// TODO: redirect to error page
-	}
-
-	userSubKeywordDtoList, err = feed.GetUserSubKeywordListByUserId(ctx, userId, offset, 10)
-	tplMap = consts.GetCommonTplMap(ctx)
-	if err != nil {
-		// TODO: Add error page
-	}
-
-	tplMap[consts.USER_INFO] = userInfo
-	tplMap[consts.CURRENT_PAGE] = page
-	tplMap[consts.USER_SUB_KEYWORD_DATA_LIST] = userSubKeywordDtoList
-	tplMap[consts.USER_SUB_KEYWORD_PAGE_NAME] = g.I18n().Tf(ctx, "keyword_sub_rss_channel_title", userInfo.Nickname)
-	tplMap[consts.PODCAST_LIST_CREATER] = g.I18n().Tf(ctx, "podcast_playlist_creater")
-	req.Response.WriteTpl("user_sub_list_page.html", tplMap)
-}
 
 func (ctl *controller) GetUserSubKeywordListAPI(req *ghttp.Request) {
 	var (

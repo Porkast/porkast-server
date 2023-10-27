@@ -26,7 +26,6 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			initConfig()
 			s := g.Server()
-			// s.Group("/", routers.WebRouter)
 			s.Group("/v1/api", routers.V1ApiRouter)
 			initComponent(ctx)
 			s.Run()
