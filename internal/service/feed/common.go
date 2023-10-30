@@ -22,14 +22,14 @@ func formatPubDate(pubDate string) (formatPubDate string) {
 func formatDuration(duration string) (formatDuration string) {
 	if !gstr.Contains(duration, ":") {
 		var (
-			totalSecs = gconv.Int(duration)
-			hours     int
-			minutes   int
-			seconds   int
+			totalMillSecs = gconv.Int(duration)
+			hours         int
+			minutes       int
+			seconds       int
 		)
-		hours = totalSecs / 3600
-		minutes = (totalSecs % 3600) / 60
-		seconds = totalSecs % 60
+		hours = totalMillSecs / 3600000
+		minutes = (totalMillSecs % 3600000) / 60000
+		seconds = (totalMillSecs % 60000) / 1000
 		formatDuration = fmt.Sprintf("%02d:%02d:%02d", hours, minutes, seconds)
 	} else {
 		var (
