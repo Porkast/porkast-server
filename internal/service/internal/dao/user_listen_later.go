@@ -71,9 +71,8 @@ func GetListenLaterListByUserId(ctx context.Context, userId string, offset, limi
 
 	g.Model("user_listen_later ull").
 		InnerJoin("feed_item fi", "ull.item_id = fi.id").
-		InnerJoin("feed_channel fc", "fi.channel_id = fc.id").
-		Fields("ull.*, fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fc.image_url as channel_image_url, fc.feed_link, fc.title as channel_title, fc.author as channelAuthor").
-		Where("status=1").
+		Fields("fi.*, ull.reg_date").
+		Where("status=1 and user_id=?", userId).
 		Offset(offset).
 		Limit(limit).
 		Order("ull.reg_date desc").
