@@ -40,3 +40,10 @@ sub_confirm_modal_title: "Confirm keyword subscription?"
 sub_confirm_modal_desc_order_by_date: "Subscribing to the keyword %s search results will be sorted by podcast release date"
 sub_confirm_modal_desc_relative: "Subscribing to the keyword %s search results will be sorted by podcast relevance"
 podcast_playlist_creater: "Playlist creator"
+
+
+# Playlist
+create_playlist_sucess: "Create playlist successfully"
+add_feed_item_to_playlist_sucess: "Add to playlist successfully"
+already_added_to_playlist: "Already added"
+delete_feed_item_from_playlist_sucess: "Delete from playlist successfully"

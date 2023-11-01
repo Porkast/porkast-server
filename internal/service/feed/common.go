@@ -120,3 +120,13 @@ func GenerateFeedChannelId(feedUrl, collectionName string) (channelId string) {
 	channelId = strconv.FormatUint(ghash.RS64([]byte(feedUrl+collectionName)), 32)
 	return
 }
+
+func GeneratePlaylistId(name, userId string) (itemID string) {
+	itemID = strconv.FormatUint(ghash.RS64([]byte(name+userId)), 32)
+	return
+}
+
+func GeneratePlaylistItemId(playlistId, itemId string) (itemID string) {
+	itemID = strconv.FormatUint(ghash.RS64([]byte(playlistId+itemId)), 32)
+	return
+}

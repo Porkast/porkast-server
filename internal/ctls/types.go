@@ -53,3 +53,16 @@ type GetSubKeywordListReqData struct {
 	UserId  string `json:"userId" v:"required"`
 	Keyword string `json:"keyword" v:"required"`
 }
+
+type CreatePlaylistReqData struct {
+	UserId      string `json:"userId" v:"required"`
+	Name        string `json:"name" v:"required"`
+	Description string `json:"description"`
+}
+
+type AddFeedItemToPlaylistReqData struct {
+	PlaylistId string `json:"playlistId" v:"required"`
+	ChannelId  string `json:"channelId" v:"required"`
+	Guid       string `json:"guid" v:"required"`
+	Source     string `json:"source"`
+}

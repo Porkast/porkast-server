@@ -35,4 +35,7 @@ func V1ApiRouter(group *ghttp.RouterGroup) {
 	// search keyword subscription
 	authGroup.POST("/subscription/keyword", ctls.Ctl.SubKeyword)
 
+	// playlist
+	authGroup.POST("/playlist", ctls.Ctl.CreatePlaylist)
+	authGroup.POST("/playlist/item", ctls.Ctl.AddFeedItemToPlaylist)
 }
