@@ -11,7 +11,6 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 
-
 func (ctl *controller) AddListenLater(req *ghttp.Request) {
 	var (
 		err     error
@@ -24,11 +23,12 @@ func (ctl *controller) AddListenLater(req *ghttp.Request) {
 
 	err = feedService.CreateListenLaterByUserIdAndFeedId(req.GetCtx(), reqData.UserId, reqData.ChannelId, reqData.ItemId, reqData.Source)
 	if err != nil {
+		g.Log().Line().Error(req.GetCtx(), err)
 		if err.Error() == consts.DB_DATA_ALREADY_EXIST {
 			middleware.JsonExit(req, 1, g.I18n().T(req.GetCtx(), `{#listen_later_exist}`), nil)
+		} else {
+			middleware.JsonExit(req, 1, err.Error(), nil)
 		}
-		g.Log().Line().Error(req.GetCtx(), err)
-		middleware.JsonExit(req, 1, err.Error(), nil)
 	}
 	middleware.JsonExit(req, 0, g.I18n().T(req.GetCtx(), `{#add_listen_later_sucess}`), nil)
 
