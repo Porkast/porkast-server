@@ -8,17 +8,30 @@ type controller struct {
 }
 
 type LoginReqData struct {
-	Password string `json:"password" v:"required"`
-	Email    string `json:"email" v:"required-without:Phone"`
-	Phone    string `json:"phone" v:"required-without:Email"`
+	UserId   string `json:"userId" v:"required"`
+	Password string `json:"password"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
 }
 
 type RegisterReqData struct {
-	Nickname       string `json:"nickname" v:"required"`
-	Password       string `json:"password" v:"required|length:6,20"`
-	PasswordVerify string `json:"passwordVerify" v:"required|length:6,20|same:password"`
-	Email          string `json:"email" v:"required-without:Phone"`
-	Phone          string `json:"phone" v:"required-without:Email"`
+	Id             string `json:"id"`
+	Nickname       string `json:"nickname"`
+	Password       string `json:"password"`
+	PasswordVerify string `json:"passwordVerify"`
+	Email          string `json:"email"`
+	Phone          string `json:"phone"`
+	Avatar         string `json:"avatar"`
+}
+
+type SyncUserInfoReqData struct {
+	UserId         string `json:"userId" v:"required"`
+	Nickname       string `json:"nickname"`
+	Password       string `json:"password"`
+	PasswordVerify string `json:"passwordVerify"`
+	Email          string `json:"email"`
+	Phone          string `json:"phone"`
+	Avatar         string `json:"avatar"`
 }
 
 type AddListenLaterReqData struct {

@@ -93,3 +93,10 @@ func GetUserInfoByUserId(ctx context.Context, userId string) (userInfoEntity ent
 
 	return
 }
+
+func UpdateUserInfoByUserId(ctx context.Context, userId string, userInfo entity.UserInfo) (err error) {
+
+	_, err = UserInfo.Ctx(ctx).Where("id=?", userId).Update(userInfo)
+	
+	return
+}

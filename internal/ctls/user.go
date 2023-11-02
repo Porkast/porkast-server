@@ -6,7 +6,6 @@ import (
 
 	userService "porkast-server/internal/service/user"
 
-	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -15,7 +14,6 @@ import (
 func (ctl *controller) DoLogin(req *ghttp.Request) {
 	var (
 		err          error
-		cryptoPwd    string
 		reqData      *LoginReqData
 		respUserInfo dto.UserInfo
 	)
@@ -23,9 +21,7 @@ func (ctl *controller) DoLogin(req *ghttp.Request) {
 		middleware.JsonExit(req, 1, err.Error())
 	}
 
-	cryptoPwd, _ = gmd5.Encrypt(reqData.Password)
-	reqData.Password = cryptoPwd
-	respUserInfo, err = userService.Login(req.GetCtx(), reqData.Email, reqData.Phone, reqData.Password)
+	respUserInfo, err = userService.Login(req.GetCtx(), reqData.UserId)
 	if err != nil {
 		g.Log().Line().Error(req.GetCtx(), err)
 		middleware.JsonExit(req, 1, g.I18n().T(req.GetCtx(), `{#username_or_password_not_right}`), nil)
@@ -46,6 +42,7 @@ func (ctl *controller) DoRegister(req *ghttp.Request) {
 	}
 
 	userInfoDto = dto.UserInfo{
+		Id:       reqData.Id,
 		Nickname: reqData.Nickname,
 		Password: reqData.Password,
 		Email:    reqData.Email,
@@ -58,4 +55,33 @@ func (ctl *controller) DoRegister(req *ghttp.Request) {
 		middleware.JsonExit(req, 1, err.Error(), nil)
 	}
 	middleware.JsonExit(req, 0, g.I18n().T(req.GetCtx(), `{#register_sucess}`), userInfoDto)
+}
+
+func (ctl *controller) SyncUserInfo(req *ghttp.Request) {
+	var (
+		ctx         = req.GetCtx()
+		err         error
+		reqData     *SyncUserInfoReqData
+		userInfoDto dto.UserInfo
+	)
+
+	if err = req.Parse(&reqData); err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	}
+
+	userInfoDto = dto.UserInfo{
+		Id:       reqData.UserId,
+		Nickname: reqData.Nickname,
+		Password: reqData.Password,
+		Email:    reqData.Email,
+		Phone:    reqData.Phone,
+		Avatar:   reqData.Avatar,
+	}
+
+	syncedUserInfo, err := userService.SyncUserInfo(ctx, userInfoDto)
+	if err != nil {
+		g.Log().Line().Error(req.GetCtx(), err)
+		middleware.JsonExit(req, 1, err.Error(), nil)
+	}
+	middleware.JsonExit(req, 0, g.I18n().T(req.GetCtx(), `{#register_sucess}`), syncedUserInfo)
 }

@@ -12,4 +12,5 @@ type UserInfo struct {
 	Phone      string      `json:"phone"      ` //
 	RegDate    *gtime.Time `json:"regDate"    ` //
 	UpdateDate *gtime.Time `json:"updateDate" ` //
+	Avatar     string      `json:"avatar"     `
 }

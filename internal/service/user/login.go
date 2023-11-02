@@ -3,39 +3,25 @@ package user
 import (
 	"context"
 	"porkast-server/internal/dto"
+	"porkast-server/internal/model/entity"
+	"porkast-server/internal/service/internal/dao"
+
+	"github.com/gogf/gf/v2/os/gtime"
 )
 
-func Login(ctx context.Context, email, phone, password string) (userInfoDto dto.UserInfo, err error) {
-	// var (
-	// 	userInfoEntity entity.UserInfo
-	// 	tokenModel     middleware.TokenModel
-	// 	token          string
-	// )
+func Login(ctx context.Context, userId string) (userInfoDto dto.UserInfo, err error) {
+	var (
+		userInfoEntity entity.UserInfo
+	)
 
-	// if email == "" {
-	// 	userInfoEntity, err = dao.GetUserInfoByPhoneAndPassword(ctx, phone, password)
-	// } else if phone == "" {
-	// 	userInfoEntity, err = dao.GetUserInfoByEmailAndPassword(ctx, email, password)
-	// }
+	userInfoEntity, err = dao.GetUserInfoByUserId(ctx, userId)
+	if err != nil {
+		return
+	}
 
-	// if userInfoEntity.Id == "" {
-	// 	err = gerror.New("user not exist")
-	// 	return userInfoDto, err
-	// }
+	userInfoEntity.UpdateDate = gtime.Now()
 
-	// g.Log().Line().Debug(ctx, "query user info : \n", gjson.MustEncodeString(userInfoEntity))
-	// gconv.Struct(userInfoEntity, &userInfoDto)
-	// tokenModel = middleware.TokenModel{
-	// 	UserId:         userInfoDto.Id,
-	// 	NickName:       userInfoDto.Nickname,
-	// 	Email:          userInfoDto.Email,
-	// 	Mobile:         userInfoDto.Phone,
-	// 	CreateDate:     userInfoDto.RegDate.String(),
-	// 	UpdateDateTime: userInfoDto.UpdateDate.String(),
-	// }
-	// token, err = middleware.CreateToken(ctx, tokenModel)
-	// userInfoDto.Password = ""
-	// userInfoDto.Token = token
+	err = dao.UpdateUserInfoByUserId(ctx, userId, userInfoEntity)
 
 	return
 }

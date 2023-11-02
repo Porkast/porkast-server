@@ -13,6 +13,7 @@ func V1ApiRouter(group *ghttp.RouterGroup) {
 	unAuthGroup := group.Group("/")
 	unAuthGroup.POST("/user/login", ctls.Ctl.DoLogin)
 	unAuthGroup.POST("/user/register", ctls.Ctl.DoRegister)
+	unAuthGroup.POST("/user/sync", ctls.Ctl.SyncUserInfo)
 	unAuthGroup.GET("/search/feed/item", ctls.Ctl.SearchFeedItemAPI)
 	unAuthGroup.GET("/search/feed/channel", ctls.Ctl.SearchFeedChannelAPI)
 

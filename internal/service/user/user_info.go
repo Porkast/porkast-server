@@ -8,6 +8,7 @@ import (
 
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -28,6 +29,36 @@ func GetUserInfoByUserId(ctx context.Context, userId string) (userInfoDto dto.Us
 
 	gconv.Struct(userInfoEntity, &userInfoDto)
 	userInfoDto.Password = ""
+
+	return
+}
+
+func SyncUserInfo(ctx context.Context, userInfoDto dto.UserInfo) (syncedUserInfo dto.UserInfo ,err error) {
+	var (
+		userInfoEntity entity.UserInfo
+	)
+
+	userInfoEntity, _ = dao.GetUserInfoByUserId(ctx, userInfoDto.Id)
+	if userInfoEntity.Id == "" {
+		userInfoEntity = entity.UserInfo{
+			Id:       userInfoDto.Id,
+			Nickname: userInfoDto.Nickname,
+			Password: userInfoDto.Password,
+			Email:    userInfoDto.Email,
+			Phone:    userInfoDto.Phone,
+			Avatar:   userInfoDto.Avatar,
+		}
+		userInfoEntity.RegDate = gtime.Now()
+		userInfoEntity.UpdateDate = gtime.Now()
+		err = dao.CreateUserInfo(ctx, userInfoEntity)
+	} else {
+		userInfoEntity.UpdateDate = gtime.Now()
+		err = dao.UpdateUserInfoByUserId(ctx, userInfoDto.Id, userInfoEntity)
+	}
+
+	if err == nil {
+		gconv.Struct(userInfoEntity, &syncedUserInfo)
+	}
 
 	return
 }
