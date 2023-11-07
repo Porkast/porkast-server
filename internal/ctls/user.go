@@ -89,15 +89,12 @@ func (ctl *controller) SyncUserInfo(req *ghttp.Request) {
 func (ctl *controller) GetUserInfo(req *ghttp.Request) {
 	var (
 		err         error
-		reqData     *GetUserInfoReqData
 		userInfoDto dto.UserInfo
+		userId      string
 	)
 
-	if err = req.Parse(&reqData); err != nil {
-		middleware.JsonExit(req, 1, err.Error())
-	}
-
-	userInfoDto, err = userService.GetUserInfoByUserId(req.GetCtx(), reqData.UserId)
+	userId = req.Get("userId").String()
+	userInfoDto, err = userService.GetUserInfoByUserId(req.GetCtx(), userId)
 
 	if err != nil {
 		g.Log().Line().Error(req.GetCtx(), err)
