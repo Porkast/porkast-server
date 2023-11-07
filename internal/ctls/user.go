@@ -85,3 +85,23 @@ func (ctl *controller) SyncUserInfo(req *ghttp.Request) {
 	}
 	middleware.JsonExit(req, 0, g.I18n().T(req.GetCtx(), `{#register_sucess}`), syncedUserInfo)
 }
+
+func (ctl *controller) GetUserInfo(req *ghttp.Request) {
+	var (
+		err         error
+		reqData     *GetUserInfoReqData
+		userInfoDto dto.UserInfo
+	)
+
+	if err = req.Parse(&reqData); err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	}
+
+	userInfoDto, err = userService.GetUserInfoByUserId(req.GetCtx(), reqData.UserId)
+
+	if err != nil {
+		g.Log().Line().Error(req.GetCtx(), err)
+		middleware.JsonExit(req, 1, err.Error(), nil)
+	}
+	middleware.JsonExit(req, 0, "", userInfoDto)
+}

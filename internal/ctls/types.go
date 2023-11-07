@@ -34,6 +34,10 @@ type SyncUserInfoReqData struct {
 	Avatar         string `json:"avatar"`
 }
 
+type GetUserInfoReqData struct {
+	UserId string `json:"userId" v:"required"`
+}
+
 type AddListenLaterReqData struct {
 	UserId    string `json:"userId" v:"required"`
 	ChannelId string `json:"channelId" v:"required"`
