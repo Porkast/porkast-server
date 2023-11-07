@@ -19,7 +19,7 @@ func GetHttpClient() (client *gclient.Client) {
 	client = g.Client()
 	client.SetTimeout(time.Second * 60)
 	if env == "dev" {
-		client.SetProxy("http://127.0.0.1:51491")
+		// client.SetProxy("http://127.0.0.1:51491")
 	}
 
 	return
