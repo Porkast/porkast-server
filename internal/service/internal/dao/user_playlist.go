@@ -6,8 +6,12 @@ package dao
 
 import (
 	"context"
+	"porkast-server/internal/consts"
 	"porkast-server/internal/model/entity"
 	"porkast-server/internal/service/internal/dao/internal"
+
+	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/errors/gerror"
 )
 
 // userPlaylistDao is the data access object for table user_playlist.
@@ -25,7 +29,20 @@ var (
 
 // Fill with you ideas below.
 
-func InsertNewUserPlaylist(ctx context.Context, newEntity entity.UserPlaylist) (err error) {
+func InsertNewUserPlaylistIfNotExist(ctx context.Context, newEntity entity.UserPlaylist) (err error) {
+	var (
+		result gdb.Record
+	)
+
+	result, err = UserPlaylist.Ctx(ctx).Where("id=?", newEntity.Id).One()
+	if err != nil {
+		return
+	}
+
+	if !result.IsEmpty() {
+		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
+		return
+	}
 	_, err = UserPlaylist.Ctx(ctx).Insert(newEntity)
 	return
 }

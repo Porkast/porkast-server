@@ -29,7 +29,36 @@ func CreatePlaylist(ctx context.Context, playlistName, userId, description strin
 		Status:       1,
 	}
 
-	err = dao.InsertNewUserPlaylist(ctx, entity)
+	err = dao.InsertNewUserPlaylistIfNotExist(ctx, entity)
+
+	return
+}
+
+func SubscribePlaylist(ctx context.Context, userId, playlistId string) (err error) {
+
+	if userId == "" || playlistId == "" {
+		err = gerror.New(gcode.CodeMissingParameter.Message())
+		return
+	}
+
+	existEntity, err := dao.GetPlaylistById(ctx, playlistId)
+	if err != nil {
+		return gerror.New("Playlist " + gcode.CodeNotFound.Message())
+	}
+
+	newPlaylistId := GeneratePlaylistId(existEntity.PlaylistName, userId)
+	newEntity := entity.UserPlaylist{
+		Id:             newPlaylistId,
+		OrigPlaylistId: existEntity.UserId,
+		PlaylistName:   existEntity.PlaylistName,
+		Description:    existEntity.Description,
+		UserId:         userId,
+		CreatorId:      existEntity.UserId,
+		RegDate:        gtime.Now(),
+		Status:         1,
+	}
+
+	err = dao.InsertNewUserPlaylistIfNotExist(ctx, newEntity)
 
 	return
 }

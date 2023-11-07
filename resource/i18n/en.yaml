@@ -44,6 +44,7 @@ podcast_playlist_creater: "Playlist creator"
 
 # Playlist
 create_playlist_sucess: "Create playlist successfully"
+subscribe_playlist_sucess: "Subscribe playlist successfully"
 add_feed_item_to_playlist_sucess: "Add to playlist successfully"
 already_added_to_playlist: "Already added"
 delete_feed_item_from_playlist_sucess: "Delete from playlist successfully"

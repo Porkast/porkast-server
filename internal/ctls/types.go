@@ -79,3 +79,9 @@ type AddFeedItemToPlaylistReqData struct {
 	Guid       string `json:"guid" v:"required"`
 	Source     string `json:"source"`
 }
+
+type SubscribePlaylistReqData struct {
+	UserId        string `json:"userId" v:"required"`
+	PlaylistId    string `json:"playlistId" v:"required"`
+	CreatorUserId string `json:"creatorUserId"`
+}

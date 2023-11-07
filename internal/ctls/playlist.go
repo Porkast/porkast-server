@@ -23,11 +23,40 @@ func (ctl *controller) CreatePlaylist(req *ghttp.Request) {
 	err = feed.CreatePlaylist(ctx, reqData.Name, reqData.UserId, reqData.Description)
 	if err != nil {
 		g.Log().Line().Error(ctx, err)
-		middleware.JsonExit(req, 1, err.Error(), nil)
+		if err.Error() == consts.DB_DATA_ALREADY_EXIST {
+			middleware.JsonExit(req, 1, g.I18n().T(req.GetCtx(), `{#already_added_to_playlist}`), nil)
+		} else {
+			middleware.JsonExit(req, 1, err.Error(), nil)
+		}
 	}
 
 	middleware.JsonExit(req, 0, g.I18n().T(ctx, `{#create_playlist_sucess}`), nil)
 
+}
+
+func (ctl *controller) SubscribePlaylist(req *ghttp.Request) {
+	var (
+		ctx     = req.GetCtx()
+		err     error
+		reqData *SubscribePlaylistReqData
+	)
+
+	if err = req.Parse(&reqData); err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	}
+
+	err = feed.SubscribePlaylist(ctx, reqData.UserId, reqData.PlaylistId)
+
+	if err != nil {
+		g.Log().Line().Error(ctx, err)
+		if err.Error() == consts.DB_DATA_ALREADY_EXIST {
+			middleware.JsonExit(req, 1, g.I18n().T(req.GetCtx(), `{#already_added_to_playlist}`), nil)
+		} else {
+			middleware.JsonExit(req, 1, err.Error(), nil)
+		}
+	}
+
+	middleware.JsonExit(req, 0, g.I18n().T(ctx, `{#subscribe_playlist_sucess}`), nil)
 }
 
 func (ctl *controller) AddFeedItemToPlaylist(req *ghttp.Request) {

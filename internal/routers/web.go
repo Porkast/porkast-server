@@ -38,5 +38,6 @@ func V1ApiRouter(group *ghttp.RouterGroup) {
 
 	// playlist
 	authGroup.POST("/playlist", ctls.Ctl.CreatePlaylist)
+	authGroup.POST("/playlist/subcription", ctls.Ctl.SubscribePlaylist)
 	authGroup.POST("/playlist/item", ctls.Ctl.AddFeedItemToPlaylist)
 }
