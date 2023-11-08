@@ -88,7 +88,7 @@ func DoSubKeywordByUserIdAndKeyword(ctx context.Context, newUSKEntity entity.Use
 		)
 
 		_, _ = tx.Insert("keyword_subscription", newKSEntityList)
-		_, err = tx.Insert("user_sub_keyword", newUSKEntity)
+		_, err = tx.Insert("user_subscription", newUSKEntity)
 		if err != nil {
 			tx.Rollback()
 		}
@@ -105,7 +105,7 @@ func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, l
 		return
 	}
 
-	g.Model("user_sub_keyword usk").
+	g.Model("user_subscription usk").
 		// InnerJoin("user_info ui", "usk.user_id = ui.id").
 		Fields("usk.*").
 		Where("usk.user_id=? and status=1", userId).
@@ -123,7 +123,7 @@ func GetUserSubKeywordListByUserIdAndKeyword(ctx context.Context, userId, keywor
 		return
 	}
 
-	g.Model("user_sub_keyword usk").
+	g.Model("user_subscription usk").
 		InnerJoin("keyword_subscription ks", "usk.keyword = ks.keyword and ks.lang = usk.lang and ks.order_by_date = usk.order_by_date").
 		InnerJoin("feed_item fi", "ks.feed_channel_id = fi.channel_id and ks.feed_item_id = fi.id").
 		Fields("usk.*, fi.id as item_id, fi.channel_id ,fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fi.image_url, fi.feed_link").
@@ -141,6 +141,7 @@ func GetAllKindSubKeywordList(ctx context.Context, offset, limit int) (entities 
 	)
 
 	dbModel = UserSubscription.Ctx(ctx).
+		Where("status=1 and type=searchKeyword").
 		Fields("keyword", "lang", "order_by_date").
 		Group("keyword", "lang", "order_by_date")
 

@@ -57,7 +57,7 @@ func GetSubKeywordItemsByUserIdAndKeyword(ctx context.Context, userId, keyword, 
 
 	g.Model("feed_item fi").
 		InnerJoin("keyword_subscription ks", "fi.id = ks.feed_item_id").
-		InnerJoin("user_sub_keyword usk", "usk.keyword = ks.keyword and usk.country = ks.country and usk.exclude_feed_id = ks.exclude_feed_id and usk.source = ks.source").
+		InnerJoin("user_subscription usk", "usk.keyword = ks.keyword and usk.country = ks.country and usk.exclude_feed_id = ks.exclude_feed_id and usk.source = ks.source").
 		Fields("fi.*, ks.source, ks.exclude_feed_id, ks.country").
 		Where("usk.user_id = ? and usk.keyword = ? and usk.source = ? and usk.status = 1", userId, keyword, source).
 		Offset(offset).
