@@ -35,16 +35,16 @@ type UserSubscriptionFeedDetailDto struct {
 }
 
 type UserSubscriptionDto struct {
-	Id            string      `json:"id"            ` //
-	UserId        string      `json:"userId"        ` //
-	CreateTime    *gtime.Time `json:"createTime"    ` //
-	Status        int         `json:"status"        ` //
-	Keyword       string      `json:"keyword"       ` //
-	OrderByDate   int         `json:"orderByDate"   ` //
-	Lang          string      `json:"lang"          ` // feed language
-	Country       string      `json:"country"       ` //
-	ExcludeFeedId string      `json:"excludeFeedId" ` //
-	Source        string      `json:"source"        ` //
-	RefId         string      `json:"refId"         ` // subscription type id, like listenlater, playlist id
-	Type          string      `json:"type"          ` // suscription type, like searchKeyword, playlist, listenlater
+	Id            string
+	UserId        string
+	CreateTime    *gtime.Time
+	Status        int
+	Keyword       string
+	OrderByDate   int
+	Lang          string
+	Country       string
+	ExcludeFeedId string
+	Source        string
+	RefId         string
+	Type          string
 }
