@@ -5,16 +5,7 @@
 package dao
 
 import (
-	"context"
-	"porkast-server/internal/consts"
-	"porkast-server/internal/dto"
-	"porkast-server/internal/model/entity"
 	"porkast-server/internal/service/internal/dao/internal"
-
-	"github.com/gogf/gf/v2/database/gdb"
-	"github.com/gogf/gf/v2/errors/gcode"
-	"github.com/gogf/gf/v2/errors/gerror"
-	"github.com/gogf/gf/v2/frame/g"
 )
 
 // userSubKeywordDao is the data access object for table user_sub_keyword.
@@ -31,150 +22,150 @@ var (
 )
 
 // Fill with you ideas below.
-func GetUserSubKeywordByUserIdAndKeyword(ctx context.Context, userId, keyword, country, source, excludeFeedId string) (resultEntity entity.UserSubKeyword, err error) {
+// func GetUserSubKeywordByUserIdAndKeyword(ctx context.Context, userId, keyword, country, source, excludeFeedId string) (resultEntity entity.UserSubKeyword, err error) {
 
-	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and country=? and source=? and exclude_feed_id=? and status=1", userId, keyword, country, source, excludeFeedId).Scan(&resultEntity)
+// 	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and country=? and source=? and exclude_feed_id=? and status=1", userId, keyword, country, source, excludeFeedId).Scan(&resultEntity)
 
-	return
-}
+// 	return
+// }
 
-func CreateUserSubKeyword(ctx context.Context, newEntity entity.UserSubKeyword) (err error) {
-	var (
-		queryEntity entity.UserSubKeyword
-	)
+// func CreateUserSubKeyword(ctx context.Context, newEntity entity.UserSubKeyword) (err error) {
+// 	var (
+// 		queryEntity entity.UserSubKeyword
+// 	)
 
-	queryEntity, err = GetUserSubKeywordByUserIdAndKeyword(ctx, newEntity.UserId, newEntity.Keyword, newEntity.Country, newEntity.Source, newEntity.ExcludeFeedId)
-	if queryEntity.Id != "" {
-		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
-		return
-	}
+// 	queryEntity, err = GetUserSubKeywordByUserIdAndKeyword(ctx, newEntity.UserId, newEntity.Keyword, newEntity.Country, newEntity.Source, newEntity.ExcludeFeedId)
+// 	if queryEntity.Id != "" {
+// 		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
+// 		return
+// 	}
 
-	if newEntity.UserId == "" || newEntity.Keyword == "" || newEntity.CreateTime == nil || newEntity.CreateTime.IsDST() {
-		err = gerror.New(gcode.CodeMissingParameter.Message())
-		return
-	}
+// 	if newEntity.UserId == "" || newEntity.Keyword == "" || newEntity.CreateTime == nil || newEntity.CreateTime.IsDST() {
+// 		err = gerror.New(gcode.CodeMissingParameter.Message())
+// 		return
+// 	}
 
-	_, err = UserSubKeyword.Ctx(ctx).Insert(newEntity)
+// 	_, err = UserSubKeyword.Ctx(ctx).Insert(newEntity)
 
-	return
-}
+// 	return
+// }
 
-func DoSubKeywordByUserIdAndKeyword(ctx context.Context, newUSKEntity entity.UserSubKeyword, newKSEntityList []entity.KeywordSubscription) (err error) {
+// func DoSubKeywordByUserIdAndKeyword(ctx context.Context, newUSKEntity entity.UserSubKeyword, newKSEntityList []entity.KeywordSubscription) (err error) {
 
-	var (
-		queryEntity entity.UserSubKeyword
-	)
+// 	var (
+// 		queryEntity entity.UserSubKeyword
+// 	)
 
-	queryEntity, err = GetUserSubKeywordByUserIdAndKeyword(ctx, newUSKEntity.UserId, newUSKEntity.Keyword, newUSKEntity.Country, newUSKEntity.Source, newUSKEntity.ExcludeFeedId)
+// 	queryEntity, err = GetUserSubKeywordByUserIdAndKeyword(ctx, newUSKEntity.UserId, newUSKEntity.Keyword, newUSKEntity.Country, newUSKEntity.Source, newUSKEntity.ExcludeFeedId)
 
-	if queryEntity.Id != "" {
-		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
-		return
-	}
+// 	if queryEntity.Id != "" {
+// 		err = gerror.New(consts.DB_DATA_ALREADY_EXIST)
+// 		return
+// 	}
 
-	if newUSKEntity.UserId == "" || newUSKEntity.Keyword == "" || newUSKEntity.CreateTime == nil || newUSKEntity.CreateTime.IsDST() {
-		err = gerror.New(gcode.CodeMissingParameter.Message())
-		return
-	}
+// 	if newUSKEntity.UserId == "" || newUSKEntity.Keyword == "" || newUSKEntity.CreateTime == nil || newUSKEntity.CreateTime.IsDST() {
+// 		err = gerror.New(gcode.CodeMissingParameter.Message())
+// 		return
+// 	}
 
-	// reverse the order of newKSEntityList
-	for i, j := 0, len(newKSEntityList)-1; i < j; i, j = i+1, j-1 {
-		newKSEntityList[i], newKSEntityList[j] = newKSEntityList[j], newKSEntityList[i]
-	}
+// 	// reverse the order of newKSEntityList
+// 	for i, j := 0, len(newKSEntityList)-1; i < j; i, j = i+1, j-1 {
+// 		newKSEntityList[i], newKSEntityList[j] = newKSEntityList[j], newKSEntityList[i]
+// 	}
 
-	return g.DB().Transaction(ctx, func(ctx context.Context, tx *gdb.TX) error {
-		var (
-			err error
-		)
+// 	return g.DB().Transaction(ctx, func(ctx context.Context, tx *gdb.TX) error {
+// 		var (
+// 			err error
+// 		)
 
-		_, _ = tx.Insert("keyword_subscription", newKSEntityList)
-		_, err = tx.Insert("user_sub_keyword", newUSKEntity)
-		if err != nil {
-			tx.Rollback()
-		}
+// 		_, _ = tx.Insert("keyword_subscription", newKSEntityList)
+// 		_, err = tx.Insert("user_sub_keyword", newUSKEntity)
+// 		if err != nil {
+// 			tx.Rollback()
+// 		}
 
-		return err
-	})
+// 		return err
+// 	})
 
-}
+// }
 
-func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (entities []entity.UserSubKeyword, err error) {
+// func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (entities []entity.UserSubKeyword, err error) {
 
-	if userId == "" {
-		err = gerror.New(gcode.CodeMissingParameter.Message())
-		return
-	}
+// 	if userId == "" {
+// 		err = gerror.New(gcode.CodeMissingParameter.Message())
+// 		return
+// 	}
 
-	g.Model("user_sub_keyword usk").
-		// InnerJoin("user_info ui", "usk.user_id = ui.id").
-		Fields("usk.*").
-		Where("usk.user_id=? and status=1", userId).
-		Offset(offset).
-		Limit(limit).
-		Scan(&entities)
+// 	g.Model("user_sub_keyword usk").
+// 		// InnerJoin("user_info ui", "usk.user_id = ui.id").
+// 		Fields("usk.*").
+// 		Where("usk.user_id=? and status=1", userId).
+// 		Offset(offset).
+// 		Limit(limit).
+// 		Scan(&entities)
 
-	return
-}
+// 	return
+// }
 
-func GetUserSubKeywordListByUserIdAndKeyword(ctx context.Context, userId, keyword string) (dtos []dto.UserSubKeywordFeedDetailDto, err error) {
+// func GetUserSubKeywordListByUserIdAndKeyword(ctx context.Context, userId, keyword string) (dtos []dto.UserSubKeywordFeedDetailDto, err error) {
 
-	if userId == "" {
-		err = gerror.New(gcode.CodeMissingParameter.Message())
-		return
-	}
+// 	if userId == "" {
+// 		err = gerror.New(gcode.CodeMissingParameter.Message())
+// 		return
+// 	}
 
-	g.Model("user_sub_keyword usk").
-		InnerJoin("keyword_subscription ks", "usk.keyword = ks.keyword and ks.lang = usk.lang and ks.order_by_date = usk.order_by_date").
-		InnerJoin("feed_item fi", "ks.feed_channel_id = fi.channel_id and ks.feed_item_id = fi.id").
-		Fields("usk.*, fi.id as item_id, fi.channel_id ,fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fi.image_url, fi.feed_link").
-		Where("usk.user_id=? and usk.keyword=? and status=1", userId, keyword).
-		OrderDesc("ks.id").
-		Scan(&dtos)
+// 	g.Model("user_sub_keyword usk").
+// 		InnerJoin("keyword_subscription ks", "usk.keyword = ks.keyword and ks.lang = usk.lang and ks.order_by_date = usk.order_by_date").
+// 		InnerJoin("feed_item fi", "ks.feed_channel_id = fi.channel_id and ks.feed_item_id = fi.id").
+// 		Fields("usk.*, fi.id as item_id, fi.channel_id ,fi.title, fi.link, fi.pub_date, fi.author, fi.input_date, fi.image_url, fi.enclosure_url, fi.enclosure_type, fi.enclosure_length, fi.duration, fi.episode, fi.explicit, fi.season, fi.episodeType, fi.description, fi.image_url, fi.feed_link").
+// 		Where("usk.user_id=? and usk.keyword=? and status=1", userId, keyword).
+// 		OrderDesc("ks.id").
+// 		Scan(&dtos)
 
-	return
-}
+// 	return
+// }
 
-func GetAllKindSubKeywordList(ctx context.Context, offset, limit int) (entities []entity.UserSubKeyword, err error) {
+// func GetAllKindSubKeywordList(ctx context.Context, offset, limit int) (entities []entity.UserSubKeyword, err error) {
 
-	var (
-		dbModel *gdb.Model
-	)
+// 	var (
+// 		dbModel *gdb.Model
+// 	)
 
-	dbModel = UserSubKeyword.Ctx(ctx).
-		Fields("keyword", "lang", "order_by_date").
-		Group("keyword", "lang", "order_by_date")
+// 	dbModel = UserSubKeyword.Ctx(ctx).
+// 		Fields("keyword", "lang", "order_by_date").
+// 		Group("keyword", "lang", "order_by_date")
 
-	if limit == 0 {
-		err = dbModel.Scan(&entities)
-	} else {
-		err = dbModel.Offset(limit).Limit(limit).Scan(&entities)
-	}
+// 	if limit == 0 {
+// 		err = dbModel.Scan(&entities)
+// 	} else {
+// 		err = dbModel.Offset(limit).Limit(limit).Scan(&entities)
+// 	}
 
-	return
-}
+// 	return
+// }
 
-func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, err error) {
+// func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, err error) {
 
-	if userId == "" {
-		err = gerror.New(gcode.CodeMissingParameter.Message())
-		return
-	}
+// 	if userId == "" {
+// 		err = gerror.New(gcode.CodeMissingParameter.Message())
+// 		return
+// 	}
 
-	count, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and status=1", userId).Count()
+// 	count, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and status=1", userId).Count()
 
-	return
-}
+// 	return
+// }
 
-func GetUserSubKeywordItem(ctx context.Context, userId, keyword, country, excludeFeedId, source string) (result entity.UserSubKeyword, err error) {
+// func GetUserSubKeywordItem(ctx context.Context, userId, keyword, country, excludeFeedId, source string) (result entity.UserSubKeyword, err error) {
 
-	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and source=? and status=1", userId, keyword, source).Scan(&result)
+// 	err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and source=? and status=1", userId, keyword, source).Scan(&result)
 
-	return
-}
+// 	return
+// }
 
-func ActiveUserSubKeywordStatus(ctx context.Context, userId, keyword, country, excludeFeedId string) (err error) {
+// func ActiveUserSubKeywordStatus(ctx context.Context, userId, keyword, country, excludeFeedId string) (err error) {
 
-	_, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and source=?", userId, keyword, country, excludeFeedId).Update(g.Map{"status": 1})
+// 	_, err = UserSubKeyword.Ctx(ctx).Where("user_id=? and keyword=? and source=?", userId, keyword, country, excludeFeedId).Update(g.Map{"status": 1})
 
-	return
-}
+// 	return
+// }

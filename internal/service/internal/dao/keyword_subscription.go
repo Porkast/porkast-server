@@ -31,7 +31,7 @@ var (
 // Fill with you ideas below.
 func CreateKeywordSubScriptionEntity(ctx context.Context, newEntity entity.KeywordSubscription) (err error) {
 	var (
-		queryEntity entity.UserSubKeyword
+		queryEntity entity.UserSubscription
 	)
 
 	err = KeywordSubscription.Ctx(ctx).Where("keyword=? and country=? and exclude_feed_id=? and feed_item_id=?", newEntity.Keyword, newEntity.Country, newEntity.ExcludeFeedId, newEntity.FeedItemId).Scan(&queryEntity)

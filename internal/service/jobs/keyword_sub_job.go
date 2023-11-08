@@ -40,7 +40,7 @@ func UpdateUserSubKeywordJobs(ctx context.Context) {
 func assignUserSubKeywordUpdateJob(ctx context.Context) {
 	var (
 		err                error
-		userSubKeywordList []entity.UserSubKeyword
+		userSubKeywordList []entity.UserSubscription
 	)
 
 	userSubKeywordList, err = dao.GetAllKindSubKeywordList(ctx, 0, 0)

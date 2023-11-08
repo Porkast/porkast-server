@@ -139,7 +139,7 @@ func (ctl *controller) GetUserSubKeywordListAPI(req *ghttp.Request) {
 		page     int
 		offset   int
 		limit    = 10
-		itemList []dto.UserSubKeywordDto
+		itemList []dto.UserSubscriptionDto
 	)
 
 	ctx = req.Context()

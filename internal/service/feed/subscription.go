@@ -20,10 +20,10 @@ import (
 func SubFeedByKeyword(ctx context.Context, userId, keyword, lang, country, excludeFeedId, source string, sortByDate int, subKeywordList []entity.KeywordSubscription) (err error) {
 
 	var (
-		userSubKeyword entity.UserSubKeyword
+		userSubKeyword entity.UserSubscription
 	)
 
-	userSubKeyword = entity.UserSubKeyword{
+	userSubKeyword = entity.UserSubscription{
 		Id:            guid.S(),
 		UserId:        userId,
 		Keyword:       keyword,
@@ -47,7 +47,7 @@ func SubFeedByKeyword(ctx context.Context, userId, keyword, lang, country, exclu
 func GetSubKeywordRSS(ctx context.Context, userId, keyword string) (rssStr string, err error) {
 
 	var (
-		userSubKeywordDtoList []dto.UserSubKeywordFeedDetailDto
+		userSubKeywordDtoList []dto.UserSubscriptionFeedDetailDto
 		userInfo              dto.UserInfo
 		feed                  podcast.Podcast
 	)
@@ -115,7 +115,7 @@ func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, er
 	return
 }
 
-func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (dtoList []dto.UserSubKeywordDto, err error) {
+func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (dtoList []dto.UserSubscriptionDto, err error) {
 
 	if userId == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
@@ -132,7 +132,7 @@ func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, l
 	}
 
 	for _, entity := range entities {
-		dtoList = append(dtoList, dto.UserSubKeywordDto{
+		dtoList = append(dtoList, dto.UserSubscriptionDto{
 			Id:          entity.Id,
 			UserId:      entity.UserId,
 			Keyword:     entity.Keyword,
@@ -147,7 +147,7 @@ func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, l
 	return
 }
 
-func GetUserSubKeywordRecord(ctx context.Context, userId, keyword, country, excludeFeedId, source string) (result entity.UserSubKeyword, err error) {
+func GetUserSubKeywordRecord(ctx context.Context, userId, keyword, country, excludeFeedId, source string) (result entity.UserSubscription, err error) {
 
 	if userId == "" || keyword == "" || source == "" {
 		err = gerror.New(gcode.CodeMissingParameter.Message())
