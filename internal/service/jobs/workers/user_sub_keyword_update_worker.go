@@ -2,7 +2,9 @@ package workers
 
 import (
 	"porkast-server/internal/consts"
+	"porkast-server/internal/dto"
 	"porkast-server/internal/model/entity"
+	"porkast-server/internal/service/feed"
 	"porkast-server/internal/service/internal/dao"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -10,32 +12,39 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-func UpdateUserSubkeyword(keyword, lang, excludeFeedId, source string) {
+func UpdateUserSubkeyword(keyword, country, excludeFeedId, source string) {
 	var (
-		err                error
-		ctx                = gctx.New()
-		esFeedItemDataList []entity.FeedItemESData
+		err          error
+		ctx          = gctx.New()
+		feedItemList []dto.FeedItem
 	)
 
-	// TODO: get search result base on source
-	// esFeedItemDataList, err = elasticsearch.GetClient().QueryFeedItemFull(ctx, keyword, orderByDate, 0, 20)
+	if source == "" || source == "itunes" {
+		feedItemList, err = feed.SearchPodcastEpisodesFromItunes(ctx, keyword, country, excludeFeedId)
+		if err != nil {
+			g.Log().Line().Errorf(ctx, "search by keyword %s , excludeFeedId %s failed:\n%s", keyword, excludeFeedId, err)
+			return
+		}
+	}
+
 	if err != nil {
 		g.Log().Line().Errorf(ctx, "search by keyword %s , excludeFeedId %s failed:\n%s", keyword, excludeFeedId, err)
 		return
 	}
 
-	for _, esFeedItem := range esFeedItemDataList {
+	for _, feedItem := range feedItemList {
 		var (
 			keywordSubEntity entity.KeywordSubscription
 		)
 
 		keywordSubEntity = entity.KeywordSubscription{
 			Keyword:       keyword,
-			FeedChannelId: esFeedItem.ChannelId,
-			FeedItemId:    esFeedItem.Id,
+			FeedChannelId: feedItem.ChannelId,
+			FeedItemId:    feedItem.Id,
 			CreateTime:    gtime.Now(),
 			ExcludeFeedId: excludeFeedId,
-			Source:        lang,
+			Country:       country,
+			Source:        source,
 		}
 
 		err = dao.CreateKeywordSubScriptionEntity(ctx, keywordSubEntity)
@@ -45,6 +54,15 @@ func UpdateUserSubkeyword(keyword, lang, excludeFeedId, source string) {
 			} else {
 				g.Log().Line().Errorf(ctx, "create keywordSubEntity failed:\n%s", err)
 			}
+			return
+		}
+
+		batchItems := make([]dto.FeedItem, 0)
+		batchItems = append(batchItems, feedItem)
+		err = feed.BatchStoreFeedItems(ctx, batchItems)
+		if err != nil {
+			g.Log().Line().Errorf(ctx, "batch store feed items failed:\n%s", err)
+			return
 		}
 	}
 
