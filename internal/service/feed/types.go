@@ -19,6 +19,39 @@ type UserSubkeywordParams struct {
 	Source        string
 }
 
+type ItunesSearchPodcastResult struct {
+    WrapperType              string   `json:"wrapperType"`
+    Kind                     string   `json:"kind"`
+    CollectionId             int      `json:"collectionId"`
+    TrackId                  int      `json:"trackId"`
+    ArtistName               string   `json:"artistName"`
+    CollectionName           string   `json:"collectionName"`
+    TrackName                string   `json:"trackName"`
+    CollectionCensoredName   string   `json:"collectionCensoredName"`
+    TrackCensoredName        string   `json:"trackCensoredName"`
+    CollectionViewUrl        string   `json:"collectionViewUrl"`
+    FeedUrl                  string   `json:"feedUrl"`
+    TrackViewUrl             string   `json:"trackViewUrl"`
+    ArtworkUrl30             string   `json:"artworkUrl30"`
+    ArtworkUrl60             string   `json:"artworkUrl60"`
+    ArtworkUrl100            string   `json:"artworkUrl100"`
+    CollectionPrice          float64  `json:"collectionPrice"`
+    TrackPrice               float64  `json:"trackPrice"`
+    CollectionHdPrice        int      `json:"collectionHdPrice"`
+    ReleaseDate              string   `json:"releaseDate"`
+    CollectionExplicitness   string   `json:"collectionExplicitness"`
+    TrackExplicitness        string   `json:"trackExplicitness"`
+    TrackCount               int      `json:"trackCount"`
+    TrackTimeMillis          int      `json:"trackTimeMillis"`
+    Country                  string   `json:"country"`
+    Currency                 string   `json:"currency"`
+    PrimaryGenreName         string   `json:"primaryGenreName"`
+    ContentAdvisoryRating    string   `json:"contentAdvisoryRating"`
+    ArtworkUrl600            string   `json:"artworkUrl600"`
+    GenreIds                 []string `json:"genreIds"`
+    Genres                   []string `json:"genres"`
+}
+
 type ItunesSearchEpisodeResult struct {
 	ContentAdvisoryRating string `json:"contentAdvisoryRating"`
 	TrackViewUrl          string `json:"trackViewUrl"`

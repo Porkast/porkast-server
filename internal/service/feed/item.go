@@ -333,8 +333,8 @@ func LookupItunesFeedItem(ctx context.Context, collectionId, guid string) (item 
 	var feedLink string
 	for index, resultsJson := range resultsJsonList {
 		if index == 0 {
-			var lookupResult ItunesSearchEpisodeResult
-			gconv.Struct(resultsJson, &lookupResult)
+			var lookupResult ItunesSearchPodcastResult
+			resultsJson.Scan(&lookupResult)
 			feedLink = lookupResult.FeedUrl
 			break
 		}
