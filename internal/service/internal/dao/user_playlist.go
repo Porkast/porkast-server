@@ -52,7 +52,12 @@ func GetPlaylistById(ctx context.Context, id string) (entity entity.UserPlaylist
 	return
 }
 
+func GetUserPlaylistTotalCountByUserId(ctx context.Context, userId string) (count int, err error) {
+	count, err = UserPlaylist.Ctx(ctx).Where("user_id=? and status=1", userId).Count()
+	return
+}
+
 func GetUserPlaylistsByUserId(ctx context.Context, userId string) (entities []entity.UserPlaylist, err error) {
-	err = UserPlaylist.Ctx(ctx).Where("user_id=? and Status=1", userId).Scan(&entities)
+	err = UserPlaylist.Ctx(ctx).Where("user_id=? and status=1", userId).Scan(&entities)
 	return
 }

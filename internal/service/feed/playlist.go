@@ -119,11 +119,17 @@ func GetUserAllPlaylists(ctx context.Context, userId string) (result []dto.UserP
 	}
 
 	var (
-		entities []entity.UserPlaylist
+		entities   []entity.UserPlaylist
+		totalCount int
 	)
 
 	entities, err = dao.GetUserPlaylistsByUserId(ctx, userId)
 	gconv.Structs(entities, &result)
+
+	totalCount, err = dao.GetUserPlaylistTotalCountByUserId(ctx, userId)
+	for index := range result {
+		result[index].Count = totalCount
+	}
 
 	return
 }
