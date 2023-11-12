@@ -37,7 +37,7 @@ func InsertFeedItemIfNotExist(ctx context.Context, model entity.FeedItem) (err e
 		result gdb.Record
 	)
 
-	result, err = FeedItem.Ctx(ctx).Where("channel_id=?", model.ChannelId).Where("title=?", model.Title).One()
+	result, err = FeedItem.Ctx(ctx).Where("id=?", model.Id).One()
 	if err != nil {
 		return
 	}
