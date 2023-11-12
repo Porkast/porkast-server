@@ -51,3 +51,8 @@ func GetPlaylistById(ctx context.Context, id string) (entity entity.UserPlaylist
 	err = UserPlaylist.Ctx(ctx).Where("id=?", id).Scan(&entity)
 	return
 }
+
+func GetUserPlaylistsByUserId(ctx context.Context, userId string) (entities []entity.UserPlaylist, err error) {
+	err = UserPlaylist.Ctx(ctx).Where("user_id=? and Status=1", userId).Scan(&entities)
+	return
+}

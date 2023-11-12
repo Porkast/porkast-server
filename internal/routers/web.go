@@ -25,6 +25,9 @@ func V1ApiRouter(group *ghttp.RouterGroup) {
 	unAuthGroup.GET("/feed/channel/:id", ctls.Ctl.GetFeedChannelDetailAPI)
 	unAuthGroup.GET("/feed/channel/:channelId/item/:itemId", ctls.Ctl.GetFeedItemDetailAPI)
 
+	// playlist
+	unAuthGroup.GET("/playlist/list/:userId", ctls.Ctl.GetUserPlaylistsByUserId)
+
 	// auth group
 
 	authGroup := group.Group("/")

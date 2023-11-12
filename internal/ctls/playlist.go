@@ -2,6 +2,7 @@ package ctls
 
 import (
 	"porkast-server/internal/consts"
+	"porkast-server/internal/dto"
 	"porkast-server/internal/service/feed"
 	"porkast-server/internal/service/middleware"
 
@@ -82,4 +83,22 @@ func (ctl *controller) AddFeedItemToPlaylist(req *ghttp.Request) {
 
 	middleware.JsonExit(req, 0, g.I18n().T(ctx, `{#add_feed_item_to_playlist_sucess}`), nil)
 
+}
+
+func (ctl *controller) GetUserPlaylistsByUserId(req *ghttp.Request) {
+	var (
+		ctx             = req.GetCtx()
+		err             error
+		userPlaylistDto []dto.UserPlaylistDto
+	)
+
+	userId := req.Get("userId").String()
+	userPlaylistDto, err = feed.GetUserAllPlaylists(ctx, userId)
+
+	if err != nil {
+		g.Log().Line().Error(ctx, err)
+		middleware.JsonExit(req, 1, err.Error(), nil)
+	} else {
+		middleware.JsonExit(req, 0, "", userPlaylistDto)
+	}
 }

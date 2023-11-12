@@ -9,6 +9,7 @@ import (
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/os/gtime"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 func CreatePlaylist(ctx context.Context, playlistName, userId, description string) (err error) {
@@ -106,6 +107,23 @@ func AddFeedItemToPlaylist(ctx context.Context, playlistId, channelId, guid, sou
 	}
 
 	err = dao.InsertNewUserPlaylistItemIfNotExit(ctx, entity)
+
+	return
+}
+
+func GetUserAllPlaylists(ctx context.Context, userId string) (result []dto.UserPlaylistDto, err error) {
+
+	if userId == "" {
+		err = gerror.New(gcode.CodeMissingParameter.Message())
+		return
+	}
+
+	var (
+		entities []entity.UserPlaylist
+	)
+
+	entities, err = dao.GetUserPlaylistsByUserId(ctx, userId)
+	gconv.Structs(entities, &result)
 
 	return
 }
