@@ -102,7 +102,7 @@ func AddFeedItemToPlaylist(ctx context.Context, playlistId, channelId, guid, sou
 		PlaylistId: playlistId,
 		ItemId:     feedItem.Id,
 		ChannelId:  channelId,
-		RegDate:    gtime.New(),
+		RegDate:    gtime.Now(),
 		Status:     0,
 	}
 

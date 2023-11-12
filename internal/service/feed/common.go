@@ -1,6 +1,7 @@
 package feed
 
 import (
+	"context"
 	"fmt"
 	"strconv"
 
@@ -12,6 +13,7 @@ import (
 	"github.com/gogf/gf/v2/text/gregex"
 	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
+	"github.com/mmcdole/gofeed"
 )
 
 func formatPubDate(pubDate string) (formatPubDate string) {
@@ -128,5 +130,19 @@ func GeneratePlaylistId(name, userId string) (itemID string) {
 
 func GeneratePlaylistItemId(playlistId, itemId string) (itemID string) {
 	itemID = strconv.FormatUint(ghash.RS64([]byte(playlistId+itemId)), 32)
+	return
+}
+
+func ParseFeed(ctx context.Context, rssStr string) (feed *gofeed.Feed) {
+
+	var (
+		err error
+		fp  *gofeed.Parser
+	)
+	fp = gofeed.NewParser()
+	feed, err = fp.ParseString(rssStr)
+	if err != nil {
+		return nil
+	}
 	return
 }

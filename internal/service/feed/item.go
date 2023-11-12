@@ -306,7 +306,7 @@ func GetFeedItemsByFeedLink(ctx context.Context, feedLink string) (feed *gofeed.
 func LookupItunesFeedItem(ctx context.Context, collectionId, guid string) (item dto.FeedItem, err error) {
 
 	var (
-		itunesLookupAPI = "https://itunes.apple.com/lookup?entity=podcastEpisode&media=podcast&id=%s"
+		itunesLookupAPI = "https://itunes.apple.com/lookup?entity=podcast&id=%s"
 		apiUrl          string
 		decodeGUID      string
 	)
@@ -330,40 +330,78 @@ func LookupItunesFeedItem(ctx context.Context, collectionId, guid string) (item 
 		return
 	}
 
+	var feedLink string
 	for index, resultsJson := range resultsJsonList {
 		if index == 0 {
-			continue
-		}
-		var lookupResult ItunesSearchEpisodeResult
-		gconv.Struct(resultsJson, &lookupResult)
-		if decodeGUID == gconv.String(lookupResult.EpisodeGuid) {
-			itemID := GenerateFeedItemId(lookupResult.FeedUrl, lookupResult.TrackName)
-			channelID := GenerateFeedChannelId(lookupResult.FeedUrl, lookupResult.CollectionName)
-			item = dto.FeedItem{
-				Id:              itemID,
-				GUID:            lookupResult.EpisodeGuid,
-				FeedId:          lookupResult.CollectionId,
-				ChannelId:       channelID,
-				ChannelTitle:    lookupResult.CollectionName,
-				Source:          "itunes",
-				Title:           lookupResult.TrackName,
-				HighlightTitle:  lookupResult.TrackName,
-				Link:            lookupResult.TrackViewUrl,
-				PubDate:         lookupResult.ReleaseDate,
-				ImageUrl:        lookupResult.ArtworkUrl60,
-				EnclosureUrl:    lookupResult.EpisodeUrl,
-				EnclosureType:   lookupResult.EpisodeContentType,
-				EnclosureLength: "",
-				Duration:        gconv.String(lookupResult.TrackTimeMillis),
-				Description:     lookupResult.Description,
-				TextDescription: lookupResult.Description,
-				FeedLink:        lookupResult.FeedUrl,
-				HasThumbnail:    true,
-			}
-
+			var lookupResult ItunesSearchEpisodeResult
+			gconv.Struct(resultsJson, &lookupResult)
+			feedLink = lookupResult.FeedUrl
 			break
 		}
 	}
 
+	item, err = GetFeedItemFromFeedLink(ctx, feedLink, decodeGUID)
+
+	return
+}
+
+func GetFeedItemFromFeedLink(ctx context.Context, feedLink, guid string) (item dto.FeedItem, err error) {
+	var (
+		feed *gofeed.Feed
+	)
+	respStr := network.GetContent(ctx, feedLink)
+	feed = ParseFeed(ctx, respStr)
+	if feed != nil {
+		for _, feedItem := range feed.Items {
+			if feedItem.GUID == guid {
+				itemID := GenerateFeedItemId(feedLink, feedItem.Title)
+				channelID := GenerateFeedChannelId(feedLink, feed.Title)
+				item = dto.FeedItem{
+					Id:          itemID,
+					ChannelId:   channelID,
+					GUID:        guid,
+					Title:       feedItem.Title,
+					Link:        feedItem.Link,
+					InputDate:   gtime.Now(),
+					Duration:    feedItem.ITunesExt.Duration,
+					Episode:     feedItem.ITunesExt.Episode,
+					EpisodeType: feedItem.ITunesExt.EpisodeType,
+					Season:      feedItem.ITunesExt.Season,
+					Description: feedItem.Description,
+				}
+
+				if feedItem.PublishedParsed != nil {
+					item.PubDate = feedItem.PublishedParsed.Format("Y-m-d H:i:s")
+				} else {
+					item.PubDate = feedItem.Published
+				}
+
+				if feedItem.Image != nil {
+					item.ImageUrl = feedItem.Image.URL
+				}
+
+				if feedItem.Authors != nil || len(feedItem.Authors) > 0 {
+					var (
+						authors []string
+					)
+					for _, author := range feedItem.Authors {
+						author.Name = formatFeedAuthor(author.Name)
+						authors = append(authors, author.Name)
+					}
+					if len(authors) == 0 {
+						item.Author = authors[0]
+					} else {
+						item.Author = gstr.Join(authors, ",")
+					}
+				}
+
+				if len(feedItem.Enclosures) > 0 && feedItem.Enclosures[0] != nil {
+					item.EnclosureUrl = feedItem.Enclosures[0].URL
+					item.EnclosureType = feedItem.Enclosures[0].Type
+					item.EnclosureLength = feedItem.Enclosures[0].Length
+				}
+			}
+		}
+	}
 	return
 }
