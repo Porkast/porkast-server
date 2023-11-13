@@ -131,6 +131,11 @@ func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, l
 		return
 	}
 
+	count, err := dao.GetUserSubscriptionCount(ctx, userId)
+	if err != nil {
+		return
+	}
+
 	for _, entity := range entities {
 		dtoList = append(dtoList, dto.UserSubscriptionDto{
 			Id:          entity.Id,
@@ -141,6 +146,7 @@ func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, l
 			Source:      entity.Source,
 			Status:      entity.Status,
 			CreateTime:  entity.CreateTime,
+			Count:       count,
 		})
 	}
 

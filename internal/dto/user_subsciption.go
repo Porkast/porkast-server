@@ -47,4 +47,5 @@ type UserSubscriptionDto struct {
 	Source        string
 	RefId         string
 	Type          string
+	Count         int
 }
