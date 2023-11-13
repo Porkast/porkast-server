@@ -331,9 +331,9 @@ func LookupItunesFeedItem(ctx context.Context, collectionId, guid string) (item 
 	}
 
 	var feedLink string
+	var lookupResult ItunesSearchPodcastResult
 	for index, resultsJson := range resultsJsonList {
 		if index == 0 {
-			var lookupResult ItunesSearchPodcastResult
 			resultsJson.Scan(&lookupResult)
 			feedLink = lookupResult.FeedUrl
 			break
@@ -341,6 +341,10 @@ func LookupItunesFeedItem(ctx context.Context, collectionId, guid string) (item 
 	}
 
 	item, err = GetFeedItemFromFeedLink(ctx, feedLink, decodeGUID)
+	item.FeedId = collectionId
+	item.ChannelTitle = lookupResult.CollectionName
+	item.FeedLink = feedLink
+	item.Source = "itunes"
 
 	return
 }
@@ -370,10 +374,10 @@ func GetFeedItemFromFeedLink(ctx context.Context, feedLink, guid string) (item d
 					Description: feedItem.Description,
 				}
 
-				if feedItem.PublishedParsed != nil {
-					item.PubDate = feedItem.PublishedParsed.Format("Y-m-d H:i:s")
-				} else {
-					item.PubDate = feedItem.Published
+				if feedItem.Published != "" {
+					item.PubDate = formatPubDate(feedItem.Published)
+				} else if feedItem.PublishedParsed != nil {
+					item.PubDate = formatPubDate(feedItem.PublishedParsed.String())
 				}
 
 				if feedItem.Image != nil {

@@ -103,6 +103,7 @@ func AddFeedItemToPlaylist(ctx context.Context, playlistId, channelId, guid, sou
 		ItemId:     feedItem.Id,
 		ChannelId:  channelId,
 		RegDate:    gtime.Now(),
+		Status:     1,
 	}
 
 	err = dao.InsertNewUserPlaylistItemIfNotExit(ctx, entity)

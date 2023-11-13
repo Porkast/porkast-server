@@ -6,10 +6,10 @@ import (
 	"strconv"
 
 	"github.com/anaskhan96/soup"
+	"github.com/araddon/dateparse"
 	"github.com/gogf/gf/v2/encoding/ghash"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
-	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/text/gregex"
 	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -17,7 +17,13 @@ import (
 )
 
 func formatPubDate(pubDate string) (formatPubDate string) {
-	formatPubDate = gtime.New(pubDate).Format("Y-m-d")
+	t, err := dateparse.ParseLocal(pubDate)
+	if err != nil {
+		return
+	}
+
+	formatPubDate = t.Format("2006-01-02")
+
 	return
 }
 
