@@ -46,6 +46,7 @@ type UserSubscriptionDto struct {
 	ExcludeFeedId string
 	Source        string
 	RefId         string
+	RefName       string
 	Type          string
 	Count         int
 }
