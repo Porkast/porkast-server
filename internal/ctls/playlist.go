@@ -93,7 +93,9 @@ func (ctl *controller) GetUserPlaylistsByUserId(req *ghttp.Request) {
 	)
 
 	userId := req.Get("userId").String()
-	userPlaylistDto, err = feed.GetUserAllPlaylists(ctx, userId)
+	offset := req.GetQuery("offset").Int()
+	limit := req.GetQuery("limit").Int()
+	userPlaylistDto, err = feed.GetUserAllPlaylists(ctx, userId, offset, limit)
 
 	if err != nil {
 		g.Log().Line().Error(ctx, err)
