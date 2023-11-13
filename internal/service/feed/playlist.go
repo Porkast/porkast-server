@@ -161,6 +161,7 @@ func GetUserPlaylistItemList(ctx context.Context, userId, playlistId string, off
 
 	for index := range result {
 		result[index].Count = totalCount
+		result[index].Duration = formatDuration(result[index].Duration)
 	}
 
 	return

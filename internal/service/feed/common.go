@@ -45,7 +45,32 @@ func formatDuration(duration string) (formatDuration string) {
 		)
 		splits = gstr.Split(duration, ":")
 		if len(splits) < 3 {
-			formatDuration = "00:" + duration
+			// if the minute over 59, it will add related hours
+			var (
+				hours      = 0
+				minutes    = gconv.Int(splits[0])
+				seconds    = gconv.Int(splits[1])
+				minutesStr string
+				secondsStr string
+			)
+
+			if minutes > 59 {
+				hours += minutes / 60
+				minutes = minutes % 60
+			}
+			// if minutes less than 10, add 0
+			if minutes < 10 {
+				minutesStr = "0" + gconv.String(minutes)
+			} else {
+				minutesStr = gconv.String(minutes)
+			}
+			// if seconds less than 10, add 0
+			if seconds < 10 {
+				secondsStr = "0" + gconv.String(seconds)
+			} else {
+				secondsStr = gconv.String(seconds)
+			}
+			formatDuration = "0" + gconv.String(hours) + ":" + minutesStr + ":" + secondsStr
 		} else {
 			formatDuration = duration
 		}
