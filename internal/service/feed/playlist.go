@@ -103,7 +103,6 @@ func AddFeedItemToPlaylist(ctx context.Context, playlistId, channelId, guid, sou
 		ItemId:     feedItem.Id,
 		ChannelId:  channelId,
 		RegDate:    gtime.Now(),
-		Status:     0,
 	}
 
 	err = dao.InsertNewUserPlaylistItemIfNotExit(ctx, entity)
@@ -131,6 +130,34 @@ func GetUserAllPlaylists(ctx context.Context, userId string, offset, limit int) 
 	gconv.Structs(entities, &result)
 
 	totalCount, err = dao.GetUserPlaylistTotalCountByUserId(ctx, userId)
+	for index := range result {
+		result[index].Count = totalCount
+	}
+
+	return
+}
+
+func GetUserPlaylistItemList(ctx context.Context, userId, playlistId string, offset, limit int) (result []dto.UserPlaylistItemDto, err error) {
+
+	if userId == "" || playlistId == "" {
+		err = gerror.New(gcode.CodeMissingParameter.Message())
+		return
+	}
+
+	if limit == 0 {
+		limit = 10
+	}
+
+	result, err = dao.GetUserPlaylistItemsById(ctx, playlistId, offset, limit)
+	if err != nil {
+		return nil, err
+	}
+
+	totalCount, err := dao.GetUserPlaylistItemTotalCount(ctx, playlistId)
+	if err != nil {
+		return nil, err
+	}
+
 	for index := range result {
 		result[index].Count = totalCount
 	}

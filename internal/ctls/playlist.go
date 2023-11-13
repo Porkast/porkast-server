@@ -104,3 +104,24 @@ func (ctl *controller) GetUserPlaylistsByUserId(req *ghttp.Request) {
 		middleware.JsonExit(req, 0, "", userPlaylistDto)
 	}
 }
+
+func (ctl *controller) GetUserPlaylistItemList(req *ghttp.Request) {
+	var (
+		ctx = req.GetCtx()
+		err error
+	)
+
+	userId := req.Get("userId").String()
+	playlistId := req.Get("playlistId").String()
+	offset := req.GetQuery("offset").Int()
+	limit := req.GetQuery("limit").Int()
+
+	itemList, err := feed.GetUserPlaylistItemList(ctx, userId, playlistId, offset, limit)
+
+	if err != nil {
+		g.Log().Line().Error(ctx, err)
+		middleware.JsonExit(req, 1, err.Error(), nil)
+	} else {
+		middleware.JsonExit(req, 0, "", itemList)
+	}
+}
