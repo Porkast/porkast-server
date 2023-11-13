@@ -345,6 +345,9 @@ func LookupItunesFeedItem(ctx context.Context, collectionId, guid string) (item 
 	item.ChannelTitle = lookupResult.CollectionName
 	item.FeedLink = feedLink
 	item.Source = "itunes"
+	if item.ImageUrl == "" {
+		item.ImageUrl = lookupResult.ArtworkUrl600
+	}
 
 	return
 }
