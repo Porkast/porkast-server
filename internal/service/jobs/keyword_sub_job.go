@@ -51,15 +51,17 @@ func assignUserSubKeywordUpdateJob(ctx context.Context) {
 
 	for _, userSubKeywordItem := range userSubKeywordList {
 		var (
-			keyword     string
-			lang        string
-			orderBydate int
+			keyword       string
+			country       string
+			excludeFeedId string
+			source        string
 		)
 
 		keyword = userSubKeywordItem.Keyword
-		lang = userSubKeywordItem.Lang
-		orderBydate = userSubKeywordItem.OrderByDate
-		_, err = celery.GetClient().Delay(consts.USER_SUB_KEYWORD_UPDATE, keyword, lang, orderBydate)
+		country = userSubKeywordItem.Country
+		excludeFeedId = userSubKeywordItem.ExcludeFeedId
+		source = userSubKeywordItem.Source
+		_, err = celery.GetClient().Delay(consts.USER_SUB_KEYWORD_UPDATE, keyword, country, excludeFeedId, source)
 		if err != nil {
 			g.Log().Line().Error(ctx, fmt.Sprintf("Assign USER_SUB_KEYWORD_UPDATE failed : %s\n", err))
 		}
