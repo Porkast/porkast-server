@@ -73,6 +73,10 @@ type CreatePlaylistReqData struct {
 	Description string `json:"description"`
 }
 
+type GetPlaylistInfoReqData struct {
+	PlaylistId string `json:"playlistId" v:"required"`
+}
+
 type AddFeedItemToPlaylistReqData struct {
 	PlaylistId string `json:"playlistId" v:"required"`
 	ChannelId  string `json:"channelId" v:"required"`

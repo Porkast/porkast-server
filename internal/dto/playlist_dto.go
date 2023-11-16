@@ -12,6 +12,7 @@ type UserPlaylistDto struct {
 	CreatorId      string
 	OrigPlaylistId string
 	Count          int
+	UserInfo	   UserInfo
 }
 
 type UserPlaylistItemDto struct {

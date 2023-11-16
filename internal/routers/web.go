@@ -28,6 +28,7 @@ func V1ApiRouter(group *ghttp.RouterGroup) {
 	// playlist
 	unAuthGroup.GET("/playlist/list/:userId", ctls.Ctl.GetUserPlaylistsByUserId)
 	unAuthGroup.GET("/playlist/list/:userId/:playlistId", ctls.Ctl.GetUserPlaylistItemList)
+	unAuthGroup.GET("/playlist/:playlistId", ctls.Ctl.GetPlaylistInfo)
 
 	// auth group
 

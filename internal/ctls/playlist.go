@@ -35,6 +35,27 @@ func (ctl *controller) CreatePlaylist(req *ghttp.Request) {
 
 }
 
+func (ctl *controller) GetPlaylistInfo(req *ghttp.Request) {
+	var (
+		ctx     = req.GetCtx()
+		err     error
+		reqData *GetPlaylistInfoReqData
+	)
+
+	if err = req.Parse(&reqData); err != nil {
+		middleware.JsonExit(req, 1, err.Error())
+	}
+
+	playlistInfo, err := feed.GetPlaylistByPlaylistId(ctx, reqData.PlaylistId)
+	if err != nil {
+		g.Log().Line().Error(ctx, err)
+		middleware.JsonExit(req, 1, err.Error(), nil)
+	}
+
+	middleware.JsonExit(req, 0, "", playlistInfo)
+
+}
+
 func (ctl *controller) SubscribePlaylist(req *ghttp.Request) {
 	var (
 		ctx     = req.GetCtx()

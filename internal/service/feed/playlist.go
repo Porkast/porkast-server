@@ -35,6 +35,29 @@ func CreatePlaylist(ctx context.Context, playlistName, userId, description strin
 	return
 }
 
+func GetPlaylistByPlaylistId(ctx context.Context, playlistId string) (result dto.UserPlaylistDto, err error) {
+	
+	if playlistId == "" {
+		err = gerror.New(gcode.CodeMissingParameter.Message())
+		return
+	}
+
+	playlistEntity, err := dao.GetPlaylistById(ctx, playlistId)
+	if playlistEntity.Id == "" || err != nil {
+		return
+	}
+
+	creatorInfo, err := dao.GetUserInfoByUserId(ctx, playlistEntity.UserId)
+	if err != nil {
+		return
+	}
+
+	gconv.Struct(playlistEntity, &result)
+	gconv.Struct(creatorInfo, &result.UserInfo)
+
+	return
+}
+
 func SubscribePlaylist(ctx context.Context, userId, playlistId string) (err error) {
 
 	if userId == "" || playlistId == "" {
