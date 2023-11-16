@@ -54,7 +54,6 @@ func initComponent(ctx context.Context) {
 	registerCeleryJobs(ctx)
 	celery.GetClient().StartWorker()
 
-	jobs.UpdateUserSubKeywordJobs(ctx)
 }
 
 func registerCeleryJobs(ctx context.Context) {
