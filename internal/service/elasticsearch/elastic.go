@@ -32,14 +32,14 @@ func InitES(ctx context.Context) {
 	gsElastic = &GSElastic{}
 	gsElastic.Client, err = elastic.NewClient(elastic.SetURL(url), elastic.SetSniff(false), elastic.SetHealthcheck(false), elastic.SetBasicAuth(username.String(), password.String()))
 	if err != nil {
-		panic(err)
+		return
 	}
 
 	// Ping the Elasticsearch server to get e.g. the version number
 	info, code, err := gsElastic.Client.Ping(url).Do(ctx)
 	if err != nil {
 		// Handle error
-		panic(err)
+		return
 	}
 	g.Log().Line().Infof(ctx, "Elasticsearch returned with code %d and version %s", code, info.Version.Number)
 
