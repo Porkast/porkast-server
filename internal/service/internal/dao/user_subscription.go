@@ -141,9 +141,9 @@ func GetAllKindSubKeywordList(ctx context.Context, offset, limit int) (entities 
 	)
 
 	dbModel = UserSubscription.Ctx(ctx).
-		Where("status=1 and type=?","searchKeyword").
-		Fields("keyword", "lang", "order_by_date").
-		Group("keyword", "lang", "order_by_date")
+		Fields("keyword", "country", "order_by_date", "exclude_feed_id", "source").
+		Where("status=1 and type=?", "searchKeyword").
+		Group("keyword", "country", "order_by_date", "exclude_feed_id", "source")
 
 	if limit == 0 {
 		err = dbModel.Scan(&entities)
