@@ -15,19 +15,7 @@ logger:
 
 database:
   default:
-    host: "aws.connect.psdb.cloud"
-    port: "3306"
-    user: "wromgs0xhe0qk1hkc4vt"
-    name: "porkastdb"
-    pass: "pscale_pw_W7KVoXfCATiw4PnPRhA06q9pIQXT58XmySKN5HVq9kd"
-    type: "mysql"
-    weight: "100"
-    createdAt: "true"
-    updatedAt: "true"
-    charset: "utf8"
-    maxIdle: "10"
-    maxOpen: "100"
-    maxLifetime: "30s"
+    link: mysql:wromgs0xhe0qk1hkc4vt:pscale_pw_W7KVoXfCATiw4PnPRhA06q9pIQXT58XmySKN5HVq9kd@tcp(aws.connect.psdb.cloud:3306)/porkastdb?tls=true
 
 redis:
   default:

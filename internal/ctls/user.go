@@ -81,7 +81,7 @@ func (ctl *controller) SyncUserInfo(req *ghttp.Request) {
 	syncedUserInfo, err := userService.SyncUserInfo(ctx, userInfoDto)
 	if err != nil {
 		g.Log().Line().Error(req.GetCtx(), err)
-		middleware.JsonExit(req, 1, err.Error(), nil)
+		middleware.JsonExit(req, 1, "sync user info failed", nil)
 	}
 	middleware.JsonExit(req, 0, g.I18n().T(req.GetCtx(), `{#register_sucess}`), syncedUserInfo)
 }
