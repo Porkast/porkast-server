@@ -53,6 +53,11 @@ func SyncUserInfo(ctx context.Context, userInfoDto dto.UserInfo) (syncedUserInfo
 		err = dao.CreateUserInfo(ctx, userInfoEntity)
 	} else {
 		userInfoEntity.UpdateDate = gtime.Now()
+		userInfoEntity.Nickname = userInfoDto.Nickname
+		userInfoEntity.Password = userInfoDto.Password
+		userInfoEntity.Email = userInfoDto.Email
+		userInfoEntity.Phone = userInfoDto.Phone
+		userInfoEntity.Avatar = userInfoDto.Avatar
 		err = dao.UpdateUserInfoByUserId(ctx, userInfoDto.Id, userInfoEntity)
 	}
 
