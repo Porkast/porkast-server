@@ -1,0 +1,106 @@
+<div id="bottom-audio-player-layout" class="w-full hidden">
+    <div class="w-full md:flex justify-center bottom-0 fixed bg-white border border-gray-300">
+        <div class="lg:w-2/5 w-full md:h-24 mt-2 md:pt-0 flex md:justify-start border-r">
+            <a id="bottom-audio-player-avatar-img" href="" target="_blank">
+                <div class="avatar ml-6">
+                    <div class="w-16 h-16 md:w-24 md:h-24 rounded">
+                        <img id="bottom-audio-channel-img" src="" />
+                    </div>
+                </div>
+            </a>
+            <div class="ml-6 w-full">
+                <div id="bottom-audio-channel-title" class="text-sm text-gray-400 hidden md:block">
+                    This is Channel Title
+                </div>
+                <a id="bottom-audio-player-item-title-tag" href="" target="_blank">
+                    <div id="bottom-audio-item-title" class="text-base">
+                        This is Channel Item Title
+                    </div>
+                </a>
+                <div class="md:hidden w-full flex justify-center items-center mt-3 pr-24">
+                    <button class="btn btn-circle btn-sm border-none" onclick="backwardAudioCurrentTime(15)">
+                        <img src="/resource/image/outline-backward-15-seconds.png" class="w-6 h-6" alt="">
+                    </button>
+                    <button id="small-bottom-audio-player-play-btn" class="btn btn-circle btn-sm border-none mr-6 ml-6"
+                        onclick="bottomPlayOrPause()">
+                        <img id="small-bottom-audio-player-play-btn-img" src="/resource/image/play.png" class="w-6 h-6"
+                            alt="">
+                        <img id="small-bottom-audio-player-pause-btn-img" src="/resource/image/pause.png"
+                            class="w-6 h-6 hidden" alt="">
+                    </button>
+                    <button class="btn btn-circle btn-sm border-none" onclick="forwardAudioCurrentTime(30)">
+                        <img src="/resource/image/outline-forward-15-seconds.png" class="w-6 h-6" alt="">
+                    </button>
+                </div>
+            </div>
+            <div class="md:hidden">
+                <div class="w-4 h-4 mr-2" onclick="hideBottomAudio()">
+                    <img src="/resource/image/down.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden flex justify-center items-center mt-3 pb-3">
+            <div id="small-bottom-audio-range-time" class="text-gray-400 ml-2">
+                00:00:00
+            </div>
+            <input id="small-bottom-audio-range-input" type="range" min="0" max="10000" value="0"
+                class="range range-warning ml-2 mr-2" />
+            <div id="small-bottom-audio-range-duration" class="text-gray-400 mr-2">
+                00:00:00
+            </div>
+        </div>
+        <div class="lg:w-3/5 w-full hidden md:block h-24">
+            <div class="flex justify-center items-center mt-3">
+                <button id="bottom-audio-player-backward-btn" class="btn btn-circle btn-sm border-none"
+                    onclick="backwardAudioCurrentTime(15)">
+                    <img src="/resource/image/outline-backward-15-seconds.png" class="w-6 h-6" alt="">
+                </button>
+                <button id="bottom-audio-player-play-btn" class="btn btn-circle btn-sm border-none mr-6 ml-6"
+                    onclick="bottomPlayOrPause()">
+                    <img id="bottom-audio-player-play-btn-img" src="/resource/image/play.png" class="w-6 h-6" alt="">
+                    <img id="bottom-audio-player-pause-btn-img" src="/resource/image/pause.png" class="w-6 h-6 hidden"
+                        alt="">
+                </button>
+                <button id="bottom-audio-player-forward-btn" class="btn btn-circle btn-sm border-none"
+                    onclick="forwardAudioCurrentTime(30)">
+                    <img src="/resource/image/outline-forward-15-seconds.png" class="w-6 h-6" alt="">
+                </button>
+            </div>
+            <div class="flex justify-center items-center mt-3">
+                <div id="bottom-audio-range-time" class="text-gray-400 ml-2">
+                    00:00:00
+                </div>
+                <input id="bottom-audio-range-input" type="range" min="0" max="10000" value="0"
+                    class="range range-warning ml-2 mr-2" />
+                <div id="bottom-audio-range-duration" class="text-gray-400 mr-2">
+                    00:00:00
+                </div>
+            </div>
+        </div>
+        <div class="md:block hidden mt-2">
+            <div class="w-4 h-4 mr-2" onclick="hideBottomAudio()">
+                <img src="/resource/image/down.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="bottom-audio-player-layout-small"
+    class="hidden w-full h-8 flex justify-center bottom-0 fixed bg-white border border-gray-300"
+    onclick="showBottomAudio()">
+    <div class="flex justify-start items-center w-full">
+        <div id="bottom-audio-player-layout-small-time" class="ml-6 text-gray-400">
+            00:00
+        </div>
+        <div id="bottom-audio-player-layout-small-item-title" class="ml-6 text-base truncate">
+            This is Feed Item Title
+        </div>
+    </div>
+    <div class="mt-2">
+        <div class="w-4 h-4 mr-2" onclick="showBottomAudio()">
+            <img src="/resource/image/up.png" alt="">
+        </div>
+    </div>
+</div>
+<audio id="bottom-audio-player" current-item-id="" current-source="">
+    <source id="bottom-audio-player-source" src="" type="">
+</audio>

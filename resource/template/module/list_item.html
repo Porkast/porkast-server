@@ -1,0 +1,96 @@
+<div class="w-full flex justify-center">
+    <div class="w-full">
+        {{range $index, $item := .feedItems}}
+        <div class="card w-full max-w-2xl bg-base-100 shadow-xl mt-6">
+            <div class="card-body">
+                <a href="/feed/{{$item.ChannelId}}/item/{{$item.Id}}">
+                    <h2 class="card-title gap-0 overflow-x-scroll inline">{{$item.HighlightTitle}}</h2>
+                </a>
+                <div class="flex mt-3">
+                    <a href="/feed/channel/{{$item.ChannelId}}">
+                        <div class="avatar">
+                            <div class="w-20 rounded">
+                                {{if $item.HasThumbnail}}
+                                <img src="{{$item.ImageUrl}}" />
+                                {{else}}
+                                <img src="/resource/image/logo192.png" />
+                                {{end}}
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <a href="/feed/channel/{{$item.ChannelId}}">
+                                <div class="text-lg font-medium">{{$item.ChannelTitle}}</div>
+                            </a>
+                            <div class="text-sm font-medium text-gray-500 mt-2">{{$item.Author}}</div>
+                            <div class="flex items-center mt-2">
+                                <div class="tooltip" data-tip="RSS Feed">
+                                    <a href="{{$item.FeedLink}}" target="">
+                                        <svg t="1681315996544" class="w-4 h-4" viewBox="0 0 1024 1024" version="1.1"
+                                            xmlns="http://www.w3.org/2000/svg" p-id="11685" width="48" height="48">
+                                            <path
+                                                d="M329.142857 768q0 45.714286-32 77.714286t-77.714286 32-77.714286-32-32-77.714286 32-77.714286 77.714286-32 77.714286 32 32 77.714286zm292.571429 70.285714q1.142857 16-9.714286 27.428571-10.285714 12-26.857143 12l-77.142857 0q-14.285714 0-24.571429-9.428571t-11.428571-23.714286q-12.571429-130.857143-105.428571-223.714286t-223.714286-105.428571q-14.285714-1.142857-23.714286-11.428571t-9.428571-24.571429l0-77.142857q0-16.571429 12-26.857143 9.714286-9.714286 24.571429-9.714286l2.857143 0q91.428571 7.428571 174.857143 46t148 103.714286q65.142857 64.571429 103.714286 148t46 174.857143zm292.571429 1.142857q1.142857 15.428571-10.285714 26.857143-10.285714 11.428571-26.285714 11.428571l-81.714286 0q-14.857143 0-25.428571-10t-11.142857-24.285714q-6.857143-122.857143-57.714286-233.428571t-132.285714-192-192-132.285714-233.428571-58.285714q-14.285714-0.571429-24.285714-11.142857t-10-24.857143l0-81.714286q0-16 11.428571-26.285714 10.285714-10.285714 25.142857-10.285714l1.714286 0q149.714286 7.428571 286.571429 68.571429t243.142857 168q106.857143 106.285714 168 243.142857t68.571429 286.571429z"
+                                                p-id="11686"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="tooltip ml-4" data-tip="源链接">
+                                    <a href="{{$item.Link}}" target="_blank">
+                                        <svg t="1681317386946" class="w-4 h-4" viewBox="0 0 1024 1024" version="1.1"
+                                            xmlns="http://www.w3.org/2000/svg" p-id="13159" width="200" height="200">
+                                            <path
+                                                d="M593.94368 715.648a10.688 10.688 0 0 0-14.976 0L424.21568 870.4c-71.68 71.68-192.576 79.232-271.68 0-79.232-79.232-71.616-200 0-271.616l154.752-154.752a10.688 10.688 0 0 0 0-15.04l-52.992-52.992a10.688 10.688 0 0 0-15.04 0L84.50368 530.688a287.872 287.872 0 0 0 0 407.488 288 288 0 0 0 407.488 0l154.752-154.752a10.688 10.688 0 0 0 0-15.04l-52.736-52.736z m344.384-631.168a288.256 288.256 0 0 1 0 407.616l-154.752 154.752a10.688 10.688 0 0 1-15.04 0l-52.992-52.992a10.688 10.688 0 0 1 0-15.104l154.752-154.688c71.68-71.68 79.232-192.448 0-271.68-79.104-79.232-200-71.68-271.68 0L443.92768 307.2a10.688 10.688 0 0 1-15.04 0l-52.864-52.864a10.688 10.688 0 0 1 0-15.04l154.88-154.752a287.872 287.872 0 0 1 407.424 0z m-296.32 240.896l52.672 52.736a10.688 10.688 0 0 1 0 15.04l-301.504 301.44a10.688 10.688 0 0 1-15.04 0l-52.736-52.672a10.688 10.688 0 0 1 0-15.04l301.632-301.504a10.688 10.688 0 0 1 15.04 0z"
+                                                fill="#262626" p-id="13160"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <a href="/feed/{{$item.ChannelId}}/item/{{$item.Id}}">
+                    <div class="max-h-24 flex overflow-clip">
+                        <p>{{$item.TextDescription}}</p>
+                    </div>
+                </a>
+                <div class="text-gray-500">{{$item.PubDate}}</div>
+                <div class="card-actions flex items-center">
+                    <button id="list-item-btn-{{$item.Id}}" class="btn btn-circle btn-sm border-none"
+                        onclick="playOrPause(event,'{{$item.Id}}', '{{$item.EnclosureUrl}}', '{{$item.EnclosureType}}', '{{$item.Title}}', '{{$item.ChannelTitle}}', '{{$item.ChannelId}}', '{{$item.ChannelImageUrl}}')">
+                        <span id="list-item-play-svg-{{$item.Id}}">
+                            <svg t="1681315725035" class="w-4 h-4" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="9542" width="32" height="32">
+                                <path
+                                    d="M130.844444 69.859556v884.963555a56.888889 56.888889 0 0 0 87.608889 47.957333l690.915556-442.538666a56.888889 56.888889 0 0 0 0-95.800889L218.396444 21.959111A56.888889 56.888889 0 0 0 130.844444 69.859556z"
+                                    fill="#FFFFFF" p-id="9543"></path>
+                            </svg>
+                        </span>
+                        <span id="list-item-pause-svg-{{$item.Id}}" class="hidden">
+                            <svg t="1681315796396" class="w-6 h-6" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="10573" width="48" height="48">
+                                <path
+                                    d="M352 768c-17.664 0-32-14.304-32-32L320 288c0-17.664 14.336-32 32-32s32 14.336 32 32l0 448C384 753.696 369.664 768 352 768z"
+                                    fill="#ffffff" p-id="10574"></path>
+                                <path
+                                    d="M672 768c-17.696 0-32-14.304-32-32L640 288c0-17.664 14.304-32 32-32s32 14.336 32 32l0 448C704 753.696 689.696 768 672 768z"
+                                    fill="#ffffff" p-id="10575"></path>
+                            </svg>
+                        </span>
+                    </button>
+                    <div class="text-base text-gray-500 w-20">{{$item.Duration}}</div>
+                    <button class="bg-gray-200 w-22 md:w-24 h-8 flex items-center rounded-lg"
+                        onclick="AddToListenLater('{{$item.ChannelId}}', '{{$item.Id}}')">
+                        <img class="w-3 md:w-4 ml-1 md:ml-2 mr-1" src="/resource/image/save.png" alt="">
+                        <span class="font-bold text-xs md:text-sm mr-2">稍后再听</span>
+                    </button>
+                    <button class="bg-gray-200 w-14 md:w-20 h-8 flex items-center rounded-lg"
+                        onclick="share('{{$item.ChannelId}}', '{{$item.Id}}')">
+                        <img class="w-3 md:w-4 ml-1 md:ml-2 mr-1" src="/resource/image/share.png" alt="">
+                        <span class="font-bold text-xs md:text-sm mr-1 md:mr-2">分享</span>
+                    </button>
+                </div>
+            </div>
+            <textarea style="display: none;" id="clipboard-temp-holder-{{$item.Id}}"></textarea>
+        </div>
+        {{end}}
+    </div>
+</div>

@@ -1,6 +1,7 @@
 package ctls
 
 import (
+	"porkast-server/internal/consts"
 	"porkast-server/internal/dto"
 	"porkast-server/internal/service/middleware"
 
@@ -10,6 +11,42 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 )
+
+func (ctl *controller) LoginTpl(req *ghttp.Request) {
+
+	var tplMap = consts.GetCommonTplMap(req.GetCtx())
+	tplMap[consts.LOGIN_EMAIL_INPUT_HINT] = consts.LOGIN_EMAIL_INPUT_HINT_VALUE
+	tplMap[consts.LOGIN_EMAIL_INPUT_PLACEHOLDER_HINT] = consts.LOGIN_EMAIL_INPUT_HINT_PLACEHOLDER_VALUE
+	tplMap[consts.LOGIN_PASSWORD_PLACEHOLDER_HINT] = consts.LOGIN_PASSWORD_HINT_PLACEHOLDER_VALUE
+	tplMap[consts.LOGIN_PASSWORD_HINT] = consts.LOGIN_PASSWORD_HINT_VALUE
+	tplMap[consts.LOGIN_BTN_TEXT] = consts.LOGIN_BTN_TEXT_VALUE
+	tplMap[consts.TO_REGISTER_TEXT] = consts.TO_REGISTER_TEXT_VALUE
+	req.Response.WriteTpl("user/login.html", tplMap)
+}
+
+func (ctl *controller) RegisterTpl(req *ghttp.Request) {
+
+	var tplMap = consts.GetCommonTplMap(req.GetCtx())
+	tplMap[consts.REGISTER_EMAIL_INPUT_HINT] = consts.REGISTER_EMAIL_INPUT_HINT_VALUE
+	tplMap[consts.REGISTER_EMAIL_INPUT_PLACEHOLDER_HINT] = consts.REGISTER_EMAIL_INPUT_HINT_PLACEHOLDER_VALUE
+	tplMap[consts.REGISTER_PASSWORD_PLACEHOLDER_HINT] = consts.REGISTER_PASSWORD_HINT_PLACEHOLDER_VALUE
+	tplMap[consts.REGISTER_PASSWORD_HINT] = consts.REGISTER_PASSWORD_HINT_VALUE
+	tplMap[consts.REGISTER_PASSWORD_CONFIRM_HINT] = consts.REGISTER_PASSWORD_CONFIRM_VALUE
+	tplMap[consts.REGISTER_NICKNAME_INPUT_HINT] = consts.REGISTER_NICKNAME_INPUT_HINT_VALUE
+	tplMap[consts.REGISTER_NICKNAME_INPUT_PLACEHOLDER_HINT] = consts.REGISTER_NICKNAME_INPUT_PLACEHOLDER_HINT_VALUE
+	tplMap[consts.REGISTER_BTN_TEXT] = consts.REGISTER_BTN_TEXT_VALUE
+	req.Response.WriteTpl("user/register.html", tplMap)
+}
+
+func (ctl *controller) UserInfoTpl(req *ghttp.Request) {
+
+	var tplMap = consts.GetCommonTplMap(req.GetCtx())
+	tplMap[consts.NICKANME_TEXT] = g.I18n().T(req.GetCtx(), `{#nickname}`)
+	tplMap[consts.ACCOUNT_TEXT] = g.I18n().T(req.GetCtx(), `{#account}`)
+	tplMap[consts.REG_DATE_TEXT] = g.I18n().T(req.GetCtx(), `{#reg_date}`)
+	req.Response.WriteTpl("user/account_info.html", tplMap)
+}
+
 
 func (ctl *controller) DoLogin(req *ghttp.Request) {
 	var (

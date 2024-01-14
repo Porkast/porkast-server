@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lofi">
+
+<head>
+    <title>{{.searchKeyword}} - {{.appname}}</title>
+    {{include "module/common_header_link.html" .}}
+</head>
+
+<body style="margin: 0; display:inherit;" class="bg-gray-100">
+    <!-- nav header -->
+    {{include "module/header.html" .}}
+    {{include "module/alert.html" .}}
+    {{include "module/sub_confirm_modal.html" .}}
+    <div class="flex justify-center min-h-screen">
+        <div class="w-full pl-6 pr-6 max-w-2xl">
+            <div class="flex justify-start mt-6">
+                <div class="text-gray-500 text-sm">{{.searchResultCountText}}</div>
+                <span>&nbsp;</span>
+                <div class="text-gray-500 text-sm">{{.searchTookTime}}</div>
+            </div>
+
+            {{if .search_channel }}
+            {{else}}
+            <div class="w-full mt-3 flex justify-center">
+                {{include "module/channel_horizontal_list.html" .}}
+            </div>
+            {{end}}
+            <!-- feed channel item list -->
+            <div class="w-full mt-3 flex justify-center">
+                {{if .search_channel }}
+                {{include "module/search_list_channel.html" .}}
+                {{else}}
+                {{include "module/search_list_item.html" .}}
+                {{end}}
+            </div>
+            {{if ne "" .sub_keyword_btn_text}}
+            <div class="w-full mt-9">
+                <label for="sub-confirm-modal" class="btn">{{.sub_keyword_btn_text}}</label>
+            </div>
+            {{end}}
+            <div class="flex justify-center mt-6">
+                <div class="btn-group">
+                    <button class="btn" id="prePageBtn">«</button>
+                    <button class="btn">第{{.currentPage}}页</button>
+                    <button class="btn" id="nextPageBtn">»</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-32">
+        {{include "module/bottom_audio_player.html" .}}
+    </div>
+    <footer class="footer items-center p-4 bg-neutral text-neutral-content">
+        <div class="items-center grid-flow-col">
+            <p>Copyright © 2023 - All right reserved</p>
+        </div>
+        <div class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+        </div>
+    </footer>
+</body>
+<script>
+    $(function () {
+        let isSearchChannel = ('{{.search_channel}}')
+        let currentPage = parseInt('{{.currentPage}}')
+        let totalPage = parseInt('{{.totalPage}}')
+        let nextPage = currentPage + 1
+        let prePage = currentPage - 1
+        let keyword = '{{.searchKeyword}}'
+        let searchOptionElem = $("#searchOptions")
+        $('#nextPageBtn').click(function (event) {
+            if (currentPage >= totalPage) {
+                return
+            }
+            let scope
+            if (isSearchChannel) {
+                scope = "channel"
+            } else {
+                scope = "item"
+            }
+            let optionValue = searchOptionElem.val()
+            let sortByDate;
+            if (optionValue === "sortByDate") {
+                sortByDate = 1
+            } else {
+                sortByDate = 0
+            }
+            window.location.href = "/search?q=" + keyword + "&page=" + nextPage + "&scope=" + scope + "&sortByDate=" + sortByDate;
+        });
+        $('#prePageBtn').click(function (event) {
+            if (currentPage == 1) {
+                return
+            }
+            let scope
+            if (isSearchChannel) {
+                scope = "channel"
+            } else {
+                scope = "item"
+            }
+            let optionValue = searchOptionElem.val()
+            let sortByDate;
+            if (optionValue === "sortByDate") {
+                sortByDate = 1
+            } else {
+                sortByDate = 0
+            }
+            window.location.href = "/search?q=" + keyword + "&page=" + prePage + "&scope=" + scope + "&sortByDate=" + sortByDate;
+        });
+    });
+</script>
+
+</html>

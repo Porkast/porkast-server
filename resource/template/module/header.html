@@ -1,0 +1,175 @@
+<div class="w-full shadow-lg bg-white">
+    <div class="w-full flex justify-center pt-4 pb-4">
+        <div class="md:w-1/6 w-1/2 flex justify-start pt-2">
+            <a class="normal-case font-bold md:text-2xl sm:text-base ml-4" href="/">
+                锅烧FM
+            </a>
+        </div>
+
+        <div class="w-4/6 md:block hidden justify-center">
+            <div class="w-full flex justify-center">
+                <div class="form-control w-full max-w-2xl shadow-none">
+                    {{if eq "" .searchKeyword}}
+                    <input id="searchInput" type="text" placeholder="输入关键词搜索" class="input input-bordered" />
+                    {{else}}
+                    <input id="searchInput" type="text" placeholder='{{.searchKeyword}}' value='{{.searchKeyword}}'
+                        class="input input-bordered" />
+                    {{end}}
+
+                    <!-- advance search -->
+                    <div class="w-full flex justify-start pt-2 md:text-sm text-xs">
+                        <div class="w-full justify-center">
+                            <div class="form-control w-full max-w-2xl justify-center">
+                                <div class="carousel flex shadow-none">
+                                    <div class="carousel-item flex items-center md:text-sm text-xs hover:cursor-pointer hover:text-gray-500"
+                                        onclick="SearchFeedItem()">
+                                        <img class="w-4 mr-2" src="/resource/image/audio.png" alt="">
+                                        {{if .search_channel}}
+                                        <span class="md:text-sm text-xs">单集</span>
+                                        {{else}}
+                                        <span class="md:text-sm text-xs font-bold">单集</span>
+                                        {{end}}
+                                    </div>
+                                    <div class="carousel-item flex items-center ml-4 hover:cursor-pointer hover:text-gray-500"
+                                        onclick="SearchFeedChannel()">
+                                        <img class="w-4 mr-2" src="/resource/image/podcasts.png" alt="">
+                                        {{if .search_channel}}
+                                        <span class="md:text-sm text-xs font-bold">播客</span>
+                                        {{else}}
+                                        <span class="md:text-sm text-xs">播客</span>
+                                        {{end}}
+                                    </div>
+                                    {{if .search_channel}}
+                                    {{else}}
+                                    <select id="searchOptions"
+                                        class="carousel-item select select-bordered select-xs ml-4">
+                                        {{if .search_order_by_date}}
+                                        <option value="sortByDate">时间</option>
+                                        <option value="relevant">相关性</option>
+                                        {{else}}
+                                        <option value="relevant">相关性</option>
+                                        <option value="sortByDate">时间</option>
+                                        {{end}}
+                                    </select>
+                                    {{end}}
+                                    <div class="carousel-item flex justify-start items-center ml-4">
+                                        <span>{{.search_only_match_title}}</span>
+                                        <input id="searchOnlyMatchTitleCheckbox" type="checkbox"
+                                            class="toggle toggle-sm ml-2" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="homeSearchBtn" class="btn btn-primary ml-1" scope-channel="{{.search_channel}}">
+                    <img class="w-6" src="/resource/image/search.png" alt="">
+                </button>
+            </div>
+        </div>
+
+        <div class="md:w-1/6 w-1/2 flex justify-end pt-2">
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="avatar md:pr-8 pr-6 hover:cursor-pointer">
+                    <div id="header-avatar"
+                        class="md:w-6 w-4 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                        <img src="/resource/image/user-fill.png" />
+                    </div>
+                </label>
+                <ul id="login" tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <li class="" onclick="logout()">
+                        <a class="w-full flex justify-start" href="/login">
+                            <img class="w-6" src="/resource/image/login.png" alt="">{{.login_tag}}
+                        </a>
+                    </li>
+                </ul>
+                <ul id="logined" tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <div class="w-full p-3">
+                        <div id="header_nickname_text">__</div>
+                        <div id="header_account_text" class="mt-4 text-gray-500">__</div>
+                    </div>
+                    <li class="h-12 border-t border-gray-200">
+                        <a id="header_account_info_tag" class="w-full flex justify-start">
+                            <img class="w-6" src="/resource/image/account.png" alt="">{{.my_account_tag}}
+                        </a>
+                    </li>
+                    <li class="h-12 border-t border-gray-200">
+                        <a id="header_listen_later_playlist_tag" class="w-full flex justify-start">
+                            <img class="w-6" src="/resource/image/list.png" alt="">{{.listen_later_header_tag}}
+                        </a>
+                    </li>
+                    <li class="h-12 border-t border-gray-200">
+                        <a id="header_user_sub_list_tag" class="w-full flex justify-start">
+                            <img class="w-6" src="/resource/image/subscriptions.png" alt="">{{.user_sub_list}}
+                        </a>
+                    </li>
+                    <li class="border-t border-gray-200" onclick="logout()">
+                        <a class="w-full flex justify-start">
+                            <img class="w-6" src="/resource/image/log-out.png" alt="">{{.logout_tag}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="w-full md:hidden flex justify-center pl-4 pr-4 pb-4">
+        <div class="form-control w-full max-w-2xl shadow-none">
+            {{if eq "" .searchKeyword}}
+            <input id="searchInputBottom" type="text" placeholder="输入关键词搜索" class="input input-sm input-bordered" />
+            {{else}}
+            <input id="searchInputBottom" type="text" value='{{.searchKeyword}}'
+                class="input input-sm input-bordered" />
+            {{end}}
+            <!-- advance search -->
+            <div class="w-full flex justify-start pt-2 md:text-sm text-xs">
+                <!-- <div class="md:w-1/6 hidden h-2"></div> -->
+                <div class="w-full block justify-center">
+                    <div class="w-full justify-center">
+                        <div class="carousel flex shadow-none">
+                            <div class="carousel-item flex items-center md:text-sm text-xs hover:cursor-pointer hover:text-gray-500"
+                                onclick="SearchFeedItem()">
+                                <img class="w-4 mr-2" src="/resource/image/audio.png" alt="">
+                                {{if .search_channel}}
+                                <span class="md:text-sm text-xs">单集</span>
+                                {{else}}
+                                <span class="md:text-sm text-xs font-bold">单集</span>
+                                {{end}}
+                            </div>
+                            <div class="carousel-item flex items-center ml-4 md:text-sm text-xs hover:cursor-pointer hover:text-gray-500"
+                                onclick="SearchFeedChannel()">
+                                <img class="w-4 mr-2" src="/resource/image/podcasts.png" alt="">
+                                {{if .search_channel}}
+                                <span class="md:text-sm text-xs font-bold">播客</span>
+                                {{else}}
+                                <span class="md:text-sm text-xs">播客</span>
+                                {{end}}
+                            </div>
+                            {{if .search_channel}}
+                            {{else}}
+                            <select id="searchOptionsBottom"
+                                class="carousel-item select select-bordered select-xs ml-4">
+                                {{if .search_order_by_date}}
+                                <option value="sortByDate">时间</option>
+                                <option value="relevant">相关性</option>
+                                {{else}}
+                                <option value="relevant">相关性</option>
+                                <option value="sortByDate">时间</option>
+                                {{end}}
+                            </select>
+                            {{end}}
+                            <div class="carousel-item flex justify-start items-center ml-4">
+                                <span>{{.search_only_match_title}}</span>
+                                <input id="searchOnlyMatchTitleCheckboxBottom" type="checkbox"
+                                    class="toggle toggle-sm ml-2" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="md:w-1/6 hidden h-2"></div> -->
+            </div>
+        </div>
+        <button id="homeSearchBtnBottom" class="btn btn-primary btn-sm ml-1" scope-channel="{{.search_channel}}">
+            <img class="w-4" src="/resource/image/search.png" alt="">
+        </button>
+    </div>
+</div>

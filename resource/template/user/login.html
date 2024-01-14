@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lofi">
+
+<head>
+    <title>{{.appname}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/resource/image/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/resource/js/common.js"></script>
+    <script src="/resource/js/login_register.js"></script>
+</head>
+
+<body style="margin: 0; display:inherit;" class="bg-gray-100">
+    <!-- nav header -->
+    <div class="w-full h-16 flex justify-center items-center shadow-lg drop-shadow-lg bg-white">
+        <div class="w-2/6 flex justify-start">
+            <a class="normal-case font-bold md:text-2xl sm:text-base ml-4" href="/">
+                {{.appname}}
+            </a>
+        </div>
+
+        <div class="w-2/6 flex justify-center ">
+        </div>
+
+        <div class="w-2/6">
+
+        </div>
+    </div>
+    {{include "module/alert.html" .}}
+    <div class="flex justify-center mt-4 min-h-screen">
+        <div class="w-full pl-6 pr-6 max-w-2xl bg-white min-h-screen">
+            <div class="mt-4">
+                <div class="flex justify-center">
+                    <div class="form-control w-full max-w-xs">
+                        <label class="label">
+                            <span class="label-text">{{.login_email_input_hint}}</span>
+                        </label>
+                        <input id="email_phone_input" type="text" placeholder="{{.login_email_input_placeholder_hint}}"
+                            class="input input-bordered w-full max-w-xs" />
+                    </div>
+                </div>
+                <div class="flex justify-center mt-4">
+                    <div class="form-control w-full max-w-xs">
+                        <label class="label">
+                            <span class="label-text">{{.login_email_password_hint}}</span>
+                        </label>
+                        <input id="password_input" type="password"
+                            placeholder="{{.login_email_password_placeholder_hint}}"
+                            class="input input-bordered w-full max-w-xs" />
+                    </div>
+                </div>
+                <div class="flex justify-center mt-6">
+                    <button id="login_btn" class="btn btn-wide w-full max-w-xs">{{.login_btn_text}}</button>
+                </div>
+                <div class="flex justify-center mt-6">
+                    <a class="underline" href="/register">{{.to_register_hint}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{include "module/footer.html" .}}
+</body>
+
+</html>

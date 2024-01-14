@@ -115,6 +115,38 @@ func GetUserSubscriptionCount(ctx context.Context, userId string) (count int, er
 	return
 }
 
+func GetUserSubKeywordDtoListByUserId(ctx context.Context, userId string, offset, limit int) (dtoList []dto.UserSubKeywordDto, err error) {
+
+	if userId == "" {
+		err = gerror.New(gcode.CodeMissingParameter.Message())
+		return
+	}
+
+	if limit == 0 {
+		limit = 10
+	}
+
+	entities, err := dao.GetUserSubKeywordListByUserId(ctx, userId, offset, limit)
+	if err != nil {
+		return
+	}
+
+	for _, entity := range entities {
+		dtoList = append(dtoList, dto.UserSubKeywordDto{
+			Id:          entity.Id,
+			UserId:      entity.UserId,
+			Keyword:     entity.Keyword,
+			Country:     entity.Country,
+			OrderByDate: entity.OrderByDate,
+			Source:      entity.Source,
+			Status:      entity.Status,
+			CreateTime:  entity.CreateTime,
+		})
+	}
+
+	return
+}
+
 func GetUserSubKeywordListByUserId(ctx context.Context, userId string, offset, limit int) (dtoList []dto.UserSubscriptionDto, err error) {
 
 	if userId == "" {

@@ -1,0 +1,19 @@
+<div class="w-full flex justify-center">
+    <div class="w-full">
+        {{range $index, $item := .user_sub_keyword_data_list}}
+        <div class="card w-96 bg-base-100 shadow-xl mt-6">
+            <div class="card-body">
+                <h2 class="card-title">#{{$item.Keyword}}</h2>
+                <div class="flex justify-start text-sm">
+                    <span class="">创建者:</span>
+                    <p>{{$item.CreaterName}}</p>
+                </div>
+                <div class="flex justify-start text-sm">
+                    <span class="">创建时间:</span>
+                    <p>{{$item.CreateTime}}</p>
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </div>
+</div>

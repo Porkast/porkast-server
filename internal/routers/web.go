@@ -7,6 +7,26 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 
+func WebRouter(group *ghttp.RouterGroup) {
+	group.Middleware(middleware.SetI18nLang)
+	group.GET("/", ctls.Ctl.IndexTpl)
+	group.GET("/search", ctls.Ctl.SearchResult)
+	group.GET("/feed/channel/:id", ctls.Ctl.FeedChannelDetail)
+	group.GET("/feed/:channelId/item/:itemId", ctls.Ctl.FeedItemDetail)
+	group.GET("/share/feed/:channelId/item/:itemId", ctls.Ctl.ShareFeedItemTpl)
+	group.GET("/share/feed/channel/:channelId", ctls.Ctl.ShareFeedChannelTpl)
+
+	group.GET("/login", ctls.Ctl.LoginTpl)
+	group.GET("/register", ctls.Ctl.RegisterTpl)
+	group.GET("/user/info/:id", ctls.Ctl.UserInfoTpl)
+
+	group.GET("/listenlater/playlist/:userId", ctls.Ctl.ListenLaterTpl)
+	group.GET("/listenlater/:userId/rss", ctls.Ctl.GetListenLaterRSS)
+
+	group.GET("/subscription/:userId/:keyword/rss", ctls.Ctl.GetSubKeywordFeedRSS)
+	group.GET("/user/sub/list/:userId/:page", ctls.Ctl.UserSubListTplt)
+}
+
 func V1ApiRouter(group *ghttp.RouterGroup) {
 	group.Middleware(middleware.SetI18nLang)
 	group.Middleware(middleware.MiddlewareCORS)
