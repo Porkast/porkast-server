@@ -15,7 +15,7 @@ logger:
 
 database:
   default:
-    link: mysql:wromgs0xhe0qk1hkc4vt:pscale_pw_W7KVoXfCATiw4PnPRhA06q9pIQXT58XmySKN5HVq9kd@tcp(aws.connect.psdb.cloud:3306)/porkastdb?tls=true
+    link: mysql:/porkastdb?tls=true
 
 redis:
   default:
